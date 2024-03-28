@@ -1,0 +1,284 @@
+{
+  "LevelsData": [
+    {
+      "id": 1,
+      "TotalShelves": 3,
+      "ItemTypes": 2,
+      "LayerPerShelf": 1,
+      "LockShelves": 0,
+      "UnknownItem": false
+    },
+    {
+      "id": 2,
+      "TotalShelves": 6,
+      "ItemTypes": 9,
+      "LayerPerShelf": 2,
+      "LockShelves": 0,
+      "UnknownItem": false
+    },
+    {
+      "id": 3,
+      "TotalShelves": 9,
+      "ItemTypes": 12,
+      "LayerPerShelf": 2,
+      "LockShelves": 2,
+      "UnknownItem": false
+    },
+    {
+      "id": 4,
+      "TotalShelves": 12,
+      "ItemTypes": 15,
+      "LayerPerShelf": 2,
+      "LockShelves": 2,
+      "UnknownItem": false
+    },
+    {
+      "id": 5,
+      "TotalShelves": 12,
+      "ItemTypes": 18,
+      "LayerPerShelf": 2,
+      "LockShelves": 3,
+      "UnknownItem": false
+    },
+    {
+      "id": 6,
+      "TotalShelves": 9,
+      "ItemTypes": 21,
+      "LayerPerShelf": 3,
+      "LockShelves": 2,
+      "UnknownItem": false
+    },
+    {
+      "id": 7,
+      "TotalShelves": 10,
+      "ItemTypes": 22,
+      "LayerPerShelf": 3,
+      "LockShelves": 2,
+      "UnknownItem": false
+    },
+    {
+      "id": 8,
+      "TotalShelves": 11,
+      "ItemTypes": 22,
+      "LayerPerShelf": 3,
+      "LockShelves": 3,
+      "UnknownItem": false
+    },
+    {
+      "id": 9,
+      "TotalShelves": 9,
+      "ItemTypes": 24,
+      "LayerPerShelf": 3,
+      "LockShelves": 2,
+      "UnknownItem": false
+    },
+    {
+      "id": 10,
+      "TotalShelves": 10,
+      "ItemTypes": 25,
+      "LayerPerShelf": 3,
+      "LockShelves": 2,
+      "UnknownItem": true
+    },
+    {
+      "id": 11,
+      "TotalShelves": 9,
+      "ItemTypes": 26,
+      "LayerPerShelf": 4,
+      "LockShelves": 2,
+      "UnknownItem": true
+    },
+    {
+      "id": 12,
+      "TotalShelves": 10,
+      "ItemTypes": 26,
+      "LayerPerShelf": 4,
+      "LockShelves": 3,
+      "UnknownItem": true
+    },
+    {
+      "id": 13,
+      "TotalShelves": 10,
+      "ItemTypes": 28,
+      "LayerPerShelf": 4,
+      "LockShelves": 3,
+      "UnknownItem": true
+    },
+    {
+      "id": 14,
+      "TotalShelves": 11,
+      "ItemTypes": 29,
+      "LayerPerShelf": 4,
+      "LockShelves": 3,
+      "UnknownItem": true
+    },
+    {
+      "id": 15,
+      "TotalShelves": 9,
+      "ItemTypes": 31,
+      "LayerPerShelf": 4,
+      "LockShelves": 3,
+      "UnknownItem": true
+    },
+    {
+      "id": 16,
+      "TotalShelves": 36,
+      "ItemTypes": 30,
+      "LayerPerShelf": 1,
+      "LockShelves": 5,
+      "UnknownItem": true
+    },
+    {
+      "id": 17,
+      "TotalShelves": 39,
+      "ItemTypes": 33,
+      "LayerPerShelf": 1,
+      "LockShelves": 5,
+      "UnknownItem": true
+    },
+    {
+      "id": 18,
+      "TotalShelves": 42,
+      "ItemTypes": 36,
+      "LayerPerShelf": 1,
+      "LockShelves": 6,
+      "UnknownItem": true
+    },
+    {
+      "id": 19,
+      "TotalShelves": 45,
+      "ItemTypes": 39,
+      "LayerPerShelf": 1,
+      "LockShelves": 6,
+      "UnknownItem": true
+    },
+    {
+      "id": 20,
+      "TotalShelves": 48,
+      "ItemTypes": 42,
+      "LayerPerShelf": 1,
+      "LockShelves": 7,
+      "UnknownItem": true
+    },
+    {
+      "id": 21,
+      "TotalShelves": 6,
+      "ItemTypes": 33,
+      "LayerPerShelf": 4,
+      "LockShelves": 2,
+      "UnknownItem": false
+    },
+    {
+      "id": 22,
+      "TotalShelves": 8,
+      "ItemTypes": 34,
+      "LayerPerShelf": 3,
+      "LockShelves": 2,
+      "UnknownItem": false
+    },
+    {
+      "id": 23,
+      "TotalShelves": 8,
+      "ItemTypes": 35,
+      "LayerPerShelf": 3,
+      "LockShelves": 2,
+      "UnknownItem": false
+    },
+    {
+      "id": 24,
+      "TotalShelves": 9,
+      "ItemTypes": 36,
+      "LayerPerShelf": 3,
+      "LockShelves": 2,
+      "UnknownItem": false
+    },
+    {
+      "id": 25,
+      "TotalShelves": 9,
+      "ItemTypes": 45,
+      "LayerPerShelf": 4,
+      "LockShelves": 3,
+      "UnknownItem": false
+    },
+    {
+      "id": 26,
+      "TotalShelves": 5,
+      "ItemTypes": 37,
+      "LayerPerShelf": 3,
+      "LockShelves": 3,
+      "UnknownItem": false
+    },
+    {
+      "id": 27,
+      "TotalShelves": 5,
+      "ItemTypes": 38,
+      "LayerPerShelf": 3,
+      "LockShelves": 3,
+      "UnknownItem": false
+    },
+    {
+      "id": 28,
+      "TotalShelves": 6,
+      "ItemTypes": 39,
+      "LayerPerShelf": 3,
+      "LockShelves": 4,
+      "UnknownItem": false
+    },
+    {
+      "id": 29,
+      "TotalShelves": 6,
+      "ItemTypes": 40,
+      "LayerPerShelf": 3,
+      "LockShelves": 4,
+      "UnknownItem": false
+    },
+    {
+      "id": 30,
+      "TotalShelves": 9,
+      "ItemTypes": 47,
+      "LayerPerShelf": 3,
+      "LockShelves": 4,
+      "UnknownItem": false
+    },
+    {
+      "id": 31,
+      "TotalShelves": 3,
+      "ItemTypes": 41,
+      "LayerPerShelf": 3,
+      "LockShelves": 4,
+      "UnknownItem": false
+    },
+    {
+      "id": 32,
+      "TotalShelves": 3,
+      "ItemTypes": 42,
+      "LayerPerShelf": 3,
+      "LockShelves": 4,
+      "UnknownItem": false
+    },
+    {
+      "id": 33,
+      "TotalShelves": 4,
+      "ItemTypes": 43,
+      "LayerPerShelf": 3,
+      "LockShelves": 5,
+      "UnknownItem": false
+    },
+    {
+      "id": 34,
+      "TotalShelves": 4,
+      "ItemTypes": 44,
+      "LayerPerShelf": 3,
+      "LockShelves": 5,
+      "UnknownItem": false
+    },
+    {
+      "id": 35,
+      "TotalShelves": 6,
+      "ItemTypes": 50,
+      "LayerPerShelf": 3,
+      "LockShelves": 5,
+      "UnknownItem": false
+    }
+  ]
+}

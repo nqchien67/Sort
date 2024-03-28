@@ -1,0 +1,123 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &512083964065853939
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 512083964065853937}
+  - component: {fileID: 512083964065853936}
+  m_Layer: 0
+  m_Name: DataController
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &512083964065853937
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 512083964065853939}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &512083964065853936
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 512083964065853939}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e2be4171f2534ea6ba50cf9f5fa87c1b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  LevelsData:
+  - id: 1
+    TotalShelves: 3
+    TotalItemTypes: 2
+    TotalLayerPerShelf: 1
+    LockShelves: 0
+    LockNumber: 0
+    UnknownItem: 0
+  - id: 2
+    TotalShelves: 6
+    TotalItemTypes: 9
+    TotalLayerPerShelf: 2
+    LockShelves: 0
+    LockNumber: 0
+    UnknownItem: 0
+  - id: 3
+    TotalShelves: 9
+    TotalItemTypes: 12
+    TotalLayerPerShelf: 2
+    LockShelves: 2
+    LockNumber: 3
+    UnknownItem: 0
+  - id: 4
+    TotalShelves: 12
+    TotalItemTypes: 15
+    TotalLayerPerShelf: 2
+    LockShelves: 2
+    LockNumber: 3
+    UnknownItem: 0
+  - id: 5
+    TotalShelves: 12
+    TotalItemTypes: 18
+    TotalLayerPerShelf: 2
+    LockShelves: 3
+    LockNumber: 4
+    UnknownItem: 0
+  - id: 6
+    TotalShelves: 9
+    TotalItemTypes: 21
+    TotalLayerPerShelf: 3
+    LockShelves: 3
+    LockNumber: 4
+    UnknownItem: 0
+  - id: 7
+    TotalShelves: 10
+    TotalItemTypes: 22
+    TotalLayerPerShelf: 3
+    LockShelves: 4
+    LockNumber: 4
+    UnknownItem: 0
+  - id: 8
+    TotalShelves: 11
+    TotalItemTypes: 23
+    TotalLayerPerShelf: 3
+    LockShelves: 3
+    LockNumber: 4
+    UnknownItem: 0
+  - id: 9
+    TotalShelves: 9
+    TotalItemTypes: 24
+    TotalLayerPerShelf: 3
+    LockShelves: 4
+    LockNumber: 4
+    UnknownItem: 0
+  - id: 10
+    TotalShelves: 9
+    TotalItemTypes: 45
+    TotalLayerPerShelf: 4
+    LockShelves: 4
+    LockNumber: 4
+    UnknownItem: 0
+  - id: 11
+    TotalShelves: 10
+    TotalItemTypes: 25
+    TotalLayerPerShelf: 3
+    LockShelves: 4
+    LockNumber: 4
+    UnknownItem: 0

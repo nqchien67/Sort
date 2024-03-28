@@ -1,0 +1,139 @@
+﻿{
+  "CombosData": [
+    {
+      "Combo": 1,
+      "Star": 0,
+      "Time": 10
+    },
+    {
+      "Combo": 2,
+      "Star": 0,
+      "Time": 9.7
+    },
+    {
+      "Combo": 3,
+      "Star": 0,
+      "Time": 9.4
+    },
+    {
+      "Combo": 4,
+      "Star": 1,
+      "Time": 9.1
+    },
+    {
+      "Combo": 5,
+      "Star": 2,
+      "Time": 8.8
+    },
+    {
+      "Combo": 6,
+      "Star": 3,
+      "Time": 8.5
+    },
+    {
+      "Combo": 7,
+      "Star": 3,
+      "Time": 8.2
+    },
+    {
+      "Combo": 8,
+      "Star": 3,
+      "Time": 7.9
+    },
+    {
+      "Combo": 9,
+      "Star": 4,
+      "Time": 7.6
+    },
+    {
+      "Combo": 10,
+      "Star": 4,
+      "Time": 7.3
+    },
+    {
+      "Combo": 11,
+      "Star": 4,
+      "Time": 7
+    },
+    {
+      "Combo": 12,
+      "Star": 4,
+      "Time": 6.7
+    },
+    {
+      "Combo": 13,
+      "Star": 5,
+      "Time": 6.4
+    },
+    {
+      "Combo": 14,
+      "Star": 5,
+      "Time": 6.1
+    },
+    {
+      "Combo": 15,
+      "Star": 5,
+      "Time": 5.8
+    },
+    {
+      "Combo": 16,
+      "Star": 5,
+      "Time": 5.5
+    },
+    {
+      "Combo": 17,
+      "Star": 5,
+      "Time": 5.2
+    },
+    {
+      "Combo": 18,
+      "Star": 6,
+      "Time": 4.9
+    },
+    {
+      "Combo": 19,
+      "Star": 6,
+      "Time": 4.6
+    },
+    {
+      "Combo": 20,
+      "Star": 6,
+      "Time": 4.3
+    },
+    {
+      "Combo": 21,
+      "Star": 6,
+      "Time": 4
+    },
+    {
+      "Combo": 22,
+      "Star": 6,
+      "Time": 3.7
+    },
+    {
+      "Combo": 23,
+      "Star": 6,
+      "Time": 3.4
+    },
+    {
+      "Combo": 24,
+      "Star": 7,
+      "Time": 3.1
+    },
+    {
+      "Combo": 25,
+      "Star": 7,
+      "Time": 2.8
+    },
+    {
+      "Combo": 26,
+      "Star": 7,
+      "Time": 2.5
+    },
+    {
+      "Combo": 27,
+      "Star": 7,
+      "Time": 2.2
+    }
+  ]
+}
