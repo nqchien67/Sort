@@ -155,7 +155,7 @@ namespace Controllers
 			if (_isGameEnd)
 				return;
 			_isGameEnd = true;
-
+			
 			StopCoroutine(_countDown);
 
 			int currentLevel = LevelIndex;

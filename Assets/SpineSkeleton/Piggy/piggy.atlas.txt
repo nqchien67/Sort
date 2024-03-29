@@ -1,0 +1,76 @@
+
+piggy.png
+size: 812,296
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+body
+  rotate: false
+  xy: 483, 101
+  size: 185, 190
+  orig: 185, 190
+  offset: 0, 0
+  index: -1
+d1
+  rotate: true
+  xy: 725, 10
+  size: 57, 55
+  orig: 57, 55
+  offset: 0, 0
+  index: -1
+face1
+  rotate: true
+  xy: 577, 4
+  size: 95, 69
+  orig: 95, 69
+  offset: 0, 0
+  index: -1
+face2
+  rotate: true
+  xy: 648, 7
+  size: 92, 75
+  orig: 92, 75
+  offset: 0, 0
+  index: -1
+face3
+  rotate: false
+  xy: 483, 3
+  size: 92, 96
+  orig: 92, 96
+  offset: 0, 0
+  index: -1
+hammer
+  rotate: true
+  xy: 670, 143
+  size: 148, 140
+  orig: 150, 142
+  offset: 1, 1
+  index: -1
+handle
+  rotate: false
+  xy: 725, 69
+  size: 61, 72
+  orig: 66, 81
+  offset: 1, 1
+  index: -1
+pileofdiamond
+  rotate: true
+  xy: 2, 2
+  size: 289, 155
+  orig: 295, 156
+  offset: 3, 1
+  index: -1
+ray1
+  rotate: false
+  xy: 159, 18
+  size: 259, 273
+  orig: 285, 306
+  offset: 12, 14
+  index: -1
+ray2
+  rotate: false
+  xy: 420, 47
+  size: 61, 244
+  orig: 68, 244
+  offset: 4, 0
+  index: -1

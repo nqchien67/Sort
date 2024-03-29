@@ -1240,10 +1240,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_UiScaleMode: 0
+  m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
-  m_ReferenceResolution: {x: 800, y: 600}
+  m_ReferenceResolution: {x: 1080, y: 2475}
   m_ScreenMatchMode: 0
   m_MatchWidthOrHeight: 0
   m_PhysicalUnit: 3
@@ -1322,10 +1322,10 @@ RectTransform:
   m_Father: {fileID: 8380712888883143028}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -417.47012, y: 1013.4}
-  m_SizeDelta: {x: 231.0598, y: 77.373}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 122.52988, y: -223.5}
+  m_SizeDelta: {x: 231.05981, y: 77.37305}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2251817938120951437
 CanvasRenderer:
@@ -1455,6 +1455,34 @@ PrefabInstance:
     - target: {fileID: 2822561008303735571, guid: bfd38c26f98a2cd44a9e6c64fbd9176c, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 3023147553867378565, guid: bfd38c26f98a2cd44a9e6c64fbd9176c, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3023147553867378565, guid: bfd38c26f98a2cd44a9e6c64fbd9176c, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3023147553867378565, guid: bfd38c26f98a2cd44a9e6c64fbd9176c, type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3023147553867378565, guid: bfd38c26f98a2cd44a9e6c64fbd9176c, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3023147553867378565, guid: bfd38c26f98a2cd44a9e6c64fbd9176c, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 145.90308
+      objectReference: {fileID: 0}
+    - target: {fileID: 3023147553867378565, guid: bfd38c26f98a2cd44a9e6c64fbd9176c, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 145.9031
+      objectReference: {fileID: 0}
+    - target: {fileID: 3023147553867378565, guid: bfd38c26f98a2cd44a9e6c64fbd9176c, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 293
       objectReference: {fileID: 0}
     - target: {fileID: 5664683256589777527, guid: bfd38c26f98a2cd44a9e6c64fbd9176c, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size

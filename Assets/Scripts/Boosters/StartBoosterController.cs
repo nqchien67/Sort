@@ -53,6 +53,8 @@ namespace Boosters
 						break;
 				}
 			}
+			
+			SelectedBoosters.Clear();
 		}
 
 		public void DeselectBooster(StartBooster booster)

@@ -11,10 +11,15 @@ namespace UI
 			_animator = GetComponent<Animator>();
 		}
 
-		public void Show()
+		public virtual void Show()
 		{
 			gameObject.SetActive(true);
 			_animator.Play("Appear");
+		}
+
+		public void Close()
+		{
+			_animator.Play("Disappear");
 		}
 	}
 }
