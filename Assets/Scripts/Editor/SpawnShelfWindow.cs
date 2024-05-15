@@ -1,8 +1,6 @@
 ﻿using UnityEditor;
 using UnityEngine;
 
-namespace Editors
-{
 	public class SpawnShelfWindow : EditorWindow
 	{
 		private const int _rowCount = 5;
@@ -157,4 +155,3 @@ namespace Editors
 			}
 		}
 	}
-}

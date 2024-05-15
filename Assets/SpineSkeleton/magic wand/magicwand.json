@@ -1,0 +1,59 @@
+{
+"skeleton": {
+	"hash": "91Etq7ifU3J9xs2xvFF/FqcoHCc",
+	"spine": "3.8.99",
+	"x": -93.5,
+	"y": -97.5,
+	"width": 187,
+	"height": 195,
+	"images": "",
+	"audio": ""
+},
+"bones": [
+	{ "name": "root" },
+	{ "name": "Magic wand", "parent": "root", "length": 80, "rotation": 133.42, "x": 13.85, "y": -13.58 }
+],
+"slots": [
+	{ "name": "Magic wand", "bone": "Magic wand", "attachment": "Magic wand" }
+],
+"skins": [
+	{
+		"name": "default",
+		"attachments": {
+			"Magic wand": {
+				"Magic wand": { "x": 19.38, "y": 0.72, "rotation": -133.42, "width": 187, "height": 195 }
+			}
+		}
+	}
+],
+"animations": {
+	"animation": {
+		"slots": {
+			"Magic wand": {
+				"color": [
+					{ "color": "ffffff00", "curve": 0.25, "c4": 0.71 },
+					{ "time": 0.1667, "color": "ffffffff" }
+				]
+			}
+		},
+		"bones": {
+			"Magic wand": {
+				"rotate": [
+					{ "curve": 0.25, "c4": 0.82 },
+					{ "time": 0.3333, "angle": -6.46, "curve": 0.25, "c3": 0.75 },
+					{ "time": 0.4667, "angle": 0.15, "curve": 0.25, "c3": 0.75 },
+					{ "time": 0.6, "angle": -5.97, "curve": 0.25, "c3": 0.75 },
+					{ "time": 0.7333 }
+				],
+				"translate": [
+					{ "x": 206.72, "curve": 0.25, "c4": 0.82 },
+					{ "time": 0.3333, "x": -43.17, "curve": 0.25, "c3": 0.75 },
+					{ "time": 0.4667, "x": -0.61, "curve": 0.25, "c3": 0.75 },
+					{ "time": 0.6, "x": -15.2, "curve": 0.25, "c3": 0.75 },
+					{ "time": 0.7333, "x": -0.61 }
+				]
+			}
+		}
+	}
+}
+}

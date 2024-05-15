@@ -59,9 +59,9 @@
     {
       "id": 8,
       "TotalShelves": 11,
-      "ItemTypes": 22,
+      "ItemTypes": 23,
       "LayerPerShelf": 3,
-      "LockShelves": 3,
+      "LockShelves": 2,
       "UnknownItem": false
     },
     {
@@ -93,7 +93,7 @@
       "TotalShelves": 10,
       "ItemTypes": 26,
       "LayerPerShelf": 4,
-      "LockShelves": 3,
+      "LockShelves": 2,
       "UnknownItem": true
     },
     {
@@ -101,13 +101,13 @@
       "TotalShelves": 10,
       "ItemTypes": 28,
       "LayerPerShelf": 4,
-      "LockShelves": 3,
+      "LockShelves": 2,
       "UnknownItem": true
     },
     {
       "id": 14,
       "TotalShelves": 11,
-      "ItemTypes": 29,
+      "ItemTypes": 28,
       "LayerPerShelf": 4,
       "LockShelves": 3,
       "UnknownItem": true
@@ -115,7 +115,7 @@
     {
       "id": 15,
       "TotalShelves": 9,
-      "ItemTypes": 31,
+      "ItemTypes": 30,
       "LayerPerShelf": 4,
       "LockShelves": 3,
       "UnknownItem": true
@@ -157,13 +157,13 @@
       "TotalShelves": 48,
       "ItemTypes": 42,
       "LayerPerShelf": 1,
-      "LockShelves": 7,
+      "LockShelves": 6,
       "UnknownItem": true
     },
     {
       "id": 21,
       "TotalShelves": 6,
-      "ItemTypes": 33,
+      "ItemTypes": 29,
       "LayerPerShelf": 4,
       "LockShelves": 2,
       "UnknownItem": false
@@ -171,7 +171,7 @@
     {
       "id": 22,
       "TotalShelves": 8,
-      "ItemTypes": 34,
+      "ItemTypes": 30,
       "LayerPerShelf": 3,
       "LockShelves": 2,
       "UnknownItem": false
@@ -179,7 +179,7 @@
     {
       "id": 23,
       "TotalShelves": 8,
-      "ItemTypes": 35,
+      "ItemTypes": 31,
       "LayerPerShelf": 3,
       "LockShelves": 2,
       "UnknownItem": false
@@ -187,7 +187,7 @@
     {
       "id": 24,
       "TotalShelves": 9,
-      "ItemTypes": 36,
+      "ItemTypes": 32,
       "LayerPerShelf": 3,
       "LockShelves": 2,
       "UnknownItem": false

@@ -4,8 +4,11 @@ using System.Collections.Generic;
 using System.Linq;
 using Boosters;
 using Data;
+using DG.Tweening;
+using Gameplay;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using Item = Gameplay.Item;
 using Random = UnityEngine.Random;
 
 namespace Controllers
@@ -31,14 +34,14 @@ namespace Controllers
 		public int LevelTime;
 		public bool DoubleStar;
 
-		private bool _isGameEnd;
+		protected bool _isGameEnd;
 		public bool IsShowAds { get; set; }
 		private Coroutine _countDown;
 
 		private int _coin;
 		private int _star;
 
-		private LevelUIController Ui => LevelUIController.Instance;
+		protected LevelUIController Ui => LevelUIController.Instance;
 		private int _secondRemain;
 
 		protected override void Awake()
@@ -72,7 +75,7 @@ namespace Controllers
 			Shelves = FindObjectsOfType<Shelf>();
 		}
 
-		private int CalculateTime()
+		protected int CalculateTime()
 		{
 			int seconds;
 			if (LevelData.ItemTypes < 25)
@@ -150,12 +153,12 @@ namespace Controllers
 			Win();
 		}
 
-		public void Win()
+		public virtual void Win()
 		{
 			if (_isGameEnd)
 				return;
 			_isGameEnd = true;
-			
+
 			StopCoroutine(_countDown);
 
 			int currentLevel = LevelIndex;
@@ -164,6 +167,7 @@ namespace Controllers
 				currentLevel = 0;
 			PlayerPrefs.SetInt("level", currentLevel);
 			StartCoroutine(GameManager.WaiForSeconds(0.5f, () => Ui.ShowWinPanel()));
+
 			SaveData();
 		}
 
@@ -213,13 +217,13 @@ namespace Controllers
 			CheckClear();
 		}
 
-		private void AddCoin(int amount)
+		protected virtual void AddCoin(int amount)
 		{
 			_coin += amount;
 			Ui.DisplayCoin(_coin);
 		}
 
-		private void AddStar(int amount)
+		protected virtual void AddStar(int amount)
 		{
 			_star += amount;
 			Ui.DisplayStar(_star);
@@ -228,7 +232,7 @@ namespace Controllers
 		private int _currentCombo;
 		private Coroutine _comboTimer;
 
-		public void GainScore()
+		public virtual void GainScore()
 		{
 			AddCoin(1);
 
@@ -254,15 +258,18 @@ namespace Controllers
 			float comboTime = DataController.Instance.CombosData[_currentCombo - 1].Time;
 			float remainTime = comboTime;
 
+			yield return Ui._comboTimeBar.DOFillAmount(1, 0.1f).WaitForCompletion();
+			remainTime -= 0.1f;
+
 			while (remainTime > 0)
 			{
-				Ui._comboTimeText.text = remainTime.ToString("0.0") + "/" + comboTime;
-				remainTime -= Time.deltaTime;
 				yield return null;
+				remainTime -= Time.deltaTime;
+				Ui.DisplayComboTimeBar(remainTime, comboTime);
 			}
 
 			_currentCombo = 0;
-			Ui._comboTimeText.text = "0/" + comboTime;
+			Ui.DisplayComboTimeBar(0, comboTime);
 			Ui.DisplayCombo(_currentCombo);
 		}
 

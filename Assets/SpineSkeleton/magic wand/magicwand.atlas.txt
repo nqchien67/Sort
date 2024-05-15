@@ -1,0 +1,13 @@
+
+magicwand.png
+size: 192,200
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+Magic wand
+  rotate: false
+  xy: 2, 2
+  size: 187, 195
+  orig: 187, 195
+  offset: 0, 0
+  index: -1

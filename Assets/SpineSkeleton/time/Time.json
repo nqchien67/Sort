@@ -1,0 +1,80 @@
+{
+"skeleton": {
+	"hash": "MIOU9PbyOVbuJRx56zn9u+nbVXQ",
+	"spine": "3.8.99",
+	"x": -116.81,
+	"y": -115.61,
+	"width": 242,
+	"height": 249,
+	"images": "./images/",
+	"audio": "D:/A_GAMING-LINH TINH/ANIMATION/minigame Good sort/Time"
+},
+"bones": [
+	{ "name": "root" },
+	{ "name": "dongho", "parent": "root", "length": 16.42, "rotation": 88.99, "x": 4.17, "y": -41.31 },
+	{ "name": "kim", "parent": "dongho", "x": 46.35, "y": 4.2 },
+	{ "name": "bone", "parent": "dongho", "rotation": -88.99, "x": 45.14, "y": 1.17 }
+],
+"slots": [
+	{ "name": "dongho", "bone": "dongho", "attachment": "dongho" },
+	{ "name": "kim", "bone": "kim", "attachment": "kim" },
+	{ "name": "light", "bone": "bone", "color": "ffffff00", "attachment": "light" }
+],
+"skins": [
+	{
+		"name": "default",
+		"attachments": {
+			"dongho": {
+				"dongho": { "x": 50.12, "y": 2.24, "rotation": -88.99, "width": 113, "height": 119 }
+			},
+			"kim": {
+				"kim": { "x": 11.24, "y": -0.33, "rotation": -88.99, "width": 24, "height": 46 }
+			},
+			"light": {
+				"light": { "x": 0.4, "y": 5.04, "width": 242, "height": 249 }
+			}
+		}
+	}
+],
+"animations": {
+	"animation": {
+		"slots": {
+			"light": {
+				"color": [
+					{ "time": 0.1667, "color": "ffffff00" },
+					{ "time": 0.3333, "color": "ffffffff" },
+					{ "time": 0.8333, "color": "ffffff00" }
+				]
+			}
+		},
+		"bones": {
+			"dongho": {
+				"scale": [
+					{ "x": 0, "y": 0 },
+					{ "time": 0.1667 }
+				]
+			},
+			"kim": {
+				"rotate": [
+					{ "time": 0.1667 },
+					{ "time": 0.3667, "angle": -134.6 },
+					{ "time": 0.6, "angle": 113.54 },
+					{ "time": 0.8333 }
+				]
+			},
+			"bone": {
+				"rotate": [
+					{ "time": 0.1667 },
+					{ "time": 0.5, "angle": 180 },
+					{ "time": 0.8333 }
+				],
+				"scale": [
+					{ "x": 0.8, "y": 0.8, "curve": "stepped" },
+					{ "time": 0.1667, "x": 0.8, "y": 0.8 },
+					{ "time": 0.8333, "x": 1.1, "y": 1.1 }
+				]
+			}
+		}
+	}
+}
+}

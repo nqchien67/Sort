@@ -3,14 +3,16 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Data;
+using Gameplay;
 using UnityEngine;
+using Item = Gameplay.Item;
 using Random = UnityEngine.Random;
 
 namespace Controllers
 {
 	public class LevelSetupManager : MonoBehaviour
 	{
-		private ItemSpritePool _itemSpritePool;
+		private SkinCollection _skinCollection;
 
 		private LevelData LevelData => LevelController.Instance.LevelData;
 		protected Shelf[] Shelves => LevelController.Instance.Shelves;
@@ -27,9 +29,9 @@ namespace Controllers
 
 		public virtual void SetUpLevel()
 		{
-			_itemSpritePool = GetComponent<ItemSpritePool>();
-			_itemSpritePool.InitUnplacedItems(LevelData.ItemTypes);
-			LevelController.Instance.RemainItemTypes = _itemSpritePool._unplacedItems;
+			_skinCollection = SkinCollection.Instance;
+			_skinCollection.InitUnplacedItems(LevelData.ItemTypes, LevelData.id);
+			LevelController.Instance.RemainItemTypes = _skinCollection._unplacedItems;
 
 			SetUpLocks();
 
@@ -46,6 +48,8 @@ namespace Controllers
 			{
 				itemCount.AddRange(s.GetAllItems());
 			}
+
+			Debug.Log(itemCount.Count); 
 		}
 
 		private void SetUpItems()
@@ -71,7 +75,7 @@ namespace Controllers
 			fixedItems = new List<Item>();
 			for (int i = 0; i < 2; i++)
 			{
-				Sprite itemSprite = _itemSpritePool.GetNextUnplacedItem();
+				Sprite itemSprite = _skinCollection.GetNextUnplacedItem();
 
 				for (int j = 0; j < 3; j++)
 				{
@@ -106,9 +110,9 @@ namespace Controllers
 				unknownItems = Random.Range(6, 16);
 			float probabilityIsUnknown = (float)unknownItems / LevelData.ItemTypes;
 
-			while (_itemSpritePool._unplacedItems.Count > 2)
+			while (_skinCollection._unplacedItems.Count > 2)
 			{
-				Sprite itemSprite = _itemSpritePool.GetNextUnplacedItem();
+				Sprite itemSprite = _skinCollection.GetNextUnplacedItem();
 				Item item = null;
 
 				for (int i = 0; i < 3; i++)
@@ -131,7 +135,7 @@ namespace Controllers
 					cloneShelfIndexPairs = ShuffleList(shelfIndexPairs);
 				}
 
-
+// anh chiến ăn cứt 
 				if (unknownItems <= 0 || Random.value >= probabilityIsUnknown || item == null)
 					continue;
 				item.Renderer.material = LevelController.Instance.UnknownMaterial;
@@ -227,7 +231,7 @@ namespace Controllers
 			{
 				var item = remainItems[0];
 				remainItems.RemoveAt(0);
-				
+
 				ShelfIndexPair shelfIndexPair =
 					GetValidShelfIndexPair2(item.Sprite, cloneShelfIndexPairs, currentLayer);
 
@@ -351,19 +355,19 @@ namespace Controllers
 			foreach (var lockedShelf in LockedShelves)
 			{
 				ItemLayer frontLayer = lockedShelf.FrontLayer;
-			
+
 				for (int i = 0; i < ItemNumbEachLayer; i++)
 				{
 					if (items.Count == 0)
 						return;
-					
+
 					if (frontLayer.Items[i] != null)
 						continue;
-			
+
 					Item item = items[0];
 					items.RemoveAt(0);
 					ItemLayer prevLayer = item.Layer;
-			
+
 					prevLayer.RemoveItem(item);
 					prevLayer.CheckShouldDestroy(false);
 
@@ -371,7 +375,7 @@ namespace Controllers
 				}
 			}
 		}
-		
+
 		private static List<T> ShuffleList<T>(List<T> list)
 		{
 			return list.OrderBy(_ => Random.value).ToList();

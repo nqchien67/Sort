@@ -1,0 +1,62 @@
+
+refresh.png
+size: 1204,580
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+f1
+  rotate: false
+  xy: 1007, 385
+  size: 192, 192
+  orig: 192, 192
+  offset: 0, 0
+  index: -1
+f2
+  rotate: false
+  xy: 1007, 194
+  size: 190, 189
+  orig: 190, 189
+  offset: 0, 0
+  index: -1
+f3
+  rotate: true
+  xy: 1003, 2
+  size: 190, 189
+  orig: 190, 189
+  offset: 0, 0
+  index: -1
+f4
+  rotate: true
+  xy: 794, 153
+  size: 209, 207
+  orig: 209, 207
+  offset: 0, 0
+  index: -1
+f5
+  rotate: true
+  xy: 588, 149
+  size: 213, 204
+  orig: 213, 204
+  offset: 0, 0
+  index: -1
+f6
+  rotate: true
+  xy: 588, 364
+  size: 213, 209
+  orig: 213, 209
+  offset: 0, 0
+  index: -1
+f7
+  rotate: false
+  xy: 799, 370
+  size: 206, 207
+  orig: 206, 207
+  offset: 0, 0
+  index: -1
+flare
+  rotate: false
+  xy: 2, 10
+  size: 584, 567
+  orig: 658, 664
+  offset: 39, 50
+  index: -1

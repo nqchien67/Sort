@@ -1,13 +1,13 @@
 ﻿using System.Collections;
 using UnityEngine;
 
-namespace Boosters
+namespace Boosters.InGame
 {
-	public class Freeze : InGameBooster
+	public class Freeze : InGameBoosterButton
 	{
 		[SerializeField] private float _freezeTime;
 
-		protected override void Active()
+		public override void Active()
 		{
 			StartCoroutine(Freezing());
 		}

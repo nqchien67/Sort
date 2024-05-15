@@ -1,0 +1,68 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &8032381396679105732
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8032381396679105734}
+  - component: {fileID: 8032381396679105735}
+  m_Layer: 0
+  m_Name: PiggyBankBtnController
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8032381396679105734
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8032381396679105732}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -9.956867, y: -2.3966298, z: -12.358038}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8032381396679105735
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8032381396679105732}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 07fdc12c05b36fd4aa616fe2bf4ef0f1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  piggyBankBtn: {fileID: 0}
+  notify: {fileID: 0}
+  timeText: {fileID: 0}
+  progressImg: {fileID: 0}
+  piggyBankPanelPrefab: {fileID: 0}
+  _iapDatas:
+  - IAPId: 
+    Price: 3.99
+  - IAPId: 
+    Price: 6.99
+  - IAPId: 
+    Price: 9.99
+  - IAPId: 
+    Price: 15.99
+  - IAPId: 
+    Price: 25.99
+  - IAPId: 
+    Price: 49.99
+  tutorialPanels:
+  - {fileID: 3816017663198132355, guid: 9035b87fa4beb8644abada5789374f9f, type: 3}
+  - {fileID: 3816017663198132355, guid: ecf2824b66da3b84ca97c6f6233ff346, type: 3}
+  - {fileID: 3816017663198132355, guid: ac01ffaf346a4504098e9e961a04474e, type: 3}
+  fullPiggyPanel: {fileID: 2165706796216416191, guid: 0e5126352076b4b4fb23d8364b85ec6a, type: 3}

@@ -2,6 +2,7 @@
 using System.Collections;
 using Controllers;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 
 public class TouchManager : MonoBehaviour
@@ -40,10 +41,11 @@ public class TouchManager : MonoBehaviour
 	{
 		// _isPressed = context.ReadValue<float>();
 		Collider2D hit = Physics2D.OverlapPoint(TouchPosition, _draggableMask);
-		if (hit && hit.TryGetComponent(out IDraggable draggable) && draggable.CanDrag())
+		if (hit && hit.TryGetComponent(out IDraggable draggable) && draggable.CanDrag() &&
+		    EventSystem.current.currentSelectedGameObject == null)
 		{
 			draggable.OnStartDrag();
-			 StartCoroutine(DragUpdate(hit.transform));
+			StartCoroutine(DragUpdate(hit.transform));
 		}
 	}
 

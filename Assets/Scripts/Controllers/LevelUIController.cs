@@ -1,7 +1,10 @@
 ﻿using System;
+using System.Runtime.CompilerServices;
+using DG.Tweening;
 using TMPro;
 using UI;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Controllers
 {
@@ -12,7 +15,7 @@ namespace Controllers
 		[SerializeField] private TextMeshProUGUI _coinText;
 		[SerializeField] private TextMeshProUGUI _starText;
 		[SerializeField] private TextMeshProUGUI _comboText;
-		public TextMeshProUGUI _comboTimeText;
+		public Image _comboTimeBar;
 
 		[SerializeField] private LosePanel _losePanel;
 		[SerializeField] private WinPanel _winPanel;
@@ -24,6 +27,8 @@ namespace Controllers
 
 			string numberString = gameObject.scene.name.Substring(5);
 			_levelText.text = "Lv." + int.Parse(numberString);
+
+			DisplayCombo(0);
 		}
 
 		public void RenderTimer(int secondsLeft)
@@ -49,7 +54,18 @@ namespace Controllers
 
 		public void DisplayCombo(int combo)
 		{
-			_comboText.text = "Combo x" + combo;
+			if (combo == 0)
+				_comboText.text = "";
+			else
+			{
+				_comboText.text = "Combo x" + combo;
+				_comboText.transform.DOScale(1.1f, 0.1f).SetLoops(2, LoopType.Yoyo);
+			}
+		}
+
+		public void DisplayComboTimeBar(float timeRemain, float totalTime)
+		{
+			_comboTimeBar.fillAmount = timeRemain / totalTime;
 		}
 
 		public void ShowLosePanel()

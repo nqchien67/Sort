@@ -8,6 +8,7 @@ using Image = UnityEngine.UI.Image;
 
 public class Loading : SingletonCore<Loading>
 {
+	[SerializeField] private float _loadTime = 3;
 	private bool clicked;
 
 	public void Pause()
@@ -16,47 +17,53 @@ public class Loading : SingletonCore<Loading>
 		Time.timeScale = clicked ? 0 : _startTimeScale;
 	}
 
-	public void DoneLoadRoad()
-	{
-		SceneManager.UnloadSceneAsync(_splashScene);
-	}
-
 	private string _splashScene = "SplashScene";
+	private string _level1 = "Level1";
 	private string _mainScene = "MainScene";
 
-	public Image sliderBar;
+	[SerializeField] private Image _fill;
+	[SerializeField] private TextMeshProUGUI _loadingText;
 	public TextMeshProUGUI verText;
 
-	void Start()
+	private float _fillMaxSizeX;
+	private float _startTimeScale;
+	private RectTransform _fillRectTransform;
+
+	private void Start()
 	{
 		StartCoroutine(LoadAsyncScene());
 		verText.text = Application.version;
-	}
+		_fillRectTransform = _fill.GetComponent<RectTransform>();
+		_fillMaxSizeX = _fillRectTransform.sizeDelta.x;
 
-	private float _startTimeScale;
+		StartCoroutine(LoadingTexAnimation());
+	}
 
 	private IEnumerator LoadAsyncScene()
 	{
-		AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(_mainScene, LoadSceneMode.Additive);
+		bool isPassLevel1 = PlayerPrefs.HasKey("level");
+		string sceneToLoad = isPassLevel1 ? _mainScene : _level1;
+
+		AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(sceneToLoad, LoadSceneMode.Additive);
 
 		asyncLoad.allowSceneActivation = false;
 		yield return null;
 
 		float elapsedTime = 0;
-		const float loadTime = 3;
-		while (elapsedTime <= loadTime)
+		while (elapsedTime <= _loadTime)
 		{
 			yield return new WaitForSecondsRealtime(1);
-			sliderBar.fillAmount = elapsedTime / loadTime;
-			elapsedTime ++;
+			FillLoadingbar(elapsedTime / _loadTime);
+			elapsedTime++;
 		}
+
 		asyncLoad.allowSceneActivation = true;
 
-		sliderBar.fillAmount = 1;
+		FillLoadingbar(1);
 		while (!asyncLoad.isDone)
 			yield return null;
 
-		SceneManager.SetActiveScene(SceneManager.GetSceneByName(_mainScene));
+		SceneManager.SetActiveScene(SceneManager.GetSceneByName(sceneToLoad));
 		SceneManager.UnloadSceneAsync(_splashScene);
 
 		// string currentScene = SceneManager.GetActiveScene().name;
@@ -70,5 +77,30 @@ public class Loading : SingletonCore<Loading>
 		// SceneManager.SetActiveScene(SceneManager.GetSceneByName(_mainScene));
 		// sliderBar.fillAmount = 1;
 		// SceneManager.UnloadSceneAsync(_splashScene);
+	}
+
+	private IEnumerator LoadingTexAnimation()
+	{
+		int dotCount = 0;
+		while (enabled)
+		{
+			dotCount++;
+			if (dotCount > 3)
+				dotCount = 0;
+
+			string dots = "";
+			for (int i = 0; i < dotCount; i++)
+				dots += ".";
+
+			_loadingText.text = "Loading" + dots;
+			yield return new WaitForSeconds(0.3f);
+		}
+	}
+
+	private void FillLoadingbar(float fillAmount)
+	{
+		var sizeDelta = _fillRectTransform.sizeDelta;
+		sizeDelta.x = Mathf.Lerp(0, _fillMaxSizeX, fillAmount);
+		_fillRectTransform.sizeDelta = sizeDelta;
 	}
 }

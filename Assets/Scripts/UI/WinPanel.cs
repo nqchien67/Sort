@@ -33,16 +33,16 @@ namespace UI
 			_animator.Play("Appear");
 
 			yield return new WaitForSeconds(0.2f);
-			if (PlayerPrefs.GetInt("level", 0) >= 6 && !DataController.Instance.IsFullPB())
+			if (PlayerPrefs.GetInt("level", 0) >= 6 && !DataController.Instance.IsPiggyBankFull())
 			{
 				_piggyBank.SetActive(true);
 				_piggyBankAnim.AnimationState.SetAnimation(1, "jumpin_x", false);
 
 				int bonusGoldPiggy =
-					DataController.Instance.CurrentPbStorage / (DataController.Instance.PbLevel * 2 + 3);
+					DataController.Instance.CurrentPbStorage / (DataController.Instance.PiggyBankLevel * 2 + 3);
 				bonusGoldPiggy += Random.Range(-1, bonusGoldPiggy / 10 + 1);
 				int averageGold = DataController.Instance.CurrentPbStorage /
-				                  ((DataController.Instance.PbLevel * 2 + 3) * 12);
+				                  ((DataController.Instance.PiggyBankLevel * 2 + 3) * 12);
 				int tmp = 0;
 				yield return new WaitForSeconds(1.3f);
 				_piggyBankAnim.AnimationState.SetAnimation(1, "suckindiamond_x", false);
@@ -58,11 +58,11 @@ namespace UI
 
 				_piggyGoldBonusTxt.text = "+" + bonusGoldPiggy;
 				yield return new WaitForSeconds(0.8f);
-				DataController.Instance.PbRuby += bonusGoldPiggy;
-				if (DataController.Instance.IsFullPB() && DataController.Instance.PbTimeDuration <= 0)
+				DataController.Instance.PiggyBankCoin += bonusGoldPiggy;
+				if (DataController.Instance.IsPiggyBankFull() && DataController.Instance.PbTimeDuration <= 0)
 				{
 					DataController.Instance.PbTimeDuration = 7200;
-					DataController.Instance.PbTimeStamp = DataController.ConvertToUnixTime(DateTime.Now);
+					DataController.Instance.PiggyBankTimeStamp = DataController.ConvertToUnixTime(DateTime.Now);
 					PlayerPrefs.SetInt("open_full_piggy", 0);
 				}
 
@@ -71,22 +71,28 @@ namespace UI
 			}
 		}
 
-		public void Close()
-		{
-			_animator.Play("Disappear");
-		}
-
 		public void OnClickCLose()
 		{
 			_animator.Play("Disappear");
 			StartCoroutine(GameManager.WaiForSeconds(0.5f, () => SceneManager.LoadScene("MainScene")));
 		}
 
-		public void OnClickNext()
+		public void OnClickClaim()
+		{
+			//TODO: Nhét piggy bank hiện khi bấm nút này
+			OnClickCLose();
+		}
+		
+		public void NextLevel()
 		{
 			int level = PlayerPrefs.GetInt("level", 0);
 			level++;
 			SceneManager.LoadScene("Level" + level);
+		}
+
+		private void EndCloseAnimationTrigger()
+		{
+			
 		}
 	}
 }

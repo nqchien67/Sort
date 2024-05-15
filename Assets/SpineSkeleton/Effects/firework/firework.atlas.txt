@@ -1,0 +1,13 @@
+
+firework.png
+size: 392,396
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+fw
+  rotate: false
+  xy: 2, 2
+  size: 387, 391
+  orig: 389, 391
+  offset: 2, 0
+  index: -1

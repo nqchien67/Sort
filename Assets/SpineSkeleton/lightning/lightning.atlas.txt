@@ -1,0 +1,34 @@
+
+lightning.png
+size: 288,432
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+f1
+  rotate: false
+  xy: 75, 5
+  size: 70, 423
+  orig: 76, 428
+  offset: 1, 3
+  index: -1
+f2
+  rotate: false
+  xy: 2, 4
+  size: 71, 424
+  orig: 73, 426
+  offset: 1, 1
+  index: -1
+f3
+  rotate: false
+  xy: 218, 2
+  size: 65, 426
+  orig: 69, 428
+  offset: 1, 1
+  index: -1
+f4
+  rotate: false
+  xy: 147, 3
+  size: 69, 425
+  orig: 73, 428
+  offset: 1, 2
+  index: -1

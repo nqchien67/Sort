@@ -1,13 +1,14 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
+using Gameplay;
 using UnityEngine;
 
 namespace Boosters.InGame
 {
-	public class LittleHammer : InGameBooster
+	public class LittleHammer : InGameBoosterButton
 	{
-		protected override void Active()
+		public override void Active()
 		{
 			if (LevelController.CanDrag)
 				CollectItems();

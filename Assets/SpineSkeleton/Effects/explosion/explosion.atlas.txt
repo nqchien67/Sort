@@ -1,0 +1,97 @@
+
+explosion.png
+size: 376,516
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+1
+  rotate: true
+  xy: 280, 177
+  size: 87, 93
+  orig: 93, 102
+  offset: 2, 4
+  index: -1
+10
+  rotate: false
+  xy: 121, 5
+  size: 120, 113
+  orig: 129, 123
+  offset: 3, 7
+  index: -1
+11
+  rotate: true
+  xy: 285, 391
+  size: 122, 88
+  orig: 133, 97
+  offset: 6, 6
+  index: -1
+12
+  rotate: true
+  xy: 285, 266
+  size: 123, 68
+  orig: 133, 91
+  offset: 4, 19
+  index: -1
+13
+  rotate: false
+  xy: 243, 9
+  size: 120, 60
+  orig: 128, 83
+  offset: 4, 19
+  index: -1
+2
+  rotate: true
+  xy: 268, 71
+  size: 104, 105
+  orig: 109, 115
+  offset: 3, 5
+  index: -1
+3
+  rotate: false
+  xy: 2, 2
+  size: 117, 117
+  orig: 122, 122
+  offset: 3, 2
+  index: -1
+4
+  rotate: true
+  xy: 136, 120
+  size: 125, 130
+  orig: 133, 137
+  offset: 6, 2
+  index: -1
+5
+  rotate: false
+  xy: 2, 376
+  size: 140, 137
+  orig: 149, 152
+  offset: 3, 13
+  index: -1
+6
+  rotate: false
+  xy: 144, 380
+  size: 139, 133
+  orig: 147, 142
+  offset: 5, 6
+  index: -1
+7
+  rotate: false
+  xy: 144, 247
+  size: 134, 131
+  orig: 138, 142
+  offset: 2, 6
+  index: -1
+8
+  rotate: false
+  xy: 2, 245
+  size: 132, 129
+  orig: 138, 138
+  offset: 3, 4
+  index: -1
+9
+  rotate: false
+  xy: 2, 121
+  size: 126, 122
+  orig: 133, 128
+  offset: 2, 4
+  index: -1

@@ -1,0 +1,63 @@
+{
+"skeleton": {
+	"hash": "Ix6zQrLAoaTdwTodHpbkhoCoKVY",
+	"spine": "3.8.99",
+	"x": -38,
+	"y": -214,
+	"width": 76,
+	"height": 428,
+	"images": "./images/",
+	"audio": "D:/A_GAMING-LINH TINH/ANIMATION/minigame Good sort/lightning-magicwand"
+},
+"bones": [
+	{ "name": "root" }
+],
+"slots": [
+	{ "name": "f1", "bone": "root", "attachment": "f1" }
+],
+"skins": [
+	{
+		"name": "default",
+		"attachments": {
+			"f1": {
+				"f1": { "width": 76, "height": 428 },
+				"f2": { "width": 73, "height": 426 },
+				"f3": { "width": 69, "height": 428 },
+				"f4": { "width": 73, "height": 428 }
+			}
+		}
+	}
+],
+"animations": {
+	"animation": {
+		"slots": {
+			"f1": {
+				"color": [
+					{ "color": "ffffff00" },
+					{ "time": 0.1, "color": "ffffffff", "curve": "stepped" },
+					{ "time": 0.9667, "color": "ffffffff" },
+					{ "time": 1.0667, "color": "ffffff00" }
+				],
+				"attachment": [
+					{ "time": 0.0667, "name": "f2" },
+					{ "time": 0.1333, "name": "f3" },
+					{ "time": 0.2, "name": "f4" },
+					{ "time": 0.2667, "name": "f1" },
+					{ "time": 0.3333, "name": "f2" },
+					{ "time": 0.4, "name": "f3" },
+					{ "time": 0.4667, "name": "f4" },
+					{ "time": 0.5333, "name": "f1" },
+					{ "time": 0.6, "name": "f2" },
+					{ "time": 0.6667, "name": "f3" },
+					{ "time": 0.7333, "name": "f4" },
+					{ "time": 0.8, "name": "f1" },
+					{ "time": 0.8667, "name": "f2" },
+					{ "time": 0.9333, "name": "f3" },
+					{ "time": 1, "name": "f4" },
+					{ "time": 1.0667, "name": "f1" }
+				]
+			}
+		}
+	}
+}
+}

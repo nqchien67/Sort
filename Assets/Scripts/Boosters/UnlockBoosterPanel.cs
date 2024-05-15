@@ -1,0 +1,29 @@
+﻿using System;
+using MainMenu.TopBar;
+using TMPro;
+using UI;
+using UnityEngine;
+using UnityEngine.Events;
+using UnityEngine.UI;
+
+namespace Boosters
+{
+	public class UnlockBoosterPanel : Popup
+	{
+		public BoosterData Data;
+		[SerializeField] private Image _boosterIcon;
+		[SerializeField] private TextMeshProUGUI _descriptionText;
+		[SerializeField] private Button _claimButton;
+
+		public UnityAction OnClickClaim;
+
+		private void Start()
+		{
+			_boosterIcon.sprite = Data.Sprite;
+			_descriptionText.text = Data.Description;
+
+			OnClickClaim += Close;
+			_claimButton.onClick.AddListener(OnClickClaim);
+		}
+	}
+}

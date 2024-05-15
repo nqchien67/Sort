@@ -1,14 +1,16 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Boosters.InGame;
 using Controllers;
 using DG.Tweening;
 using DigitalRuby.LightningBolt;
+using Gameplay;
 using UnityEngine;
 
 namespace Boosters
 {
-	public class MagicWand : InGameBooster
+	public class MagicWand : InGameBoosterButton
 	{
 		[SerializeField] private Sprite _transformedSprite;
 		[SerializeField] private LightningBoltScript _lightningPrefab;
@@ -18,7 +20,7 @@ namespace Boosters
 		private int time;
 		private List<Item> _effectedItems;
 
-		protected override void Active()
+		public override void Active()
 		{
 			if (!LevelController.CanDrag)
 				return;

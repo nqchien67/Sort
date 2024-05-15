@@ -1,0 +1,27 @@
+
+Time.png
+size: 340,212
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+dongho
+  rotate: false
+  xy: 227, 92
+  size: 111, 117
+  orig: 113, 119
+  offset: 1, 1
+  index: -1
+kim
+  rotate: false
+  xy: 227, 46
+  size: 22, 44
+  orig: 24, 46
+  offset: 1, 1
+  index: -1
+light
+  rotate: true
+  xy: 2, 2
+  size: 207, 223
+  orig: 242, 249
+  offset: 16, 10
+  index: -1

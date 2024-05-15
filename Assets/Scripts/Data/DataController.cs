@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Runtime.Serialization.Formatters.Binary;
 using DG.Tweening;
+using MainMenu;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -12,7 +13,7 @@ namespace Data
 	public class DataController : MonoBehaviour
 	{
 		public static DataController Instance;
-		
+
 		[SerializeField] private GameData gameData;
 		[HideInInspector] public UnityEvent onDataChange;
 
@@ -22,7 +23,7 @@ namespace Data
 
 		protected void Awake()
 		{
-			 DontDestroyOnLoad(gameObject);
+			DontDestroyOnLoad(gameObject);
 			var levelDataCollection = JsonUtility.FromJson<LevelDataCollection>(GetLevelsData());
 			LevelsData = levelDataCollection.LevelsData;
 
@@ -39,14 +40,64 @@ namespace Data
 
 				// DontDestroyOnLoad(gameObject);
 			}
+
+			LoadData();
+			Coin = 100000;
 		}
-		
-		public int Ruby
+
+		public void LoadData()
 		{
-			get => gameData.ruby;
+			LoadLocalData();
+		}
+
+		public void LoadLocalData()
+		{
+			if (File.Exists(dataPath))
+			{
+				BinaryFormatter binaryFormatter = new BinaryFormatter();
+				using (FileStream fileStream = File.Open(dataPath, FileMode.Open))
+				{
+					try
+					{
+						string data = (string)binaryFormatter.Deserialize(fileStream);
+						gameData = JsonUtility.FromJson<GameData>(data);
+					}
+					catch (Exception e)
+					{
+						Debug.LogError(e.Message);
+						ResetData();
+					}
+				}
+			}
+			else
+				ResetData();
+		}
+
+		public void ResetData()
+		{
+			gameData = new GameData
+			{
+				SkinData = SkinDataController.Instance.InitSkinData()
+			};
+			SaveData(false);
+		}
+
+		public int Coin
+		{
+			get => gameData.Coin;
 			set
 			{
-				gameData.ruby = value;
+				gameData.Coin = value;
+				onDataChange?.Invoke();
+			}
+		}
+
+		public int Star
+		{
+			get => gameData.Star;
+			set
+			{
+				gameData.Star = value;
 				onDataChange?.Invoke();
 			}
 		}
@@ -67,55 +118,63 @@ namespace Data
 					using (FileStream fileStream = File.Open(dataPath, FileMode.OpenOrCreate))
 					{
 						binaryFormatter.Serialize(fileStream, origin);
+						Debug.Log("save data");
 					}
+
 
 					// if (postData)
 					// 	DatabaseController.Instance.PostData();
 				}
 			);
 		}
-		
+
+		public int GetItemQuantity(ConsumableType consumableType)
+		{
+			string itemId = consumableType.ToString();
+			return (from itemState in gameData.ConsumableStates where itemState.Id == itemId select itemState.Quantity)
+				.FirstOrDefault();
+		}
+
 		public bool isFirstOpenPB = true;
+
 		public int PbTimeDuration
 		{
 			get => gameData.pbTimeDuration;
 			set => gameData.pbTimeDuration = value;
 		}
 
-		public double PbTimeStamp
+		public double PiggyBankTimeStamp
 		{
-			get => gameData.pbTimeStamp;
-			set => gameData.pbTimeStamp = value;
+			get => gameData.PiggyBankTimeStamp;
+			set => gameData.PiggyBankTimeStamp = value;
 		}
 
-		public int PbRuby
+		public int PiggyBankCoin
 		{
-			get { return gameData.pbRuby; }
-			set { gameData.pbRuby = Mathf.Clamp(value, 0, pbStorageMilestone[PbLevel - 1]); }
+			get => gameData.PiggyBankCoin;
+			set => gameData.PiggyBankCoin = Mathf.Clamp(value, 0, PiggyBankStorageMilestone[PiggyBankLevel - 1]);
 		}
 
-		public int[] pbStorageMilestone
-		{
-			get { return new int[] { 120, 200, 340, 700, 1600, 4000 }; }
-		}
+		public int[] PiggyBankStorageMilestone
+			=> new[] { 3000, 6000, 9000, 15000, 25000, 45000 };
 
-		public int PbLevel
+		public int PiggyBankLevel
 		{
 			get
 			{
-				if (gameData.pbLevel == 0) gameData.pbLevel = 1;
-				return Mathf.Clamp(gameData.pbLevel, 1, 6);
+				if (gameData.PiggyBankLevel == 0)
+					gameData.PiggyBankLevel = 1;
+				return Mathf.Clamp(gameData.PiggyBankLevel, 1, 6);
 			}
-			set => gameData.pbLevel = Mathf.Clamp(value, 1, 6);
+			set => gameData.PiggyBankLevel = Mathf.Clamp(value, 1, 6);
 		}
-		
-		public int CurrentPbStorage => pbStorageMilestone[PbLevel - 1];
-		
-		public bool IsFullPB()
+
+		public int CurrentPbStorage => PiggyBankStorageMilestone[PiggyBankLevel - 1];
+
+		public bool IsPiggyBankFull()
 		{
-			return gameData.pbRuby >= pbStorageMilestone[PbLevel - 1];
+			return gameData.PiggyBankCoin >= PiggyBankStorageMilestone[PiggyBankLevel - 1];
 		}
-		
 
 		public string GetLevelsData()
 		{
@@ -139,6 +198,74 @@ namespace Data
 			// }
 
 			// return value;
+		}
+
+		public void AddConsumable(ConsumableType consumableTypeId, int quantity)
+		{
+			gameData.AddConsumable(consumableTypeId, quantity);
+		}
+
+		public SkinData SkinData
+		{
+			get => gameData.SkinData;
+			set => gameData.SkinData = value;
+		}
+
+		public int[] PurchasedBackgroundIds => gameData.PurchasedBackgroundIds;
+
+		public static int SecondsToDays(float totalSeconds)
+		{
+			return (int)(totalSeconds / (3600f * 24f));
+		}
+
+		public static int SecondToHours(float totalSeconds)
+		{
+			return (int)(totalSeconds / 3600f);
+		}
+
+		public static int SecondsToMinutes(float totalSeconds)
+		{
+			return (int)(totalSeconds / 60 % 60);
+		}
+
+		public static int GetSeconds(float totalSeconds)
+		{
+			return (int)(totalSeconds % 60);
+		}
+
+		public static ConsumableType StringToItem(string value)
+		{
+			if (Enum.IsDefined(typeof(ConsumableType), value))
+			{
+				return (ConsumableType)Enum.Parse(typeof(ConsumableType), value);
+			}
+
+			Debug.LogError("Khong the convert string: \"" + value + "\" sang Item duoc -_-");
+			return ConsumableType.Coin;
+		}
+
+		public static ConsumableType[] StringsToItems(string[] values)
+		{
+			ConsumableType[] items = new ConsumableType[values.Length];
+
+			for (int i = 0; i < values.Length; i++)
+			{
+				items[i] = StringToItem(values[i]);
+			}
+
+			return items;
+		}
+
+		public List<int> UnlockedAvatarIds
+		{
+			get => gameData.UnlockedAvatarIds.ToList();
+			set => gameData.UnlockedAvatarIds = value.ToArray();
+		}
+
+		public Profile Profile
+		{
+			get => gameData.Profile;
+			set => gameData.Profile = value;
 		}
 	}
 }

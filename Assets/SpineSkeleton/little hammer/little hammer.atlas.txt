@@ -1,0 +1,69 @@
+
+little hammer.png
+size: 432,808
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+Blink
+  rotate: true
+  xy: 2, 748
+  size: 56, 57
+  orig: 58, 60
+  offset: 1, 2
+  index: -1
+F1
+  rotate: false
+  xy: 194, 421
+  size: 192, 192
+  orig: 192, 192
+  offset: 0, 0
+  index: -1
+F2
+  rotate: false
+  xy: 240, 615
+  size: 190, 189
+  orig: 190, 189
+  offset: 0, 0
+  index: -1
+F3
+  rotate: false
+  xy: 2, 452
+  size: 190, 189
+  orig: 190, 189
+  offset: 0, 0
+  index: -1
+F4
+  rotate: false
+  xy: 2, 6
+  size: 209, 207
+  orig: 209, 207
+  offset: 0, 0
+  index: -1
+F5
+  rotate: false
+  xy: 2, 215
+  size: 213, 204
+  orig: 213, 204
+  offset: 0, 0
+  index: -1
+F6
+  rotate: false
+  xy: 213, 2
+  size: 213, 209
+  orig: 213, 209
+  offset: 0, 0
+  index: -1
+F7
+  rotate: true
+  xy: 217, 213
+  size: 206, 207
+  orig: 206, 207
+  offset: 0, 0
+  index: -1
+Little hammer
+  rotate: true
+  xy: 61, 643
+  size: 161, 177
+  orig: 161, 177
+  offset: 0, 0
+  index: -1

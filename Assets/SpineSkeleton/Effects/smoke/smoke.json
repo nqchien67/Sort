@@ -1,0 +1,47 @@
+{
+"skeleton": { "hash": "GkMfo0kEZQBpkdblU6k08co4gig", "spine": "3.8.99", "images": "./images/", "audio": "D:/A_GAMING-LINH TINH/ANIMATION/minigame Good sort/3/smoke" },
+"bones": [
+	{ "name": "root" }
+],
+"slots": [
+	{ "name": "f1", "bone": "root" }
+],
+"skins": [
+	{
+		"name": "default",
+		"attachments": {
+			"f1": {
+				"f1": { "width": 108, "height": 88 },
+				"f2": { "width": 129, "height": 115 },
+				"f3": { "width": 164, "height": 149 },
+				"f4": { "width": 224, "height": 205 },
+				"f5": { "width": 288, "height": 240 },
+				"f6": { "width": 318, "height": 285 },
+				"f7": { "width": 348, "height": 298 },
+				"f8": { "width": 360, "height": 314 },
+				"f9": { "width": 370, "height": 328 }
+			}
+		}
+	}
+],
+"animations": {
+	"animation": {
+		"slots": {
+			"f1": {
+				"attachment": [
+					{ "time": 0.0667, "name": "f1" },
+					{ "time": 0.1333, "name": "f2" },
+					{ "time": 0.2, "name": "f3" },
+					{ "time": 0.2667, "name": "f4" },
+					{ "time": 0.3333, "name": "f5" },
+					{ "time": 0.4, "name": "f6" },
+					{ "time": 0.4667, "name": "f7" },
+					{ "time": 0.5333, "name": "f8" },
+					{ "time": 0.6, "name": "f9" },
+					{ "time": 0.6667, "name": null }
+				]
+			}
+		}
+	}
+}
+}

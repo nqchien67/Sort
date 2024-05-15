@@ -1,11 +1,11 @@
 ﻿using System.Collections.Generic;
-using UnityEngine;
+using Gameplay;
 
-namespace Boosters
+namespace Boosters.InGame
 {
-	public class Refresh : InGameBooster
+	public class Refresh : InGameBoosterButton
 	{
-		protected override void Active()
+		public override void Active()
 		{
 			if(!LevelController.CanDrag)
 				return;

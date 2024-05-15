@@ -1,0 +1,48 @@
+
+spark.png
+size: 200,332
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+Layer 1
+  rotate: false
+  xy: 2, 217
+  size: 94, 113
+  orig: 100, 120
+  offset: 3, 4
+  index: -1
+Layer 2
+  rotate: false
+  xy: 98, 220
+  size: 97, 110
+  orig: 102, 116
+  offset: 3, 3
+  index: -1
+Layer 3
+  rotate: false
+  xy: 2, 103
+  size: 93, 112
+  orig: 98, 116
+  offset: 3, 2
+  index: -1
+Layer 4
+  rotate: false
+  xy: 97, 103
+  size: 92, 112
+  orig: 97, 116
+  offset: 2, 2
+  index: -1
+Layer 5
+  rotate: true
+  xy: 2, 2
+  size: 99, 102
+  orig: 103, 109
+  offset: 2, 4
+  index: -1
+Layer 6
+  rotate: true
+  xy: 106, 9
+  size: 92, 88
+  orig: 95, 90
+  offset: 2, 1
+  index: -1

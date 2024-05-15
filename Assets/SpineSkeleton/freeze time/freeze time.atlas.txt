@@ -1,0 +1,27 @@
+
+freeze time.png
+size: 764,144
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+Blink
+  rotate: false
+  xy: 704, 84
+  size: 56, 57
+  orig: 58, 60
+  offset: 1, 2
+  index: -1
+freeze
+  rotate: true
+  xy: 2, 2
+  size: 139, 700
+  orig: 150, 715
+  offset: 10, 1
+  index: -1
+snow
+  rotate: false
+  xy: 704, 30
+  size: 52, 52
+  orig: 54, 54
+  offset: 1, 1
+  index: -1

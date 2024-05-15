@@ -17,9 +17,13 @@ namespace UI
 			_animator.Play("Appear");
 		}
 
-		public void Close()
+		public virtual void Close()
 		{
 			_animator.Play("Disappear");
+		}
+		
+		public virtual void EndCloseAnimationTrigger()
+		{
 		}
 	}
 }
