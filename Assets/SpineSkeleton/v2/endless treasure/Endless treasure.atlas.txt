@@ -1,0 +1,34 @@
+
+Endless treasure.png
+size: 656,688
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+flare
+  rotate: false
+  xy: 387, 25
+  size: 267, 270
+  orig: 306, 320
+  offset: 12, 25
+  index: -1
+icon
+  rotate: false
+  xy: 2, 2
+  size: 383, 293
+  orig: 399, 308
+  offset: 14, 12
+  index: -1
+light
+  rotate: false
+  xy: 2, 297
+  size: 389, 386
+  orig: 463, 414
+  offset: 31, 24
+  index: -1
+pad
+  rotate: true
+  xy: 393, 421
+  size: 262, 229
+  orig: 264, 231
+  offset: 1, 1
+  index: -1

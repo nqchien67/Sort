@@ -33,7 +33,7 @@ public class Loading : SingletonCore<Loading>
 	{
 		StartCoroutine(LoadAsyncScene());
 		verText.text = Application.version;
-		_fillRectTransform = _fill.GetComponent<RectTransform>();
+		_fillRectTransform = _fill.rectTransform;
 		_fillMaxSizeX = _fillRectTransform.sizeDelta.x;
 
 		StartCoroutine(LoadingTexAnimation());

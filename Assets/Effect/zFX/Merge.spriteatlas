@@ -1,0 +1,75 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!687078895 &4343727234628468602
+SpriteAtlas:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Merge
+  m_EditorData:
+    serializedVersion: 2
+    textureSettings:
+      serializedVersion: 2
+      anisoLevel: 1
+      compressionQuality: 50
+      maxTextureSize: 2048
+      textureCompression: 0
+      filterMode: 1
+      generateMipMaps: 0
+      readable: 0
+      crunchedCompression: 0
+      sRGB: 1
+    platformSettings:
+    - serializedVersion: 3
+      m_BuildTarget: DefaultTexturePlatform
+      m_MaxTextureSize: 2048
+      m_ResizeAlgorithm: 0
+      m_TextureFormat: -1
+      m_TextureCompression: 2
+      m_CompressionQuality: 50
+      m_CrunchedCompression: 0
+      m_AllowsAlphaSplitting: 0
+      m_Overridden: 0
+      m_AndroidETC2FallbackOverride: 0
+      m_ForceMaximumCompressionQuality_BC6H_BC7: 0
+    packingSettings:
+      serializedVersion: 2
+      padding: 4
+      blockOffset: 1
+      allowAlphaSplitting: 0
+      enableRotation: 1
+      enableTightPacking: 0
+    secondaryTextureSettings: {}
+    variantMultiplier: 1
+    packables:
+    - {fileID: 102900000, guid: 0d41746e929e1a34084fd9460f6a7538, type: 3}
+    bindAsDefault: 1
+    isAtlasV2: 0
+    cachedData: {fileID: 0}
+  m_MasterAtlas: {fileID: 0}
+  m_PackedSprites:
+  - {fileID: 21300000, guid: 854ddc90b36337f4eb0f08a94c4779e8, type: 3}
+  - {fileID: 21300000, guid: b6132f539b32e984a8828c7a194ae44b, type: 3}
+  - {fileID: 21300000, guid: 6716d4a685e2dbb42bc78d57d9c2b3c5, type: 3}
+  - {fileID: 21300000, guid: 0824658790b21764eb188e2aef66fa35, type: 3}
+  - {fileID: 21300000, guid: cbf2e85891e74454aac29a79005bb2d2, type: 3}
+  - {fileID: 21300000, guid: 57bc7c1a804813c44982fa398f3250a7, type: 3}
+  - {fileID: 21300000, guid: 0093cabad93694440ab9497bb2b6611d, type: 3}
+  - {fileID: 21300000, guid: cec9355df66e6ba4ca6f6f3c64a4ec3c, type: 3}
+  - {fileID: 21300000, guid: d37a785edc582fa408c29bdae8a2c458, type: 3}
+  - {fileID: 21300000, guid: 2687ff3f76d5524459579221a32513ba, type: 3}
+  m_PackedSpriteNamesToIndex:
+  - ring4
+  - trail2
+  - ring1
+  - energy1
+  - ring2
+  - ligh_2t
+  - light1
+  - black
+  - light0
+  - glow1
+  m_RenderDataMap: {}
+  m_Tag: Merge
+  m_IsVariant: 0

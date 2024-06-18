@@ -1,28 +1,34 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using Boosters.InGame;
 using Controllers;
+using Data;
 using DG.Tweening;
 using DigitalRuby.LightningBolt;
 using Gameplay;
+using Spine;
+using Spine.Unity;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
-namespace Boosters
+namespace Boosters.InGame
 {
 	public class MagicWand : InGameBoosterButton
 	{
 		[SerializeField] private Sprite _transformedSprite;
 		[SerializeField] private LightningBoltScript _lightningPrefab;
-		[SerializeField] private Transform _magicWandPrefab;
+		[SerializeField] private GameObject _hitEffect;
+		private bool _animCompleted;
 
 		private int _x;
 		private int time;
 		private List<Item> _effectedItems;
+		private SkeletonAnimation _effectSkeletonAnimation;
 
 		public override void Active()
 		{
-			if (!LevelController.CanDrag)
+			if (!LevelController.CanDrag || _quantity <= 0)
 				return;
 			
 			_x = 0;
@@ -62,6 +68,7 @@ namespace Boosters
 
 				if (uniqueItems.Count == 0)
 					return;
+				
 				int randomIndex = Random.Range(0, uniqueItems.Count);
 				Item randomItem = uniqueItems[randomIndex];
 				uniqueItems.RemoveAt(randomIndex);
@@ -69,8 +76,27 @@ namespace Boosters
 				_effectedItems.AddRange(FindSameItems(randomItem));
 			}
 
+			ReduceQuantity();
 			StartCoroutine(TransformItems(_effectedItems));
 			time++;
+		}
+
+		protected override Transform SpawnEffect()
+		{
+			Vector2 spawnPos = CameraController.Camera.ViewportToWorldPoint(new Vector2(0.5f, 0.2f));
+			if (_spawnedEffect == null)
+			{
+				_spawnedEffect = Instantiate(_effectPrefab, spawnPos, Quaternion.identity);
+				_effectSkeletonAnimation = _spawnedEffect.GetComponentInChildren<SkeletonAnimation>();
+
+				_effectSkeletonAnimation.AnimationState.Complete += entry => _animCompleted = true;
+				return _spawnedEffect;
+			}
+
+			_spawnedEffect.gameObject.SetActive(true);
+			_effectSkeletonAnimation.AnimationState.SetAnimation(0, "animation", false);
+			_spawnedEffect.transform.position = spawnPos;
+			return _spawnedEffect;
 		}
 
 		private List<Item> RemoveDuplicate(List<Item> items)
@@ -106,20 +132,9 @@ namespace Boosters
 		private IEnumerator TransformItems(List<Item> items)
 		{
 			LevelController.CanDrag = false;
-			
-			Transform magicWand = SpawnMagicWand();
-			yield return magicWand.DOMoveX(0, 0.3f).WaitForCompletion();
-			for (int i = 0; i < items.Count; i++)
-			{
-				LightningBoltScript lightning = Instantiate(_lightningPrefab);
-				lightning.StartObject = magicWand.gameObject;
-				lightning.EndObject = items[i].gameObject;
 
-				Destroy(lightning.gameObject, 0.5f);
-			}
-
-			yield return new WaitForSeconds(0.5f);
-			Destroy(magicWand.gameObject);
+			SpawnEffect();
+			yield return new WaitForSeconds(0.3f);
 
 			for (int i = 0; i < items.Count; i++)
 			{
@@ -128,13 +143,40 @@ namespace Boosters
 				item.gameObject.name = "CULAC " + time;
 			}
 
+			yield return CastLightnings(items, _spawnedEffect.gameObject);
+			yield return new WaitUntil(() => _animCompleted);
+
+			Vector2 movePos = new Vector2(CameraController.BottomLeft.x - 3, _spawnedEffect.position.y);
+			yield return _spawnedEffect.DOMove(movePos, 0.5f).WaitForCompletion();
+
+			_effectSkeletonAnimation.AnimationState.ClearTracks();
+			_spawnedEffect.gameObject.SetActive(false);
+
+
 			LevelController.CanDrag = true;
 		}
 
-		private Transform SpawnMagicWand()
+		private YieldInstruction CastLightnings(List<Item> items, GameObject startObject)
 		{
-			Vector2 spawnPos = CameraController.Camera.ViewportToWorldPoint(new Vector2(1.2f, 0.2f));
-			return Instantiate(_magicWandPrefab, spawnPos, Quaternion.identity);
+			const float duration = 0.45f;
+			for (int i = 0; i < items.Count; i++)
+			{
+				LightningBoltScript lightning = Instantiate(_lightningPrefab);
+				lightning.StartObject = startObject.gameObject;
+				lightning.EndObject = items[i].gameObject;
+
+				Instantiate(_hitEffect, items[i].transform.position, Quaternion.identity);
+
+				Destroy(lightning.gameObject, duration);
+			}
+
+			return new WaitForSeconds(duration);
+		}
+		
+		protected override bool IsBoosterUnlocked()
+		{
+			int highestPassedLevel = PlayerPrefs.GetInt("level", 0);
+			return highestPassedLevel >= 5;
 		}
 	}
 }

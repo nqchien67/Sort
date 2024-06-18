@@ -134,7 +134,7 @@ namespace MainMenu.PiggyBank
 		{
 			int piggyBankLevel = DataController.Instance.PiggyBankLevel - 1;
 			GameObject piggy = Instantiate(piggyBankPanelPrefab, MainMenuController.Instance.CameraCanvas);
-			
+
 			var piggyBankPanelController = piggy.GetComponent<PiggyBankPanel>();
 			piggyBankPanelController.ForceOpen = false;
 			piggyBankPanelController.Init(_iapDatas[piggyBankLevel]);
@@ -148,6 +148,11 @@ namespace MainMenu.PiggyBank
 			var piggyBankPanelController = piggy.GetComponent<PiggyBankPanel>();
 			piggyBankPanelController.ForceOpen = true;
 			piggyBankPanelController.Init(_iapDatas[piggyBankLevel]);
+		}
+
+		public void DisableFullText()
+		{
+			timeText.SetActive(false);
 		}
 	}
 

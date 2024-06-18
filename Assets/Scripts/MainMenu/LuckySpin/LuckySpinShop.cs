@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using MainMenu.LuckySpin;
 using UnityEngine;
 
 public class LuckySpinShop : MonoBehaviour

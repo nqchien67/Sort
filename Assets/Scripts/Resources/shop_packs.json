@@ -1,0 +1,230 @@
+{
+  "packs": [
+    {
+      "Id": "removeads",
+      "Price": 1.99,
+      "RewardTypes": [
+        "Coin"
+      ],
+      "Quantities": [
+        300
+      ]
+    },
+    {
+      "Id": "limitedpakage",
+      "Price": 2.99,
+      "RewardTypes": [
+        "Coin",
+        "HugeHammer",
+        "Time",
+        "DoublePoint",
+        "LittleHammer",
+        "MagicWand",
+        "FreezeTime",
+        "Refresh"
+      ],
+      "Quantities": [
+        2000,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2
+      ],
+      "Tag": "70% off"
+    },
+    {
+      "Id": "smallpack",
+      "Price": 6.99,
+      "RewardTypes": [
+        "Coin",
+        "HugeHammer",
+        "Time",
+        "DoublePoint",
+        "LittleHammer",
+        "MagicWand",
+        "FreezeTime",
+        "Refresh",
+        "Energy"
+      ],
+      "Quantities": [
+        3500,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        60
+      ]
+    },
+    {
+      "Id": "basicbundle",
+      "Price": 12.99,
+      "RewardTypes": [
+        "Coin",
+        "HugeHammer",
+        "Time",
+        "DoublePoint",
+        "LittleHammer",
+        "MagicWand",
+        "FreezeTime",
+        "Refresh",
+        "Energy"
+      ],
+      "Quantities": [
+        7000,
+        4,
+        4,
+        4,
+        4,
+        4,
+        4,
+        4,
+        180
+      ],
+      "Tag": "Best seller"
+    },
+    {
+      "Id": "greatbundle",
+      "Price": 24.99,
+      "RewardTypes": [
+        "Coin",
+        "HugeHammer",
+        "Time",
+        "DoublePoint",
+        "LittleHammer",
+        "MagicWand",
+        "FreezeTime",
+        "Refresh",
+        "Energy"
+      ],
+      "Quantities": [
+        15000,
+        8,
+        8,
+        8,
+        8,
+        8,
+        8,
+        8,
+        360
+      ]
+    },
+    {
+      "Id": "mightybundle",
+      "Price": 48.99,
+      "RewardTypes": [
+        "Coin",
+        "HugeHammer",
+        "Time",
+        "DoublePoint",
+        "LittleHammer",
+        "MagicWand",
+        "FreezeTime",
+        "Refresh",
+        "Energy"
+      ],
+      "Quantities": [
+        32000,
+        16,
+        16,
+        16,
+        16,
+        16,
+        16,
+        16,
+        720
+      ]
+    },
+    {
+      "Id": "superiorbundle",
+      "Price": 99.99,
+      "RewardTypes": [
+        "Coin",
+        "HugeHammer",
+        "Time",
+        "DoublePoint",
+        "LittleHammer",
+        "MagicWand",
+        "FreezeTime",
+        "Refresh",
+        "Energy"
+      ],
+      "Quantities": [
+        70000,
+        32,
+        32,
+        32,
+        32,
+        32,
+        32,
+        32,
+        1440
+      ]
+    },
+    {
+      "Id": "coin1",
+      "Price": 2.99,
+      "RewardTypes": [
+        "Coin"
+      ],
+      "Quantities": [
+        1000
+      ]
+    },
+    {
+      "Id": "coin2",
+      "Price": 4.99,
+      "RewardTypes": [
+        "Coin"
+      ],
+      "Quantities": [
+        2600
+      ]
+    },
+    {
+      "Id": "coin3",
+      "Price": 8.99,
+      "RewardTypes": [
+        "Coin"
+      ],
+      "Quantities": [
+        5500
+      ]
+    },
+    {
+      "Id": "coin4",
+      "Price": 14.99,
+      "RewardTypes": [
+        "Coin"
+      ],
+      "Quantities": [
+        12000
+      ]
+    },
+    {
+      "Id": "coin5",
+      "Price": 26.99,
+      "RewardTypes": [
+        "Coin"
+      ],
+      "Quantities": [
+        25000
+      ]
+    },
+    {
+      "Id": "coin6",
+      "Price": 69.99,
+      "RewardTypes": [
+        "Coin"
+      ],
+      "Quantities": [
+        65000
+      ]
+    }
+  ]
+}

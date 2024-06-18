@@ -16,19 +16,28 @@ namespace MainMenu.TopBar
 
 		private int _value;
 
-		public int Value
-		{
-			get => _value;
-			set
-			{
-				_value = value;
-			}
-		}
-
+		[SerializeField] private float _updateDuration = 0.3f;
+		
 		private void Start()
 		{
-			Text.text = DataController.Instance.Star.ToString();
 			_originalScale = Icon.transform.localScale;
+			UpdateValue();
+		}
+		
+		public void UpdateValue()
+		{
+			int currentValue = int.Parse(Text.text);
+			int endValue = DataController.Instance.Star;
+
+			if (_updateTween != null && _updateTween.IsActive())
+			{
+				_updateTween.Kill();
+				Icon.transform.localScale = _originalScale;
+			}
+
+			_updateTween = DOTween.Sequence()
+				.Join(Text.DOCounter(currentValue, endValue, _updateDuration, false))
+				.Join(Icon.transform.DOScale(_originalScale * 1.25f, 0.06f).SetLoops(2, LoopType.Yoyo));
 		}
 	}
 }

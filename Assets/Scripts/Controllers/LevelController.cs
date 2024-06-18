@@ -6,8 +6,14 @@ using Boosters;
 using Data;
 using DG.Tweening;
 using Gameplay;
+using InGame;
+using InGame.Gameplay;
+using MainMenu.CollectionTask;
+using MainMenu.TopCharts;
+using Spine.Unity;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using Utilities;
 using Item = Gameplay.Item;
 using Random = UnityEngine.Random;
 
@@ -30,7 +36,7 @@ namespace Controllers
 		public List<Shelf> LockedShelves;
 		public List<Sprite> RemainItemTypes;
 
-		public bool CanDrag = true;
+		public bool CanDrag;
 		public int LevelTime;
 		public bool DoubleStar;
 
@@ -38,11 +44,14 @@ namespace Controllers
 		public bool IsShowAds { get; set; }
 		private Coroutine _countDown;
 
-		private int _coin;
-		private int _star;
+		public int Coin;
+		public int Star;
 
 		protected LevelUIController Ui => LevelUIController.Instance;
 		private int _secondRemain;
+		public GameObject SortEffect;
+		public Prop StarProp;
+		public Prop CoinProp;
 
 		protected override void Awake()
 		{
@@ -53,21 +62,29 @@ namespace Controllers
 			string numberString = gameObject.scene.name.Substring(5);
 			LevelIndex = int.Parse(numberString);
 			LevelIndex--;
-			LevelData = DataController.Instance.LevelsData[LevelIndex];
+			LevelData = (LevelData)DataController.Instance.LevelsData[LevelIndex].Clone();
 		}
 
-		protected virtual void Start()
+		protected virtual IEnumerator Start()
 		{
 			_levelSetupManager = GetComponent<LevelSetupManager>();
 			_levelSetupManager.SetUpLevel();
-			LevelTime = CalculateTime();
+			yield return new WaitForSeconds(0.5f);
+			CanDrag = false;
 
-			if (StartBoosterController.Instance != null)
-				StartBoosterController.Instance.ActiveBooster();
-
-			_countDown = StartCoroutine(CountDown(LevelTime));
 			Ui.DisplayCoin(0);
 			Ui.DisplayStar(0);
+
+			LevelTime = CalculateTime();
+			Ui.RenderTimer(LevelTime);
+
+			if (StartBoosterController.Instance != null)
+				yield return StartCoroutine(StartBoosterController.Instance.ActiveBooster());
+			else
+				yield return null;
+
+			_countDown = StartCoroutine(CountDown(LevelTime));
+			CanDrag = true;
 		}
 
 		private void RefreshShelfList()
@@ -94,10 +111,10 @@ namespace Controllers
 			if (LockedShelves == null || LockedShelves.Count <= 0)
 				return;
 
-			LockedShelves[0].Lock.Number--;
+			LockedShelves[0].Lock.ReduceLocksNumber();
 			if (LockedShelves[0].Lock.Number <= 0)
 			{
-				LockedShelves[0].Lock.Remove();
+				// LockedShelves[0].Lock.Remove();
 				LockedShelves.RemoveAt(0);
 			}
 		}
@@ -110,7 +127,6 @@ namespace Controllers
 			var waitForASecond = new WaitForSeconds(1);
 
 			_secondRemain = totalSeconds;
-			Ui.RenderTimer(_secondRemain);
 			while (enabled)
 			{
 				yield return waitForASecond;
@@ -128,15 +144,18 @@ namespace Controllers
 			}
 		}
 
-		public void CheckFull()
+		public virtual void CheckFull()
 		{
-			foreach (var shelf in Shelves)
+			StartCoroutine(CommonIEnumerator.WaitForFrames(1, () =>
 			{
-				if (shelf.FrontLayer.ItemsCount < 3)
-					return;
-			}
+				foreach (var shelf in Shelves)
+				{
+					if (shelf.FrontLayer.ItemsCount < 3)
+						return;
+				}
 
-			Lose();
+				Lose();
+			}));
 		}
 
 		public void CheckClear()
@@ -158,6 +177,7 @@ namespace Controllers
 			if (_isGameEnd)
 				return;
 			_isGameEnd = true;
+			CanDrag = false;
 
 			StopCoroutine(_countDown);
 
@@ -166,28 +186,50 @@ namespace Controllers
 			if (currentLevel > DataController.Instance.LevelsData.Length - 1)
 				currentLevel = 0;
 			PlayerPrefs.SetInt("level", currentLevel);
-			StartCoroutine(GameManager.WaiForSeconds(0.5f, () => Ui.ShowWinPanel()));
+			StartCoroutine(CommonIEnumerator.WaiForSeconds(0.5f, () => Ui.ShowWinPanel()));
+			GainReward();
 
-			SaveData();
+			int prevPoint = PlayerPrefs.GetInt("PointUser", 0);
+			PlayerPrefs.SetInt("PointUser", prevPoint + Star);
+			PlayerPrefs.SetInt("PrevPointUser", prevPoint);
+
+			TopChartsPlayerDataManager.Instance.UpdateRank();
+
+			int currentFreeItemProgress = PlayerPrefs.GetInt("FreeItemProgress", 0);
+			currentFreeItemProgress = Mathf.Min(currentFreeItemProgress + 1, 5);
+			PlayerPrefs.SetInt("FreeItemProgress", currentFreeItemProgress);
+
+			if (LevelData.IsHardLevel() && IsReducedDifficulty())
+				PlayerPrefs.SetInt("ReducedDifficulty", 0);
+
+			CollectionTaskHandle();
 		}
 
-		private void SaveData()
-		{
-			int coin = PlayerPrefs.GetInt("coin", 0);
-			int star = PlayerPrefs.GetInt("star", 0);
-
-			coin += _coin;
-			star += star;
-			PlayerPrefs.SetInt("coin", coin);
-			PlayerPrefs.SetInt("star", star);
-		}
-
-		private void Lose()
+		protected void Lose()
 		{
 			if (_isGameEnd)
 				return;
+
 			_isGameEnd = true;
-			StartCoroutine(GameManager.WaiForSeconds(1, () => Ui.ShowLosePanel()));
+			CanDrag = false;
+			StopCoroutine(_countDown);
+
+			if (LevelData.IsHardLevel() && !IsReducedDifficulty())
+				PlayerPrefs.SetInt("ReducedDifficulty", 1);
+
+			StartCoroutine(CommonIEnumerator.WaiForSeconds(1, () => Ui.ShowLosePanel()));
+		}
+
+		private void GainReward()
+		{
+			DataController.Instance.IncreaseOneEnergy();
+			if (LevelData.IsHardLevel())
+				Coin += IsReducedDifficulty() ? 25 : 50;
+
+			DataController.Instance.Coin += Coin;
+			DataController.Instance.Star += Star;
+
+			DataController.Instance.SaveData();
 		}
 
 		private void OnApplicationPause(bool pause)
@@ -219,18 +261,23 @@ namespace Controllers
 
 		protected virtual void AddCoin(int amount)
 		{
-			_coin += amount;
-			Ui.DisplayCoin(_coin);
+			Coin += amount;
+			Ui.DisplayCoin(Coin);
 		}
 
 		protected virtual void AddStar(int amount)
 		{
-			_star += amount;
-			Ui.DisplayStar(_star);
+			Star += amount;
+			Ui.DisplayStar(Star);
+		}
+
+		public void AddTime(int amount)
+		{
 		}
 
 		private int _currentCombo;
 		private Coroutine _comboTimer;
+		private int _highestCombo;
 
 		public virtual void GainScore()
 		{
@@ -238,6 +285,8 @@ namespace Controllers
 
 			_currentCombo++;
 			_currentCombo = Mathf.Min(_currentCombo, DataController.Instance.CombosData.Length);
+
+			if (_highestCombo < _currentCombo) _highestCombo = _currentCombo;
 
 			int comboStar = DataController.Instance.CombosData[_currentCombo - 1].Star;
 
@@ -275,7 +324,25 @@ namespace Controllers
 
 		public void GoHome()
 		{
-			SceneManager.LoadScene("MainScene");
+			SceneController.Instance.LoadScene("MainScene");
+		}
+
+		public static bool IsReducedDifficulty() => PlayerPrefs.GetInt("ReducedDifficulty", 0) > 0;
+
+		private void CollectionTaskHandle()
+		{
+			var cTController = CollectionTaskController.Instance;
+			if (!cTController.IsStarted)
+				return;
+
+			if (cTController.Current.Type == TaskType.Star)
+			{
+				cTController.AddProgress(Star);
+			}
+			else if (cTController.Current.Type == TaskType.Combo)
+			{
+				cTController.AddProgress(_highestCombo);
+			}
 		}
 	}
 }

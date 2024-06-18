@@ -1,0 +1,206 @@
+﻿using System;
+using System.Collections;
+using System.Collections.Generic;
+using Controllers;
+using DG.Tweening;
+using InGame;
+using InGame.Gameplay;
+using Spine.Unity;
+using UnityEngine;
+using UnityEngine.Jobs;
+using Utilities;
+
+namespace Gameplay
+{
+	public class Item : MonoBehaviour, IDraggable
+	{
+		public bool IsMoving;
+
+		public string Type;
+		public Sprite Sprite;
+
+		[HideInInspector] public SpriteRenderer Renderer;
+		private Collider2D _collider;
+
+		protected List<Shelf> _touchingShelves = new List<Shelf>();
+		private int _originIndex;
+		protected ItemLayer _originLayer;
+
+		public Vector3 Position
+		{
+			get => transform.position;
+			set => transform.position = value;
+		}
+
+		public Vector3 LocalPosition
+		{
+			get => transform.localPosition;
+			set => transform.localPosition = value;
+		}
+
+		public ItemLayer Layer
+		{
+			get => _layer;
+			set
+			{
+				if (value == null)
+				{
+					Debug.Log("oi doi oi");
+					return;
+				}
+
+				transform.parent = value.transform;
+				_layer = value;
+			}
+		}
+
+		private ItemLayer _layer;
+
+		private LevelController LevelController => LevelController.Instance;
+
+		private void Awake()
+		{
+			Renderer = GetComponent<SpriteRenderer>();
+			_collider = GetComponent<Collider2D>();
+			_collider.enabled = false;
+		}
+
+		public void Init(Sprite sprite)
+		{
+			SetSprite(sprite);
+			gameObject.name = Type;
+		}
+
+		public void SetSprite(Sprite sprite)
+		{
+			Type = sprite.name;
+			Sprite = sprite;
+			Renderer.sprite = sprite;
+		}
+
+		public void Active(bool active)
+		{
+			_collider.enabled = active;
+			Renderer.material = active ? LevelController.NormalMaterial : LevelController.DisabledMaterial;
+		}
+
+		public virtual void OnStartDrag()
+		{
+			IsMoving = true;
+			_touchingShelves.Add(_layer.Shelf);
+			_originLayer = _layer;
+			_originIndex = Array.IndexOf(_layer.Items, this);
+			_layer.RemoveItem(this);
+			transform.parent = null;
+
+			Renderer.sortingOrder = 1;
+		}
+
+		public virtual bool CanDrag()
+		{
+			return !_layer.Shelf.IsLocked && LevelController.CanDrag;
+		}
+
+		public virtual void OnEndDrag()
+		{
+			IsMoving = false;
+			if (_touchingShelves == null || _touchingShelves.Count == 0)
+			{
+				MoveBack();
+				return;
+			}
+
+			var closetShelf = GetClosetShelf();
+			if (closetShelf.CanTakeItem())
+			{
+				closetShelf.TakeItem(this);
+				_originLayer.CheckShouldDestroy();
+
+				LevelController.Instance.CheckFull();
+			}
+			else
+				MoveBack();
+
+			_touchingShelves.Clear();
+		}
+
+		protected void MoveBack()
+		{
+			_originLayer.MoveItemToIndex(this, _originIndex);
+		}
+
+		public YieldInstruction LocalMove(Vector3 position, float duration)
+		{
+			return transform.DOLocalMove(position, duration)
+				.OnComplete(() => Renderer.sortingOrder = 0)
+				.WaitForCompletion();
+		}
+
+		protected Shelf GetClosetShelf()
+		{
+			Shelf nearestShelf = _touchingShelves[0];
+			float nearestDistance = Vector2.Distance(Position, nearestShelf.Position);
+
+			for (int i = 1; i < _touchingShelves.Count; i++)
+			{
+				var shelf = _touchingShelves[i];
+				float distance = Vector2.Distance(Position, shelf.Position);
+				if (distance < nearestDistance)
+				{
+					nearestShelf = shelf;
+					nearestDistance = distance;
+				}
+			}
+
+			return nearestShelf;
+		}
+
+		public bool Equals(Item item2)
+		{
+			return Type == item2.Type;
+		}
+
+		private void OnTriggerEnter2D(Collider2D other)
+		{
+			if (IsMoving && other.TryGetComponent(out Shelf shelf))
+			{
+				_touchingShelves.Add(shelf);
+			}
+		}
+
+		private void OnTriggerExit2D(Collider2D other)
+		{
+			if (other.TryGetComponent(out Shelf shelf))
+			{
+				_touchingShelves.Remove(shelf);
+			}
+		}
+
+		public IEnumerator Disappear()
+		{
+			_collider.enabled = false;
+
+			Vector3 newScale = new Vector3(1.3f, 1.3f, 0);
+			transform.DOScale(newScale, 0.3f).SetEase(Ease.InBack);
+			yield return new WaitForSeconds(0.05f);
+			Renderer.DOFade(0, 0.2f).SetEase(Ease.InCubic);
+			yield return new WaitForSeconds(0.05f);
+			var effect = Instantiate(LevelController.Instance.SortEffect, Position, Quaternion.identity);
+			SpawnProps();
+
+			// bool animCompleted = false;
+			// effect.AnimationState.Complete += entry => animCompleted = true;
+			// yield return new WaitUntil(() => animCompleted);
+			yield return new WaitForSeconds(0.5f);
+			// Destroy(effect.gameObject);
+			Destroy(gameObject);
+		}
+
+		private void SpawnProps()
+		{
+			Prop starProp = Instantiate(LevelController.Instance.StarProp, Position, Quaternion.identity);
+			starProp.Init(LevelUIController.Instance.StarIcon.position,
+				() => LevelUIController.Instance.BlinkStarIcon());
+		}
+	}
+}

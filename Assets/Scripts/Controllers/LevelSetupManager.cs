@@ -4,7 +4,11 @@ using System.Collections.Generic;
 using System.Linq;
 using Data;
 using Gameplay;
+using InGame.Gameplay;
+using MainMenu.TopCharts;
+using UnityEditor;
 using UnityEngine;
+using Utilities;
 using Item = Gameplay.Item;
 using Random = UnityEngine.Random;
 
@@ -12,7 +16,7 @@ namespace Controllers
 {
 	public class LevelSetupManager : MonoBehaviour
 	{
-		private SkinCollection _skinCollection;
+		private SkinManager _skinManager;
 
 		private LevelData LevelData => LevelController.Instance.LevelData;
 		protected Shelf[] Shelves => LevelController.Instance.Shelves;
@@ -29,9 +33,12 @@ namespace Controllers
 
 		public virtual void SetUpLevel()
 		{
-			_skinCollection = SkinCollection.Instance;
-			_skinCollection.InitUnplacedItems(LevelData.ItemTypes, LevelData.id);
-			LevelController.Instance.RemainItemTypes = _skinCollection._unplacedItems;
+			if (LevelData.IsHardLevel() && LevelController.IsReducedDifficulty())
+				ReduceDifficult();
+
+			_skinManager = SkinManager.Instance;
+			_skinManager.InitUnplacedItems(LevelData.ItemTypes, LevelData.id);
+			LevelController.Instance.RemainItemTypes = _skinManager._unplacedItems;
 
 			SetUpLocks();
 
@@ -43,13 +50,7 @@ namespace Controllers
 			foreach (var shelf in Shelves)
 				shelf.RenderLayers();
 
-			var itemCount = new List<Item>();
-			foreach (var s in Shelves)
-			{
-				itemCount.AddRange(s.GetAllItems());
-			}
-
-			Debug.Log(itemCount.Count); 
+			_skinManager.SetShelfAndBackgroundSkin(Shelves);
 		}
 
 		private void SetUpItems()
@@ -75,7 +76,7 @@ namespace Controllers
 			fixedItems = new List<Item>();
 			for (int i = 0; i < 2; i++)
 			{
-				Sprite itemSprite = _skinCollection.GetNextUnplacedItem();
+				Sprite itemSprite = _skinManager.GetNextUnplacedItem();
 
 				for (int j = 0; j < 3; j++)
 				{
@@ -106,13 +107,14 @@ namespace Controllers
 			cloneShelfIndexPairs = ShuffleList(shelfIndexPairs);
 
 			int unknownItems = 0;
-			if (LevelData.UnknownItem)
-				unknownItems = Random.Range(6, 16);
+			if (LevelData.HaveUnknownItems)
+				unknownItems = CalculateUnknownItemsNumber();
+
 			float probabilityIsUnknown = (float)unknownItems / LevelData.ItemTypes;
 
-			while (_skinCollection._unplacedItems.Count > 2)
+			while (_skinManager._unplacedItems.Count > 2)
 			{
-				Sprite itemSprite = _skinCollection.GetNextUnplacedItem();
+				Sprite itemSprite = _skinManager.GetNextUnplacedItem();
 				Item item = null;
 
 				for (int i = 0; i < 3; i++)
@@ -135,7 +137,6 @@ namespace Controllers
 					cloneShelfIndexPairs = ShuffleList(shelfIndexPairs);
 				}
 
-// anh chiến ăn cứt 
 				if (unknownItems <= 0 || Random.value >= probabilityIsUnknown || item == null)
 					continue;
 				item.Renderer.material = LevelController.Instance.UnknownMaterial;
@@ -143,6 +144,19 @@ namespace Controllers
 			}
 
 			// yield return null;
+		}
+
+		private int CalculateUnknownItemsNumber()
+		{
+			Range number = new Range(6, 10);
+
+			if (!LevelData.IsHardLevel())
+				return number.GetRandomValue();
+
+			if (LevelController.IsReducedDifficulty())
+				return number.Max - 3;
+
+			return number.Max;
 		}
 
 		private void CalculateMaxItemPerLayer()
@@ -191,8 +205,13 @@ namespace Controllers
 				}
 			}
 
+			if (this is FallingLevelSetupManager)
+				LevelController.Instance.Shelves = ToolHelper.RemoveNulls(Shelves);
+
 			foreach (var shelf in Shelves)
+			{
 				shelf.RenderLayers();
+			}
 		}
 
 		private void PlaceItemsShuffle(List<ShelfIndexPair> shelfIndexPairs, List<Item> refreshItems)
@@ -211,7 +230,8 @@ namespace Controllers
 						GetValidShelfIndexPair(item.Sprite, cloneShelfIndexPairs, currentLayer);
 
 					var layer = shelfIndexPair.Shelf.Layers[currentLayer];
-					layer.PlaceItemAtIndex(item, shelfIndexPair.Index);
+					// layer.PlaceItemAtIndex(item, shelfIndexPair.Index);
+					layer.MoveItemToIndex(item, shelfIndexPair.Index);
 					count++;
 
 					if (count < _maxItemPerLayer)
@@ -236,7 +256,8 @@ namespace Controllers
 					GetValidShelfIndexPair2(item.Sprite, cloneShelfIndexPairs, currentLayer);
 
 				var layer = shelfIndexPair.Shelf.Layers[currentLayer];
-				layer.PlaceItemAtIndex(item, shelfIndexPair.Index);
+				// layer.PlaceItemAtIndex(item, shelfIndexPair.Index);
+				layer.MoveItemToIndex(item, shelfIndexPair.Index);
 
 				fixedItems.Add(item);
 			}
@@ -376,11 +397,16 @@ namespace Controllers
 			}
 		}
 
+		private void ReduceDifficult()
+		{
+			LevelData.ItemTypes -= 3;
+			LevelData.LockShelves = Mathf.Max(2, LevelData.LockShelves - 1);
+		}
+
 		private static List<T> ShuffleList<T>(List<T> list)
 		{
 			return list.OrderBy(_ => Random.value).ToList();
 		}
-
 
 		[Serializable]
 		public class ShelfIndexPair

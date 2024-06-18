@@ -1,7 +1,9 @@
 ﻿using System.Diagnostics;
 using Boosters.Start;
+using Data;
 using DG.Tweening;
 using MainMenu;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -16,10 +18,16 @@ namespace Boosters
 
 		[SerializeField] private Button _selectButton;
 		[SerializeField] private GameObject _arrow;
+		[SerializeField] private TextMeshProUGUI _description;
 
 		private void Awake()
 		{
 			_unlockBoosterPanel.Data = _booster.Data;
+			if (DataController.Instance.GetBoosterQuantity(_unlockBoosterPanel.Data.Type) < 3)
+			{
+				DataController.Instance.AddBooster(_unlockBoosterPanel.Data.Type, 3);
+				DataController.Instance.SaveData();
+			}
 		}
 
 		private void Start()
@@ -29,6 +37,7 @@ namespace Boosters
 				_unlockBoosterPanel.OnClickClaim += OnClickClaimBooster;
 				_unlockBoosterPanel.Show();
 				// _booster.gameObject.SetActive(false);
+				_description.text = _unlockBoosterPanel.Data.Description;
 			}
 			else
 			{
@@ -57,7 +66,7 @@ namespace Boosters
 
 		public void OnClickContinue()
 		{
-			FindObjectOfType<StartLevelPopup>().OnClickPlayButton();
+			FindObjectOfType<StartLevelPanel>().OnClickPlayButton();
 			PlayerPrefs.SetInt(gameObject.name, 1);
 		}
 	}

@@ -126,7 +126,7 @@ namespace MainMenu.PiggyBank
 			StartCoroutine(DelayClaimReward());
 		}
 
-		IEnumerator DelayClaimReward()
+		private IEnumerator DelayClaimReward()
 		{
 			pigAnimator.AnimationState.SetAnimation(1, "jumpin", false);
 			yield return new WaitForSeconds(1.5f);
@@ -143,7 +143,9 @@ namespace MainMenu.PiggyBank
 			DataController.Instance.PiggyBankCoin = 0;
 			DataController.Instance.PiggyBankLevel++;
 			DataController.Instance.SaveData();
-			FindObjectOfType<PiggyBankController>().SetupData();
+			
+			PiggyBankController piggyBankController = FindObjectOfType<PiggyBankController>();
+			piggyBankController.SetupData();
 			// APIController.Instance.LogEventEarnRuby(ruby, "buy_IAP");
 			// CookingIAPButton iapBtn;
 			// if (fullPiggyPanel.activeSelf == true)
@@ -159,6 +161,8 @@ namespace MainMenu.PiggyBank
 			{
 				PlayerPrefs.SetInt("isShowFullPiggy", 0);
 			}
+			
+			piggyBankController.DisableFullText();
 		}
 
 		public void OnClickInforBtn()

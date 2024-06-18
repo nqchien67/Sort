@@ -1,50 +1,67 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using Boosters;
 using Data;
 using DG.Tweening;
 using MainMenu;
+using MainMenu.CollectionTask;
 using MainMenu.DailyReward;
 using TMPro;
 using UI;
+using UI.MainMenu;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.SceneManagement;
+using Utilities;
+using Random = UnityEngine.Random;
 
 namespace Controllers
 {
 	public class MainMenuController : SingletonCore<MainMenuController>
 	{
 		[SerializeField] private TMP_InputField _levelInput;
-		[SerializeField] private StartLevelPopup _startLevelPopup;
+		[SerializeField] private StartLevelPanel startLevelPanel;
 		[SerializeField] private TextMeshProUGUI _buttonPlayText;
 
 		[Header("Top Bar")] [SerializeField] private Transform _coinIcon;
 
 		[Header("Props")] [SerializeField] private Transform _coinPropPrefab;
+		[SerializeField] private RewardProp _rewardPropPrefab;
 
 		[Header("Tutorials")] [SerializeField] private StartBoosterTutorial _hugeHammerTutorial;
 		[SerializeField] private StartBoosterTutorial _addTimeTutorial;
 		[SerializeField] private StartBoosterTutorial _doublePointTutorial;
 		[SerializeField] private CommonTutorial _luckySpinTutorial;
 		[SerializeField] private CommonTutorial _piggyBankTutorial;
+		[SerializeField] private CommonTutorial _endlessTreasureTutorial;
 
 		[Space] [SerializeField] private DailyRewardController _dailyRewardController;
-		[SerializeField] private UnlockNewItemPanel _unlockNewItemPanelPrefab;
 
 		public Transform CameraCanvas;
 
-		private int _highestPassedLevel;
+		public int HighestPassedLevel;
 		private int _nextLevel;
 		[HideInInspector] public bool HardLevelComing;
 
+		public UnityAction<int> OnStartLevelAction;
+
+		protected override void Awake()
+		{
+			HighestPassedLevel = DataController.Instance.HighestPassedLevel;
+			base.Awake();
+			// PlayerPrefs.SetInt("ReducedDifficulty", 0);
+		}
+
 		private void Start()
 		{
-			_highestPassedLevel = PlayerPrefs.GetInt("level", 0);
-			_nextLevel = _highestPassedLevel + 1;
+			_nextLevel = HighestPassedLevel + 1;
 			_buttonPlayText.text = "LEVEL " + _nextLevel;
 
-			HardLevelComing = _nextLevel % 5 == 0 && _highestPassedLevel > 5;
+			HardLevelComing = _nextLevel % 5 == 0 && HighestPassedLevel > 5;
 
 			DataController.Instance.SaveData();
+
+			OnStartLevelAction += OnStartLevel; 
 			DisplayMenuPanel();
 		}
 
@@ -52,11 +69,8 @@ namespace Controllers
 		{
 			if (_dailyRewardController.ShouldShowPanel())
 				_dailyRewardController.ShowDailyRewardPanel();
-			else if (_highestPassedLevel % 5 == 0 &&
-			         _highestPassedLevel / 5 > SkinDataController.Instance.UnlockedItemSkinsCount)
-				Instantiate(_unlockNewItemPanelPrefab, CameraCanvas);
 			else
-				switch (_highestPassedLevel)
+				switch (HighestPassedLevel)
 				{
 					case 2:
 						OnClickPlay();
@@ -70,62 +84,65 @@ namespace Controllers
 						if (_luckySpinTutorial != null)
 							_piggyBankTutorial.gameObject.SetActive(true);
 						break;
+					case 12:
+						if (_endlessTreasureTutorial != null)
+							_endlessTreasureTutorial.gameObject.SetActive(true);
+						break;
 				}
 		}
 
 		public void OnClickPlay()
 		{
-			_startLevelPopup.Show();
+			startLevelPanel.Show();
 
-			if (_highestPassedLevel == 4)
+			if (HighestPassedLevel == 4 && _addTimeTutorial != null)
 				_addTimeTutorial.gameObject.SetActive(true);
 
-			if (_highestPassedLevel == 6)
+			if (HighestPassedLevel == 6 && _doublePointTutorial != null)
 				_doublePointTutorial.gameObject.SetActive(true);
 		}
 
 		public void Play()
 		{
-			string text = _levelInput.text;
-			if (int.TryParse(text, out int level) && level >= 1)
-				PlayerPrefs.SetInt("level", _highestPassedLevel);
+			if (DataController.Instance.TryUseEnergy())
+			{
+				string text = _levelInput.text;
+				if (int.TryParse(text, out int level) && level >= 1)
+					PlayerPrefs.SetInt("level", HighestPassedLevel);
+				else
+					level = HighestPassedLevel + 1;
+
+				SceneController.Instance.LoadScene("Level" + level);
+				OnStartLevelAction?.Invoke(level);
+			}
 			else
-				level = _highestPassedLevel + 1;
-
-			SceneManager.LoadScene("Level" + level);
+				EnergyController.Instance.OpenBuyEnergyPanel();
 		}
 
-		public void StartIncreaseCoin(Vector3 spawnPos, int totalCoin)
+		public void PlayClaimCoinEffect(Vector3 spawnPos)
 		{
-			StartCoroutine(IncreaseCoin(spawnPos, totalCoin));
+			StartCoroutine(IncreaseCoin(spawnPos));
 		}
 
-		private IEnumerator IncreaseCoin(Vector3 spawnPos, int totalCoin)
+		private IEnumerator IncreaseCoin(Vector3 spawnPos)
 		{
 			// isLockUpdateData = true;
-			// tmpGold = targetCoin;
-			int[] coins = new int[5];
-			int averageGold = totalCoin / 5;
-			for (int i = 0; i < 4; i++)
-				coins[i] = averageGold;
 
-			coins[4] = totalCoin - averageGold * 4;
 			for (int i = 0; i < 5; i++)
 			{
-				int rewardCoin = coins[i];
-				StartCoroutine(CoinPropEffect(spawnPos, rewardCoin));
+				StartCoroutine(CoinPropEffect(spawnPos));
 
 				yield return new WaitForSeconds(0.06f);
 			}
 			// isLockUpdateData = false;
 		}
 
-		private IEnumerator CoinPropEffect(Vector3 spawnPos, int rewardCoin)
+		private IEnumerator CoinPropEffect(Vector3 spawnPos)
 		{
 			Transform coin = Instantiate(_coinPropPrefab, spawnPos + new Vector3(0, 0, -0.1f), Quaternion.identity);
 			Vector3 targetPosition = coin.transform.position +
 			                         new Vector3(Random.Range(-1.3f, 1.3f), Random.Range(-1.3f, 1.3f), 0);
-			Vector3 coinIconPos = _coinIcon.position;
+			Vector3 coinIconPos = MainMenuUIController.Instance.Coin.IconPosition;
 			yield return coin.DOMove(targetPosition, 0.75f)
 				.SetEase(Ease.OutQuint)
 				.WaitForCompletion();
@@ -138,6 +155,23 @@ namespace Controllers
 			MainMenuUIController.Instance.Coin.UpdateValue();
 			// goldTimeStamp = Time.time;
 			Destroy(coin.gameObject);
+		}
+
+		public void PlayClaimRewardEffect(RewardType rewardType, Vector3 spawnPos)
+		{
+			var position = spawnPos;
+			RewardProp prop = Instantiate(_rewardPropPrefab, position, Quaternion.identity, CameraCanvas);
+			prop.Init(rewardType);
+
+			StartCoroutine(CommonIEnumerator.IMove(prop.gameObject, MainMenuUIController.Instance.Avatar.Position, 1));
+		}
+		
+		private void OnStartLevel(int level)
+		{
+			// if (level == 4)
+			// {
+			// 	CollectionTaskController.Instance.
+			// }
 		}
 	}
 }

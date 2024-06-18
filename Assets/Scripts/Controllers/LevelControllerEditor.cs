@@ -1,5 +1,6 @@
 ﻿#if UNITY_EDITOR
 using System.Collections.Generic;
+using InGame.Gameplay;
 using UnityEditor;
 using UnityEngine;
 

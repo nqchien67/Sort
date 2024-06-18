@@ -1,0 +1,113 @@
+{
+"skeleton": {
+	"hash": "gEi82t1rAoz80fF1ojsblf78dfk",
+	"spine": "3.8.99",
+	"x": -71.42,
+	"y": -41.48,
+	"width": 142,
+	"height": 139,
+	"images": "./images/",
+	"audio": "D:/A_GAMING-LINH TINH/ANIMATION/minigame Good sort/2/icon booster"
+},
+"bones": [
+	{ "name": "root" },
+	{ "name": "heart", "parent": "root", "length": 83.45, "rotation": 89.23, "x": 0.4, "y": -19.63 },
+	{ "name": "heart2", "parent": "root", "length": 83.45, "rotation": 89.23, "x": 0.4, "y": -19.63 }
+],
+"slots": [
+	{ "name": "heart", "bone": "heart", "attachment": "heart" },
+	{ "name": "heart2", "bone": "heart2", "color": "ffffff00", "attachment": "heart", "blend": "additive" }
+],
+"skins": [
+	{
+		"name": "coin",
+		"attachments": {
+			"heart": {
+				"heart": { "name": "Coin", "x": 47.63, "y": 1.46, "rotation": -89.23, "width": 127, "height": 128 }
+			},
+			"heart2": {
+				"heart": { "name": "Coin", "x": 47.63, "y": 1.46, "rotation": -89.23, "width": 127, "height": 128 }
+			}
+		}
+	},
+	{
+		"name": "coin x2",
+		"attachments": {
+			"heart": {
+				"heart": { "name": "Coin x2", "x": 47.63, "y": 1.46, "rotation": -89.23, "width": 127, "height": 128 }
+			},
+			"heart2": {
+				"heart": { "name": "Coin x2", "x": 47.63, "y": 1.46, "rotation": -89.23, "width": 127, "height": 128 }
+			}
+		}
+	},
+	{
+		"name": "gift",
+		"attachments": {
+			"heart": {
+				"heart": { "name": "gift", "x": 47.63, "y": 1.46, "rotation": -89.23, "width": 142, "height": 139 }
+			},
+			"heart2": {
+				"heart": { "name": "gift", "x": 47.63, "y": 1.46, "rotation": -89.23, "width": 142, "height": 139 }
+			}
+		}
+	},
+	{
+		"name": "heart",
+		"attachments": {
+			"heart": {
+				"heart": { "x": 47.63, "y": 1.46, "rotation": -89.23, "width": 143, "height": 119 }
+			},
+			"heart2": {
+				"heart": { "x": 47.63, "y": 1.46, "rotation": -89.23, "width": 143, "height": 119 }
+			}
+		}
+	},
+	{
+		"name": "star x2",
+		"attachments": {
+			"heart": {
+				"heart": { "name": "star x2", "x": 47.63, "y": 1.46, "rotation": -89.23, "width": 152, "height": 139 }
+			},
+			"heart2": {
+				"heart": { "name": "star x2", "x": 47.63, "y": 1.46, "rotation": -89.23, "width": 152, "height": 139 }
+			}
+		}
+	}
+],
+"animations": {
+	"animation": {
+		"slots": {
+			"heart2": {
+				"color": [
+					{ "color": "ffffff00", "curve": 0.25, "c3": 0.75 },
+					{ "time": 0.3333, "color": "ffffff82", "curve": 0.25, "c3": 0.75 },
+					{ "time": 0.6667, "color": "ffffff00", "curve": 0.25, "c3": 0.75 },
+					{ "time": 1.3333, "color": "ffffff31", "curve": 0.25, "c3": 0.75 },
+					{ "time": 2, "color": "ffffff00" }
+				]
+			}
+		},
+		"bones": {
+			"heart": {
+				"scale": [
+					{ "curve": 0.25, "c3": 0.75 },
+					{ "time": 0.3333, "x": 1.05, "y": 1.05, "curve": 0.25, "c3": 0.75 },
+					{ "time": 0.6667, "curve": 0.25, "c3": 0.75 },
+					{ "time": 1.3333, "x": 1.05, "y": 1.05, "curve": 0.25, "c3": 0.75 },
+					{ "time": 2 }
+				]
+			},
+			"heart2": {
+				"scale": [
+					{ "curve": 0.25, "c3": 0.75 },
+					{ "time": 0.3333, "x": 1.05, "y": 1.05, "curve": 0.25, "c3": 0.75 },
+					{ "time": 0.6667, "curve": 0.25, "c3": 0.75 },
+					{ "time": 1.3333, "x": 1.05, "y": 1.05, "curve": 0.25, "c3": 0.75 },
+					{ "time": 2 }
+				]
+			}
+		}
+	}
+}
+}

@@ -17,6 +17,7 @@ public class TouchManager : MonoBehaviour
 	[SerializeField] private float _dragSmoothTime;
 
 	public Vector2 TouchPosition => _camera.ScreenToWorldPoint(_touchPositionAction.ReadValue<Vector2>());
+	public Vector2 log;
 
 	private Vector2 _currentVelocity = Vector2.zero;
 
@@ -45,6 +46,8 @@ public class TouchManager : MonoBehaviour
 		    EventSystem.current.currentSelectedGameObject == null)
 		{
 			draggable.OnStartDrag();
+			_currentVelocity = Vector2.zero;
+			// _clickedTransform = hit.transform;
 			StartCoroutine(DragUpdate(hit.transform));
 		}
 	}
@@ -57,10 +60,14 @@ public class TouchManager : MonoBehaviour
 			yield return waitForEndOfFrame;
 			clickedTransform.position = Vector2.SmoothDamp(clickedTransform.position, TouchPosition,
 				ref _currentVelocity, _dragSmoothTime);
-			// yield return null;
 		}
 
 		if (clickedTransform.TryGetComponent(out IDraggable draggable))
 			draggable.OnEndDrag();
+	}
+
+	private void Update()
+	{
+		log = TouchPosition;
 	}
 }

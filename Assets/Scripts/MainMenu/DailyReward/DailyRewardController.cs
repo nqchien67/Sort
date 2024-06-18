@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Controllers;
 using UnityEngine;
 
@@ -12,7 +13,8 @@ namespace MainMenu.DailyReward
 
 		private void Start()
 		{
-			_isPassLevel4 = PlayerPrefs.GetInt("level", 0) >= 4;
+			_isPassLevel4 = MainMenuController.Instance.HighestPassedLevel >= 4;
+			_isPassLevel4 = false;
 			_dailyRewardButton.SetActive(_isPassLevel4);
 		}
 
@@ -28,7 +30,7 @@ namespace MainMenu.DailyReward
 
 		public void ShowDailyRewardPanel()
 		{
-		 	Instantiate(_dailyRewardPanelPrefab, MainMenuController.Instance.CameraCanvas);
+			Instantiate(_dailyRewardPanelPrefab, MainMenuController.Instance.CameraCanvas);
 		}
 
 		public static bool CanClaimReward()
@@ -37,5 +39,18 @@ namespace MainMenu.DailyReward
 			bool isClaimed = _lastRewardDay == DateTime.Now.DayOfYear;
 			return !isClaimed;
 		}
+	}
+
+	[Serializable]
+	public class Reward
+	{
+		public string[] RewardTypes;
+		public int[] Quantities;
+	}
+
+	[Serializable]
+	public class DailyRewardObjects
+	{
+		[SerializeField] public List<Reward> DailyReward;
 	}
 }

@@ -1,0 +1,41 @@
+
+icon booster.png
+size: 668,148
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+Coin
+  rotate: false
+  xy: 412, 17
+  size: 125, 126
+  orig: 127, 128
+  offset: 1, 1
+  index: -1
+Coin x2
+  rotate: false
+  xy: 539, 17
+  size: 125, 126
+  orig: 127, 128
+  offset: 1, 1
+  index: -1
+gift
+  rotate: true
+  xy: 154, 3
+  size: 140, 137
+  orig: 142, 139
+  offset: 1, 1
+  index: -1
+heart
+  rotate: true
+  xy: 293, 2
+  size: 141, 117
+  orig: 143, 119
+  offset: 1, 1
+  index: -1
+star x2
+  rotate: false
+  xy: 2, 6
+  size: 150, 137
+  orig: 152, 139
+  offset: 1, 1
+  index: -1

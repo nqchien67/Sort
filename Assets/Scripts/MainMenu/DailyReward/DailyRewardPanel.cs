@@ -35,7 +35,7 @@ namespace MainMenu.DailyReward
 		{
 			_maxFillBarLength = _progressFill.rectTransform.sizeDelta.x;
 
-			LoadDailyRewardData();
+			dailyRewards = LoadDailyRewardData();
 			// weeklyRewardProgress = PlayerPrefs.GetInt("weekly_reward_progress", 0);
 			// dailyRewards = GetDailyRewardObjectsByWeek(weeklyRewardProgress);
 			int receivedProgress = PlayerPrefs.GetInt("received_progress", 0);
@@ -51,7 +51,7 @@ namespace MainMenu.DailyReward
 				DailyRewardButton dailyRewardBtn = Instantiate(dailyRewardBtnPrefab, spawnsPos[i].position,
 					Quaternion.identity, spawnsPos[i]);
 
-				ConsumableType[] items = DataController.StringsToItems(dailyRewards.DailyReward[i].ItemIDs);
+				RewardType[] items = DataController.StringsToConsumable(dailyRewards.DailyReward[i].RewardTypes);
 				dailyRewardBtn.Init(items, dailyRewards.DailyReward[i].Quantities, i + 1, receivedProgress, canDouble,
 					Close /*,dailyRewardExtra.itemId*/);
 
@@ -74,10 +74,10 @@ namespace MainMenu.DailyReward
 			_rewardCanClaim.OnClick();
 		}
 
-		private void LoadDailyRewardData()
+		private DailyRewardObjects LoadDailyRewardData()
 		{
-			var data = Resources.Load<TextAsset>("daily_reward_data");
-			dailyRewards = JsonUtility.FromJson<DailyRewardObjects>(data.text);
+			var data = FirebaseServiceController.Instance.GetDailyRewardData();
+			return JsonUtility.FromJson<DailyRewardObjects>(data);
 		}
 
 		public DailyRewardObjects GetDailyRewardObjectsByWeek(int weekIndex)
@@ -133,18 +133,5 @@ namespace MainMenu.DailyReward
 				button.ResetClaimed();
 			}
 		}
-	}
-
-	[System.Serializable]
-	public class Reward
-	{
-		public string[] ItemIDs;
-		public int[] Quantities;
-	}
-
-	[System.Serializable]
-	public class DailyRewardObjects
-	{
-		[SerializeField] public List<Reward> DailyReward;
 	}
 }

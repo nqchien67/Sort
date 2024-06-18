@@ -1,0 +1,146 @@
+﻿using System;
+using System.Collections;
+using Controllers;
+using Data;
+using DG.Tweening;
+using MainMenu.TopCharts;
+using Spine.Unity;
+using TMPro;
+using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
+using Utilities;
+using Random = UnityEngine.Random;
+
+namespace UI
+{
+	public class WinPanel : MonoBehaviour
+	{
+		[SerializeField] private SkeletonGraphic _piggyBankAnim;
+		[SerializeField] private GameObject _piggyBank;
+		[SerializeField] private TextMeshProUGUI _piggyGoldBonusTxt;
+
+		[SerializeField] private Image _progressFill;
+		[SerializeField] private TextMeshProUGUI _progressCount;
+		[SerializeField] private Button _claimItemButton;
+		[SerializeField] private UnlockNewItemPanel _unlockNewItemPanelPrefab;
+		[SerializeField] private GameObject _highlight;
+
+		private Animator _animator;
+		private float _maxFillBarLength;
+
+		private void Awake()
+		{
+			_animator = GetComponent<Animator>();
+			_maxFillBarLength = _progressFill.rectTransform.sizeDelta.x;
+		}
+
+		public void Show()
+		{
+			gameObject.SetActive(true);
+			StartCoroutine(ShowCoroutine());
+
+			int freeItemProgress = PlayerPrefs.GetInt("FreeItemProgress", 0);
+			UpdateUnlockItemProgress(freeItemProgress, 5);
+			if (freeItemProgress >= 5 && SpritesCollection.Instance.GetNotUnlockedItems().Count > 0)
+			{
+				_claimItemButton.onClick.AddListener(OnClickClaimFreeItem);
+				_highlight.SetActive(true);
+			}
+		}
+
+		private IEnumerator ShowCoroutine()
+		{
+			_animator.Play("Appear");
+
+			yield return new WaitForSeconds(0.2f);
+			GetComponentInChildren<TopChartsPanel>(true).Show();
+
+			if (PlayerPrefs.GetInt("level", 0) >= 6 && !DataController.Instance.IsPiggyBankFull())
+			{
+				_piggyBank.SetActive(true);
+				_piggyBankAnim.AnimationState.SetAnimation(1, "jumpin_x", false);
+
+				int bonusGoldPiggy =
+					DataController.Instance.CurrentPbStorage / (DataController.Instance.PiggyBankLevel * 2 + 3);
+				bonusGoldPiggy += Random.Range(-1, bonusGoldPiggy / 10 + 1);
+				int averageGold = DataController.Instance.CurrentPbStorage /
+				                  ((DataController.Instance.PiggyBankLevel * 2 + 3) * 12);
+				int tmp = 0;
+				yield return new WaitForSeconds(1.3f);
+				_piggyBankAnim.AnimationState.SetAnimation(1, "suckindiamond_x", false);
+				yield return new WaitForSeconds(0.4f);
+				var delay = new WaitForSeconds(0.03f);
+				while (tmp < bonusGoldPiggy)
+				{
+					tmp += averageGold;
+					_piggyGoldBonusTxt.text = "+" + tmp;
+					// AudioController.Instance.PlaySfx(IncreaseGoldAudio);
+					yield return delay;
+				}
+
+				_piggyGoldBonusTxt.text = "+" + bonusGoldPiggy;
+				yield return new WaitForSeconds(0.8f);
+				DataController.Instance.PiggyBankCoin += bonusGoldPiggy;
+				if (DataController.Instance.IsPiggyBankFull() && DataController.Instance.PbTimeDuration <= 0)
+				{
+					DataController.Instance.PbTimeDuration = 7200;
+					DataController.Instance.PiggyBankTimeStamp = DataController.ConvertToUnixTime(DateTime.Now);
+					PlayerPrefs.SetInt("open_full_piggy", 0);
+				}
+
+				yield return new WaitForSeconds(0.7f);
+				_piggyBank.SetActive(false);
+			}
+		}
+
+		public void OnClickCLose()
+		{
+			_animator.Play("Disappear");
+			StartCoroutine(CommonIEnumerator.WaiForSeconds(0.3f, () => LevelController.Instance.GoHome()));
+		}
+
+		public void OnClickClaim()
+		{
+			//TODO: Nhét piggy bank hiện khi bấm nút này
+			OnClickCLose();
+		}
+
+		public void NextLevel()
+		{
+			int level = PlayerPrefs.GetInt("level", 0);
+			level++;
+			SceneManager.LoadScene("Level" + level);
+		}
+
+		private void UpdateUnlockItemProgress(int fillAmount, int total)
+		{
+			float newFillPercent = (float)fillAmount / total;
+
+			Vector2 sizeDelta = _progressFill.rectTransform.sizeDelta;
+			Vector2 newSizeDelta = sizeDelta;
+
+			sizeDelta.x = 0;
+			_progressFill.rectTransform.sizeDelta = sizeDelta;
+
+			newSizeDelta.x = _maxFillBarLength * newFillPercent;
+			_progressFill.rectTransform.DOSizeDelta(newSizeDelta, 0.3f);
+
+			DOVirtual.Float(0, fillAmount, 0.3f,
+				value => _progressCount.text = Mathf.RoundToInt(value) + "/" + total);
+		}
+
+		private void OnClickClaimFreeItem()
+		{
+			Instantiate(_unlockNewItemPanelPrefab, LevelUIController.Instance.Canvas);
+			PlayerPrefs.SetInt("FreeItemProgress", 0);
+			_claimItemButton.enabled = false;
+
+			UpdateUnlockItemProgress(0, 5);
+		}
+
+		private void EndCloseAnimationTrigger()
+		{
+		}
+	}
+}

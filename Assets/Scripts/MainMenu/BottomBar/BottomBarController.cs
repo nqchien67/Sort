@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace MainMenu.BottomBar
+namespace UI.MainMenu.BottomBar
 {
 	public class BottomBarController : MonoBehaviour
 	{
@@ -12,6 +12,12 @@ namespace MainMenu.BottomBar
 		private void Start()
 		{
 			_buttons[_initialSelectedButton].OnClick();
+		}
+
+		public void OpenShop()
+		{
+			const int buttonIndex = 0; 
+			_buttons[buttonIndex].OnClick();
 		}
 	}
 }

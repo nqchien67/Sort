@@ -8,7 +8,7 @@ namespace MainMenu.ShopSkin
 		public override void Init(Skin skin, SkinGroup skinGroup)
 		{
 			base.Init(skin, skinGroup);
-			_skinImage.sprite = SkinDataController.Instance.GetEffectIcon(_skin.Id);
+			_skinImage.sprite = SpritesCollection.Instance.GetEffectIcon(_skin.Id);
 		}
 
 		public override void ToggleUse()

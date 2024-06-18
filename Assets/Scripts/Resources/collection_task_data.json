@@ -1,0 +1,180 @@
+﻿{
+  "TimeResetTask": 172800,
+  "CollectionTasksData": [
+    {
+      "Id": 1,
+      "Type": "Star",
+      "RequestAmount": 60,
+      "RewardType": "Coin",
+      "RewardAmount": 60
+    },
+    {
+      "Id": 2,
+      "Type": "Star",
+      "RequestAmount": 100,
+      "RewardType": "LittleHammer",
+      "RewardAmount": 1
+    },
+    {
+      "Id": 3,
+      "Type": "Star",
+      "RequestAmount": 150,
+      "RewardType": "Coin",
+      "RewardAmount": 80
+    },
+    {
+      "Id": 4,
+      "Type": "Star",
+      "RequestAmount": 300,
+      "RewardType": "MagicWand",
+      "RewardAmount": 1
+    },
+    {
+      "Id": 5,
+      "Type": "Star",
+      "RequestAmount": 500,
+      "RewardType": "Coin",
+      "RewardAmount": 100
+    },
+    {
+      "Id": 6,
+      "Type": "Combo",
+      "RequestAmount": 5,
+      "RewardType": "Energy",
+      "RewardAmount": 30
+    },
+    {
+      "Id": 7,
+      "Type": "Star",
+      "RequestAmount": 600,
+      "RewardType": "FreezeTime",
+      "RewardAmount": 1
+    },
+    {
+      "Id": 8,
+      "Type": "Combo",
+      "RequestAmount": 6,
+      "RewardType": "Coin",
+      "RewardAmount": 110
+    },
+    {
+      "Id": 9,
+      "Type": "Combo",
+      "RequestAmount": 7,
+      "RewardType": "Refresh",
+      "RewardAmount": 1
+    },
+    {
+      "Id": 10,
+      "Type": "Star",
+      "RequestAmount": 800,
+      "RewardType": "Coin",
+      "RewardAmount": 120
+    },
+    {
+      "Id": 11,
+      "Type": "Star",
+      "RequestAmount": 900,
+      "RewardType": "Coin",
+      "RewardAmount": 150
+    },
+    {
+      "Id": 12,
+      "Type": "Star",
+      "RequestAmount": 1000,
+      "RewardType": "ShelfSkin",
+      "RewardAmount": 1
+    },
+    {
+      "Id": 13,
+      "Type": "Star",
+      "RequestAmount": 1200,
+      "RewardType": "Coin",
+      "RewardAmount": 160
+    },
+    {
+      "Id": 14,
+      "Type": "Combo",
+      "RequestAmount": 9,
+      "RewardType": "X2Coin",
+      "RewardAmount": 30
+    },
+    {
+      "Id": 15,
+      "Type": "Combo",
+      "RequestAmount": 9,
+      "RewardType": "Coin",
+      "RewardAmount": 180
+    },
+    {
+      "Id": 16,
+      "Type": "Star",
+      "RequestAmount": 1300,
+      "RewardType": "HugeHammer",
+      "RewardAmount": 1
+    },
+    {
+      "Id": 17,
+      "Type": "Combo",
+      "RequestAmount": 10,
+      "RewardType": "X2Star",
+      "RewardAmount": 15
+    },
+    {
+      "Id": 18,
+      "Type": "Star",
+      "RequestAmount": 1500,
+      "RewardType": "Coin",
+      "RewardAmount": 200
+    },
+    {
+      "Id": 19,
+      "Type": "Combo",
+      "RequestAmount": 10,
+      "RewardType": "ItemSkin",
+      "RewardAmount": 1
+    },
+    {
+      "Id": 20,
+      "Type": "Combo",
+      "RequestAmount": 11,
+      "RewardType": "Time",
+      "RewardAmount": 1
+    },
+    {
+      "Id": 21,
+      "Type": "Star",
+      "RequestAmount": 1600,
+      "RewardType": "Coin",
+      "RewardAmount": 220
+    },
+    {
+      "Id": 22,
+      "Type": "Star",
+      "RequestAmount": 1800,
+      "RewardType": "Energy",
+      "RewardAmount": 30
+    },
+    {
+      "Id": 23,
+      "Type": "Star",
+      "RequestAmount": 2000,
+      "RewardType": "DoublePoint",
+      "RewardAmount": 1
+    },
+    {
+      "Id": 24,
+      "Type": "Combo",
+      "RequestAmount": 13,
+      "RewardType": "Coin",
+      "RewardAmount": 240
+    },
+    {
+      "Id": 25,
+      "Type": "Combo",
+      "RequestAmount": 15,
+      "RewardType": "Effect",
+      "RewardAmount": 1
+    }
+  ]
+}

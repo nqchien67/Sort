@@ -20,7 +20,7 @@ namespace Boosters
 		private void Start()
 		{
 			_boosterIcon.sprite = Data.Sprite;
-			_descriptionText.text = Data.Description;
+			_descriptionText.text = Data.Name;
 
 			OnClickClaim += Close;
 			_claimButton.onClick.AddListener(OnClickClaim);

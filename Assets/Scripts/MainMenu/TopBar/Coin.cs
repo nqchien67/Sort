@@ -16,6 +16,8 @@ namespace MainMenu.TopBar
 
 		[SerializeField] private float _updateDuration = 0.3f;
 
+		public Vector2 IconPosition => Icon.transform.position;
+
 		// public int Value
 		// {
 		// 	get => _value;
@@ -28,8 +30,8 @@ namespace MainMenu.TopBar
 
 		private void Start()
 		{
-			UpdateValue();
 			_originalScale = Icon.transform.localScale;
+			UpdateValue();
 		}
 
 		public void UpdateValue()

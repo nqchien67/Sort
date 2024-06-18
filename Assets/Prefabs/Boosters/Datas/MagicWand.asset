@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 96980a4c35634561ba85801000cdda0e, type: 3}
+  m_Name: MagicWand
+  m_EditorClassIdentifier: 
+  Name: Magic Wand
+  Type: 4
+  Sprite: {fileID: 21300000, guid: 2e20d5560d7bbfa42a6709b7e52836d5, type: 3}
+  Description: Change 9 models.

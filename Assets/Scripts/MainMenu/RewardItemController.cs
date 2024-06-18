@@ -11,9 +11,9 @@ namespace MainMenu
 		[SerializeField] private TextMeshProUGUI itemQuantityTxt;
 		[SerializeField] private Sprite[] itemSprites;
 
-		public void Init(ConsumableType consumableTypeId, int quantity)
+		public void Init(RewardType rewardTypeId, int quantity)
 		{
-			itemImage.sprite = itemSprites[(int)consumableTypeId];
+			itemImage.sprite = itemSprites[(int)rewardTypeId];
 			itemQuantityTxt.text = quantity.ToString();
 		}
 	}

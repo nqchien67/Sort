@@ -1,0 +1,226 @@
+﻿{
+  "EndlessTreasureData": [
+    {
+      "Id": 1,
+      "Price": 0,
+      "RewardTypes": [
+        "Coin"
+      ],
+      "Quantities": [
+        100
+      ]
+    },
+    {
+      "Id": 2,
+      "Price": 0,
+      "RewardTypes": [
+        "Time"
+      ],
+      "Quantities": [
+        1
+      ]
+    },
+    {
+      "Id": 3,
+      "Price": 0,
+      "RewardTypes": [
+        "Coin",
+        "LittleHammer"
+      ],
+      "Quantities": [
+        100,
+        1
+      ]
+    },
+    {
+      "Id": 4,
+      "Price": 1.99,
+      "RewardTypes": [
+        "Coin",
+        "LittleHammer",
+        "MagicWand",
+        "FreezeTime",
+        "Refresh"
+      ],
+      "Quantities": [
+        1000,
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "Id": 5,
+      "Price": 0,
+      "RewardTypes": [
+        "Coin",
+        "HugeHammer"
+      ],
+      "Quantities": [
+        150,
+        1
+      ]
+    },
+    {
+      "Id": 6,
+      "Price": 0,
+      "RewardTypes": [
+        "Coin",
+        "TIme"
+      ],
+      "Quantities": [
+        150,
+        1
+      ]
+    },
+    {
+      "Id": 7,
+      "Price": 2.99,
+      "RewardTypes": [
+        "Coin",
+        "HugeHammer",
+        "Time",
+        "DoublePoint",
+        "Energy"
+      ],
+      "Quantities": [
+        3000,
+        2,
+        2,
+        2,
+        15
+      ]
+    },
+    {
+      "Id": 8,
+      "Price": 0,
+      "RewardTypes": [
+        "Coin",
+        "LittleHammer",
+        "MagicWand"
+      ],
+      "Quantities": [
+        300,
+        1,
+        1
+      ]
+    },
+    {
+      "Id": 9,
+      "Price": 0,
+      "RewardTypes": [
+        "Coin",
+        "DoublePoint",
+        "FrezzeTime"
+      ],
+      "Quantities": [
+        350,
+        1,
+        1
+      ]
+    },
+    {
+      "Id": 10,
+      "Price": 9.99,
+      "RewardTypes": [
+        "Coin",
+        "LittleHammer",
+        "MagicWand",
+        "FrezzeTime",
+        "Refresh",
+        "X2Coin"
+      ],
+      "Quantities": [
+        5000,
+        5,
+        5,
+        5,
+        5,
+        15
+      ]
+    },
+    {
+      "Id": 11,
+      "Price": 0,
+      "RewardTypes": [
+        "Coin",
+        "Refresh",
+        "Energy"
+      ],
+      "Quantities": [
+        400,
+        1,
+        15
+      ]
+    },
+    {
+      "Id": 12,
+      "Price": 0,
+      "RewardTypes": [
+        "Coin",
+        "FrezzeTime",
+        "MagicWand"
+      ],
+      "Quantities": [
+        500,
+        2,
+        2
+      ]
+    },
+    {
+      "Id": 13,
+      "Price": 14.99,
+      "RewardTypes": [
+        "Coin",
+        "LittleHammer",
+        "MagicWand",
+        "FrezzeTime",
+        "Refresh",
+        "Energy"
+      ],
+      "Quantities": [
+        8000,
+        8,
+        8,
+        8,
+        8,
+        30
+      ]
+    },
+    {
+      "Id": 14,
+      "Price": 0,
+      "RewardTypes": [
+        "Coin",
+        "LittleHammer",
+        "X2Coin"
+      ],
+      "Quantities": [
+        600,
+        3,
+        15
+      ]
+    },
+    {
+      "Id": 15,
+      "Price": 24.99,
+      "RewardTypes": [
+        "Coin",
+        "HugeHammer",
+        "Time",
+        "DoublePoint",
+        "MagicWand",
+        "Energy"
+      ],
+      "Quantities": [
+        10000,
+        12,
+        12,
+        12,
+        12,
+        60
+      ]
+    }
+  ]
+}

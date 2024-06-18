@@ -1,0 +1,76 @@
+
+lucky spin.png
+size: 732,264
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+arrow
+  rotate: false
+  xy: 623, 53
+  size: 38, 52
+  orig: 40, 54
+  offset: 1, 1
+  index: -1
+b light
+  rotate: false
+  xy: 2, 7
+  size: 255, 253
+  orig: 304, 271
+  offset: 20, 15
+  index: -1
+chan
+  rotate: false
+  xy: 376, 32
+  size: 141, 74
+  orig: 143, 76
+  offset: 1, 1
+  index: -1
+dot 1
+  rotate: false
+  xy: 663, 66
+  size: 40, 39
+  orig: 42, 43
+  offset: 1, 2
+  index: -1
+dot 2
+  rotate: false
+  xy: 259, 2
+  size: 115, 113
+  orig: 117, 116
+  offset: 1, 2
+  index: -1
+light 2
+  rotate: false
+  xy: 259, 117
+  size: 162, 143
+  orig: 170, 150
+  offset: 4, 4
+  index: -1
+sd ar
+  rotate: false
+  xy: 623, 19
+  size: 41, 32
+  orig: 44, 34
+  offset: 1, 1
+  index: -1
+shadow w2
+  rotate: false
+  xy: 423, 108
+  size: 153, 152
+  orig: 155, 154
+  offset: 1, 1
+  index: -1
+shadow wheel
+  rotate: false
+  xy: 519, 18
+  size: 102, 87
+  orig: 105, 90
+  offset: 2, 2
+  index: -1
+wheel
+  rotate: true
+  xy: 578, 107
+  size: 153, 152
+  orig: 155, 154
+  offset: 1, 1
+  index: -1

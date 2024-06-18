@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using MainMenu.CollectionTask;
+using MainMenu.TopCharts;
 using UnityEngine;
 
 namespace Data
@@ -17,43 +19,59 @@ namespace Data
 		public int Coin;
 		public int Star;
 
-		public Consumable[] ConsumableStates = Array.Empty<Consumable>();
+		public Booster[] BoostersState;
 
 		public SkinData SkinData;
-		public int[] PurchasedBackgroundIds;
 
 		public int[] UnlockedAvatarIds;
-		public Profile Profile = new Profile();
+		public Profile Profile;
 
-		public void AddConsumable(ConsumableType consumableType, int amount)
+		public int Energy;
+		public double EnergyTimeStamp;
+		public int UnlimitedEnergyTime;
+		public double UnlimitedEnergyTimeStamp;
+
+		public GameData()
 		{
-			foreach (Consumable consumableState in ConsumableStates)
-				if (consumableState.Id == consumableType.ToString())
+			Array boosterTypes = Enum.GetValues(typeof(BoosterType));
+
+			List<Booster> listBoosters = new List<Booster>();
+			foreach (BoosterType boosterType in boosterTypes)
+				listBoosters.Add(new Booster(boosterType));
+
+			BoostersState = listBoosters.ToArray();
+		}
+
+		public void AddBooster(BoosterType boosterType, int quantity)
+		{
+			foreach (Booster consumableState in BoostersState)
+				if (consumableState.Type == boosterType)
 				{
-					consumableState.Quantity += amount;
+					consumableState.Quantity = Mathf.Max(0, consumableState.Quantity + quantity);
 					return;
 				}
 
-			List<Consumable> consumableStatesTmp = new List<Consumable>(ConsumableStates)
-				{ new Consumable(consumableType.ToString(), amount) };
-			ConsumableStates = consumableStatesTmp.ToArray();
+			List<Booster> consumableStatesTmp = new List<Booster>(BoostersState)
+				{ new Booster(boosterType, quantity) };
+			BoostersState = consumableStatesTmp.ToArray();
 		}
 	}
 
 	[Serializable]
-	public class Consumable
+	public class Booster
 	{
-		public string Id;
-		public int Quantity = 0;
+		public BoosterType Type;
+		public int Quantity;
 
-		public Consumable(string consumableId)
+		public Booster(BoosterType boosterType)
 		{
-			Id = consumableId;
+			Type = boosterType;
+			Quantity = 0;
 		}
 
-		public Consumable(string consumableId, int quantity)
+		public Booster(BoosterType boosterType, int quantity)
 		{
-			Id = consumableId;
+			Type = boosterType;
 			Quantity = quantity;
 		}
 	}
@@ -61,7 +79,9 @@ namespace Data
 	[Serializable]
 	public class Profile
 	{
-		public int CurrentAvatarId = 0;
-		public string Name = "Player";
+		public string AvatarName = "49";
+		public string Name;
+
+		public Sprite Avatar => Resources.Load<Sprite>("Avatars/" + AvatarName);
 	}
 }

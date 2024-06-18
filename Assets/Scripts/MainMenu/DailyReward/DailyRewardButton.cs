@@ -24,7 +24,7 @@ namespace MainMenu.DailyReward
 
 		private UnityAction onCloseCallback;
 		private bool canDoubleReward;
-		private readonly List<ConsumableType> _consumables = new List<ConsumableType>();
+		private readonly List<RewardType> _consumables = new List<RewardType>();
 		private readonly List<int> _consumableQuantities = new List<int>();
 		private int _itemSkinId;
 		private int _coinQuantity = 0;
@@ -33,7 +33,7 @@ namespace MainMenu.DailyReward
 
 		public int _date;
 
-		public void Init(ConsumableType[] items, int[] quantities, int date, int receivedProgress, bool canDouble,
+		public void Init(RewardType[] items, int[] quantities, int date, int receivedProgress, bool canDouble,
 			UnityAction onCloseCallback = null)
 		{
 			_date = date;
@@ -64,7 +64,7 @@ namespace MainMenu.DailyReward
 			this.onCloseCallback = onCloseCallback;
 		}
 
-		private void SetConsumableIcon(ConsumableType[] consumables, int[] quantities)
+		private void SetConsumableIcon(RewardType[] consumables, int[] quantities)
 		{
 			if (consumables.Length > 1)
 			{
@@ -72,25 +72,26 @@ namespace MainMenu.DailyReward
 				return;
 			}
 
-			ConsumableType consumable = consumables[0];
+			RewardType reward = consumables[0];
 			int quantity = quantities[0];
 
-			if (consumable == ConsumableType.ItemSkin)
-			{
-				var notPurchasedItemIds = SkinDataController.Instance.GetNotPurchasedItemsId();
-				if (notPurchasedItemIds.Count == 0)
-					_itemSkinId = notPurchasedItemIds[Random.Range(0, notPurchasedItemIds.Count)];
-				else
-					consumable = ConsumableType.Coin;
-			}
+			// if (reward == RewardType.ItemSkin)
+			// {
+			// 	var notPurchasedItemIds = SpritesCollection.Instance.GetNotPurchasedItemsId();
+			// 	if (notPurchasedItemIds.Count == 0)
+			// 		_itemSkinId = notPurchasedItemIds[Random.Range(0, notPurchasedItemIds.Count)];
+			// 	else
+			// 		reward = RewardType.Coin;
+			// }
 
-			_itemIcon.sprite = itemSprites[GetConsumableIndex(consumable, quantity)];
+			_itemIcon.sprite = itemSprites[GetConsumableIndex(reward, quantity)];
+			//TODO: doi sang dung RewardHelper
 		}
 
 
-		private void ResizeIcon(ConsumableType item)
+		private void ResizeIcon(RewardType item)
 		{
-			if (item == ConsumableType.Coin)
+			if (item == RewardType.Coin)
 				return;
 
 			var rectTransform = _itemIcon.GetComponent<RectTransform>();
@@ -112,18 +113,18 @@ namespace MainMenu.DailyReward
 			rectTransform.sizeDelta = rectTransform.parent.GetComponent<RectTransform>().sizeDelta;
 		}
 
-		private int GetConsumableIndex(ConsumableType consumableType, int quantity)
+		private int GetConsumableIndex(RewardType rewardType, int quantity)
 		{
-			_consumables.Add(consumableType);
+			_consumables.Add(rewardType);
 
-			if (consumableType == ConsumableType.Coin)
+			if (rewardType == RewardType.Coin)
 			{
 				_coinQuantity = quantity;
 				return 0;
 			}
 
 			_consumableQuantities.Add(quantity);
-			return (int)consumableType;
+			return (int)rewardType;
 		}
 
 		public void OnClick()
@@ -147,7 +148,7 @@ namespace MainMenu.DailyReward
 					FindObjectOfType<RewardPanelController>().Init(_coinQuantity, time, _consumables.ToArray(),
 						_consumableQuantities.ToArray(), true, true, canDoubleReward, "x2Daily", 1, null);
 				else
-					FindObjectOfType<RewardPanelController>().Init(_coinQuantity, time, Array.Empty<ConsumableType>(),
+					FindObjectOfType<RewardPanelController>().Init(_coinQuantity, time, Array.Empty<RewardType>(),
 						Array.Empty<int>(), canDoubleReward, true, true, "x2Daily", 1, null);
 			}
 		}

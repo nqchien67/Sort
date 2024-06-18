@@ -1,4 +1,5 @@
 ﻿using System;
+using Controllers;
 using Data;
 using TMPro;
 using UnityEngine;
@@ -20,10 +21,13 @@ namespace Boosters.Start
 		[SerializeField] private TextMeshProUGUI _amountText;
 		[SerializeField] private Sprite _selectedBox;
 		[SerializeField] private Sprite _selectedAmountBox;
+		[SerializeField] private GameObject _lock;
 
 		private Sprite _unselectedBox;
 		private Sprite _unselectedAmountBox;
-		public ConsumableType consumableType;
+		public BoosterType boosterType;
+
+		private int _quantity;
 
 		private void Awake()
 		{
@@ -34,23 +38,33 @@ namespace Boosters.Start
 
 		private void Start()
 		{
+			if (!IsBoosterUnlocked())
+			{
+				_lock.SetActive(true);
+				_amountBoxImage.gameObject.SetActive(false);
+				return;
+			}
+
 			_unselectedBox = _image.sprite;
 			_unselectedAmountBox = _amountBoxImage.sprite;
 			Button.onClick.AddListener(Select);
 
-			consumableType = _booster switch
+			boosterType = _booster switch
 			{
-				StartBooster.HugeHammer => ConsumableType.HugeHammer,
-				StartBooster.Time => ConsumableType.Time,
-				StartBooster.DoublePoint => ConsumableType.DoublePoint,
+				StartBooster.HugeHammer => BoosterType.HugeHammer,
+				StartBooster.Time => BoosterType.Time,
+				StartBooster.DoublePoint => BoosterType.DoublePoint,
 				_ => throw new ArgumentOutOfRangeException()
 			};
 
-			RefreshAmountText();
+			RefreshQuantityText();
 		}
 
 		public void Select()
 		{
+			// if (_quantity <= 0)
+			// 	return;
+
 			_selected = !_selected;
 
 			if (_selected)
@@ -69,9 +83,26 @@ namespace Boosters.Start
 			_amountText.gameObject.SetActive(!_selected);
 		}
 
-		public void RefreshAmountText()
+		public void RefreshQuantityText()
 		{
-			_amountText.text = DataController.Instance.GetItemQuantity(consumableType).ToString();
+			_quantity = DataController.Instance.GetBoosterQuantity(boosterType);
+			_amountText.text = _quantity.ToString();
+		}
+
+		private bool IsBoosterUnlocked()
+		{
+			int highestPassedLevel = PlayerPrefs.GetInt("level", 0);
+			switch (_booster)
+			{
+				case StartBooster.HugeHammer:
+					return highestPassedLevel >= 2;
+				case StartBooster.Time:
+					return highestPassedLevel >= 4;
+				case StartBooster.DoublePoint:
+					return highestPassedLevel >= 6;
+			}
+
+			return false;
 		}
 	}
 }

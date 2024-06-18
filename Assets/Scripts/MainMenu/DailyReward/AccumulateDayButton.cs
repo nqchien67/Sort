@@ -27,7 +27,7 @@ namespace MainMenu.DailyReward
 
 		public void Init(int accumulateProgress)
 		{
-			bool claimed = PlayerPrefs.GetInt("claimedAccumulatedDay_" + _numberOfDays, 0) == 0;
+			bool claimed = PlayerPrefs.GetInt("claimedAccumulatedDay_" + _numberOfDays, 0) == 1;
 			_canClaim = _numberOfDays <= accumulateProgress && claimed;
 			_highlight.SetActive(_canClaim);
 			

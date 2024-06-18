@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Linq;
 using Data;
 using DG.Tweening;
-using Gameplay;
 using TMPro;
 using UI;
 using UnityEngine;
@@ -23,6 +21,7 @@ namespace MainMenu.ShopSkin
 		[SerializeField] private TextMeshProUGUI _priceText;
 
 		public bool Switching { get; set; }
+		private int _currentTabIndex;
 
 		public SkinButton SelectingButton
 		{
@@ -51,7 +50,7 @@ namespace MainMenu.ShopSkin
 
 			_buyButtonLayoutGroup = _buyButtonsGroup.GetComponent<HorizontalLayoutGroup>();
 			_initialSpacing = _buyButtonLayoutGroup.spacing;
-			_buyButtonLayoutGroup.spacing = Screen.width;
+			_buyButtonLayoutGroup.spacing = Screen.width * 2;
 			_priceText.text = _buyPrice.ToString();
 		}
 
@@ -66,9 +65,9 @@ namespace MainMenu.ShopSkin
 
 		private void InitSkinGroups()
 		{
-			_skinGroups[0].InitSkinButtons(SkinDataController.Instance.PurchasableItemSkins.ToList());
-			_skinGroups[1].InitSkinButtons(SkinDataController.Instance.ShelfSkins.ToList());
-			_skinGroups[2].InitSkinButtons(SkinDataController.Instance.Effects.ToList());
+			_skinGroups[0].InitSkinButtons(SpritesCollection.Instance.PurchasableItemSkins.ToList());
+			_skinGroups[1].InitSkinButtons(SpritesCollection.Instance.BackgroundSkins.ToList());
+			_skinGroups[2].InitSkinButtons(SpritesCollection.Instance.Effects.ToList());
 		}
 
 		private Tween _tween;
@@ -94,6 +93,9 @@ namespace MainMenu.ShopSkin
 					_skinGroups[i].Active(false);
 				}
 			}
+
+			if (_currentTabIndex != tabIndex)
+				SelectingButton = null;
 		}
 
 		public void OnClickBuy()
@@ -110,6 +112,12 @@ namespace MainMenu.ShopSkin
 			DataController.Instance.Coin -= _buyPrice;
 			MainMenuUIController.Instance.Coin.UpdateValue();
 
+			DataController.Instance.SaveData();
+		}
+
+		public void OnLickAds()
+		{
+			SelectingButton.Unlock();
 			DataController.Instance.SaveData();
 		}
 
@@ -134,7 +142,7 @@ namespace MainMenu.ShopSkin
 			if (_activeBuyButtonsTween != null)
 				StopCoroutine(_activeBuyButtonsTween);
 
-			StartCoroutine(isActive ? LerpBuyButtonsSpacing(_initialSpacing) : LerpBuyButtonsSpacing(Screen.width));
+			StartCoroutine(isActive ? LerpBuyButtonsSpacing(_initialSpacing) : LerpBuyButtonsSpacing(Screen.width * 2));
 		}
 
 		private IEnumerator LerpBuyButtonsSpacing(float newSpacing)
@@ -156,6 +164,23 @@ namespace MainMenu.ShopSkin
 
 			_buyButtonLayoutGroup.spacing = newSpacing;
 			_buyButtonsGroup.GetComponent<CanvasGroup>().interactable = true;
+		}
+
+		public override void Show()
+		{
+			gameObject.SetActive(true);
+			_animator.Play("Appear");
+		}
+
+		public override void Close()
+		{
+			_animator.Play("Disappear");
+		}
+
+		public override void EndCloseAnimationTrigger()
+		{
+			base.EndCloseAnimationTrigger();
+			gameObject.SetActive(false);
 		}
 	}
 }

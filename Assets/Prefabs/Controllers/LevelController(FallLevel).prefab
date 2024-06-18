@@ -1,0 +1,107 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &7011591744238157161
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7011591744238157160}
+  - component: {fileID: 4626747898529262598}
+  - component: {fileID: 7011591744430550208}
+  - component: {fileID: 7011591744430550223}
+  m_Layer: 0
+  m_Name: LevelController(FallLevel)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7011591744238157160
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7011591744238157161}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -4.84, y: -11.55, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4626747898529262598
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7011591744238157161}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bb2ed64ac9404e558dede48d7268eac2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _unplacedItems: []
+--- !u!114 &7011591744430550208
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7011591744238157161}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dabb73ddd2b24b7f9824c47e612f9695, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shelfIndexPairs: []
+  fixedItems: []
+  _fallingShelfPrefab: {fileID: 6850707948911361702, guid: f7e86676adec52348a7be659dcdf2fef, type: 3}
+--- !u!114 &7011591744430550223
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7011591744238157161}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6db6677fa1254180a87e9e2613d8fa8d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  LevelIndex: 0
+  Shelves: []
+  ItemLayerPrefab: {fileID: 4581809348472007012, guid: ce4f5adfcf57641449e981434b65f6b4, type: 3}
+  ItemPrefab: {fileID: 9127276917371074957, guid: e191be95aaec05646b5df5dceacc40ae, type: 3}
+  LockPrefab: {fileID: 4389405379797761328, guid: e1b6c0f8c5e5a9d4a9af6be97c1ec437, type: 3}
+  DisabledMaterial: {fileID: 2100000, guid: 854afd646f757394fa6e09e2f44c38be, type: 2}
+  NormalMaterial: {fileID: 2100000, guid: 43e02f601d0b3a44ea8de2dea1da1104, type: 2}
+  UnknownMaterial: {fileID: 2100000, guid: 3cc52aee55c9fa54aa6c692f154cb11c, type: 2}
+  LevelData:
+    id: 0
+    TotalShelves: 0
+    ItemTypes: 0
+    LayerPerShelf: 0
+    LockShelves: 0
+    HaveUnknownItems: 0
+  LockedShelves: []
+  RemainItemTypes: []
+  CanDrag: 1
+  LevelTime: 0
+  DoubleStar: 0
+  Coin: 0
+  Star: 0
+  SortEffect: {fileID: 6447278513215144292, guid: 4d73530b8aafcd0478b95a2a46d2e873, type: 3}
+  StarProp: {fileID: 5043075920097340578, guid: fbb1678156591434f9bc30dd9baaf900, type: 3}
+  CoinProp: {fileID: 5043075920097340578, guid: 9f47bc15386ba18488067ee6278a0f7d, type: 3}
+  PausedTime: 0
+  _gridColumn: 0
+  _gridRow: 0
+  _cellSizeX: 3.455
+  _cellSizeY: 2.12
+  ShelvesParent: {fileID: 0}
+  ActionTime: 0.3

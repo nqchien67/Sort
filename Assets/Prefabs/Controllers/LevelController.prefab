@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 4378140318385922898}
   - component: {fileID: 4378140318385922925}
   - component: {fileID: 2141998552552452668}
+  - component: {fileID: 8271954476012367025}
   m_Layer: 0
   m_Name: LevelController
   m_TagString: Untagged
@@ -51,7 +52,7 @@ MonoBehaviour:
   LockPrefab: {fileID: 4389405379797761328, guid: e1b6c0f8c5e5a9d4a9af6be97c1ec437, type: 3}
   DisabledMaterial: {fileID: 2100000, guid: 854afd646f757394fa6e09e2f44c38be, type: 2}
   NormalMaterial: {fileID: 2100000, guid: 43e02f601d0b3a44ea8de2dea1da1104, type: 2}
-  UnknownMaterial: {fileID: 0}
+  UnknownMaterial: {fileID: 2100000, guid: 3cc52aee55c9fa54aa6c692f154cb11c, type: 2}
   LevelData:
     id: 0
     TotalShelves: 0
@@ -64,6 +65,11 @@ MonoBehaviour:
   CanDrag: 1
   LevelTime: 0
   DoubleStar: 0
+  Coin: 0
+  Star: 0
+  SortEffect: {fileID: 6447278513215144292, guid: 4d73530b8aafcd0478b95a2a46d2e873, type: 3}
+  StarProp: {fileID: 5043075920097340578, guid: fbb1678156591434f9bc30dd9baaf900, type: 3}
+  CoinProp: {fileID: 5043075920097340578, guid: 9f47bc15386ba18488067ee6278a0f7d, type: 3}
   PausedTime: 0
 --- !u!114 &2141998552552452668
 MonoBehaviour:
@@ -77,8 +83,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bb2ed64ac9404e558dede48d7268eac2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _simple: []
-  _detail: []
-  Purchasable: []
-  Unlockable: []
   _unplacedItems: []
+--- !u!114 &8271954476012367025
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4378140318385922899}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 274f7baab4044fcdb4c808f5617a6a6e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shelfIndexPairs: []
+  fixedItems: []

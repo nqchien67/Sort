@@ -15,7 +15,7 @@ namespace MainMenu.LuckySpin
 	{
 		public int numberSpin;
 		public int timeToFreeSpin;
-		public GameObject wheelObject;
+		public Transform wheel;
 		public Button exitButton, freeButton, adsButton, iapButton;
 		public TextMeshProUGUI timeToFreeSpinText;
 		public LuckySpinItem finalItem;
@@ -24,9 +24,13 @@ namespace MainMenu.LuckySpin
 		[SerializeField] private TextMeshProUGUI _fakeAdsCountText;
 		public AudioClip spinClip;
 
+		[SerializeField] private Image _wheelImage;
+		[SerializeField] private Sprite _adsWheelSprite;
+		private Sprite _freeWheelSprite;
+
 		[SerializeField] private GameObject _tutorial;
 
-		public string TimeLineResetFreeSpin
+		private string TimeLineResetFreeSpin
 		{
 			get => PlayerPrefs.GetString("TimeLineResetFreeSpin", "");
 			set => PlayerPrefs.SetString("TimeLineResetFreeSpin", value);
@@ -40,9 +44,12 @@ namespace MainMenu.LuckySpin
 
 		private void Start()
 		{
+			_freeWheelSprite = _wheelImage.sprite;
+
 			SwitchAdsAndFreeButton();
 			GetComponent<Animator>().Play("Appear");
 			// UIController.Instance.PushUitoStack(this);
+
 			string timeLineResetFreeSpin = TimeLineResetFreeSpin;
 			if (timeLineResetFreeSpin != "")
 			{
@@ -55,9 +62,11 @@ namespace MainMenu.LuckySpin
 
 			if (PlayerPrefs.GetInt("level", 0) == 5 && PlayerPrefs.GetInt("LuckySpinPanelTutorial", 0) != 1)
 				_tutorial.SetActive(true);
+
+			ChangeWheelAndRewardValue();
 		}
 
-		public void SwitchAdsAndFreeButton()
+		private void SwitchAdsAndFreeButton()
 		{
 			if (TimeLineResetFreeSpin == "")
 			{
@@ -81,9 +90,6 @@ namespace MainMenu.LuckySpin
 					adsButton.gameObject.SetActive(true);
 
 					timeToFreeSpinText.gameObject.SetActive(true);
-
-					foreach (LuckySpinItem item in luckySpinItems)
-						item.IncreaseRewardValue();
 				}
 			}
 
@@ -91,7 +97,7 @@ namespace MainMenu.LuckySpin
 			_fakeAdsCountText.text = $"({AdsCount}/3)";
 		}
 
-		public void OnSpin(int _multiple)
+		public void OnSpin(Action onComplete = null)
 		{
 			// AudioController.Instance.PlaySfx(spinClip);
 			exitButton.enabled = false;
@@ -114,7 +120,7 @@ namespace MainMenu.LuckySpin
 
 			finalItem.OnCollect();
 			float timeRotate = 0.4f * (numberSpin + finalItem.rotationZ / 360f);
-			wheelObject.transform.DOLocalRotate(new Vector3(0, 0, -360f * numberSpin - finalItem.rotationZ), timeRotate)
+			wheel.DOLocalRotate(new Vector3(0, 0, -360f * numberSpin - finalItem.rotationZ), timeRotate)
 				.SetEase(Ease.OutQuint)
 				.OnComplete(() =>
 				{
@@ -123,6 +129,7 @@ namespace MainMenu.LuckySpin
 					adsButton.enabled = true;
 					iapButton.enabled = true;
 					finalItem.OnOpenRewardPanel();
+					onComplete?.Invoke();
 				});
 		}
 
@@ -130,10 +137,10 @@ namespace MainMenu.LuckySpin
 		{
 			ResetTimeFreeSpin();
 			SwitchAdsAndFreeButton();
-			OnSpin(1);
+			OnSpin(ChangeWheelAndRewardValue);
 		}
 
-		public void ResetTimeFreeSpin()
+		private void ResetTimeFreeSpin()
 		{
 			TimeLineResetFreeSpin = DateTime.Today.AddDays(1).ToString();
 			timeToFreeSpin = (int)(DateTime.Today.AddDays(1) - DateTime.Now).TotalSeconds;
@@ -153,7 +160,7 @@ namespace MainMenu.LuckySpin
 			//     {
 			//         if (isWatchedAds)
 			//         {
-			OnSpin(1);
+			OnSpin();
 
 			int adsCount = AdsCount;
 			adsCount++;
@@ -173,10 +180,10 @@ namespace MainMenu.LuckySpin
 
 		public void OnSpinIAP()
 		{
-			OnSpin(10);
+			OnSpin();
 		}
 
-		void CounterTimeToSpinFree()
+		private void CounterTimeToSpinFree()
 		{
 			timeToFreeSpin--;
 			timeToFreeSpinText.text = DataController.SecondToHours(timeToFreeSpin) + "h:" +
@@ -188,6 +195,8 @@ namespace MainMenu.LuckySpin
 				freeButton.gameObject.SetActive(true);
 				adsButton.gameObject.SetActive(false);
 				timeToFreeSpinText.gameObject.SetActive(false);
+
+				ChangeWheelAndRewardValue();
 			}
 		}
 
@@ -207,13 +216,6 @@ namespace MainMenu.LuckySpin
 			// UIController.Instance.PopUiOutStack();
 		}
 
-		private IEnumerator DelayClosePanel()
-		{
-			GetComponent<Animator>().Play("Disappear");
-			yield return new WaitForSeconds(0.3f);
-			Destroy(gameObject);
-		}
-
 		public override void EndCloseAnimationTrigger()
 		{
 			base.EndCloseAnimationTrigger();
@@ -225,6 +227,22 @@ namespace MainMenu.LuckySpin
 			OnSpinFree();
 			Destroy(_tutorial);
 			PlayerPrefs.SetInt("LuckySpinPanelTutorial", 1);
+		}
+
+		private void ChangeWheelAndRewardValue()
+		{
+			if (adsButton.gameObject.activeSelf)
+			{
+				_wheelImage.sprite = _adsWheelSprite;
+				foreach (LuckySpinItem item in luckySpinItems)
+					item.SetAdsRewardValue();
+			}
+			else
+			{
+				_wheelImage.sprite = _freeWheelSprite;
+				foreach (LuckySpinItem item in luckySpinItems)
+					item.SetFreeRewardValue();
+			}
 		}
 	}
 }

@@ -1,11 +1,11 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-namespace MainMenu.BottomBar
+namespace UI.MainMenu.BottomBar
 {
-	public class BottomBarButton : MonoBehaviour
+	public class BottomBarButton : MonoBehaviour, IPointerUpHandler
 	{
 		private Button _button;
 		private Animator _animator;
@@ -13,7 +13,9 @@ namespace MainMenu.BottomBar
 		private static readonly int Normal = Animator.StringToHash("Normal");
 		private static readonly int Selected = Animator.StringToHash("Selected");
 
+		[SerializeField] private UnityEvent _onSelect;
 		[SerializeField] private UnityEvent _onDeSelect;
+		private static readonly int Pressed = Animator.StringToHash("Pressed");
 
 		private void Awake()
 		{
@@ -35,6 +37,7 @@ namespace MainMenu.BottomBar
 			if (_bottomBar.SelectingButton != null)
 				_bottomBar.SelectingButton.DeSelect();
 
+			_onSelect.Invoke();
 			_bottomBar.SelectingButton = this;
 			_animator.SetTrigger(Selected);
 		}
@@ -45,6 +48,12 @@ namespace MainMenu.BottomBar
 			_animator.SetTrigger(Normal);
 
 			_onDeSelect.Invoke();
+		}
+
+		public void OnPointerUp(PointerEventData eventData)
+		{
+			// _animator.ResetTrigger(Pressed);
+			_animator.SetTrigger(Selected);
 		}
 	}
 }

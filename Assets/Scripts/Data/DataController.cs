@@ -5,6 +5,8 @@ using System.Linq;
 using System.Runtime.Serialization.Formatters.Binary;
 using DG.Tweening;
 using MainMenu;
+using MainMenu.CollectionTask;
+using MainMenu.TopCharts;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -19,17 +21,9 @@ namespace Data
 
 		public LevelData[] LevelsData;
 		public ComboData[] CombosData;
+		public int HighestPassedLevel => PlayerPrefs.GetInt("level", 0);
+
 		private string dataPath = "";
-
-		protected void Awake()
-		{
-			DontDestroyOnLoad(gameObject);
-			var levelDataCollection = JsonUtility.FromJson<LevelDataCollection>(GetLevelsData());
-			LevelsData = levelDataCollection.LevelsData;
-
-			var comboDataCollection = JsonUtility.FromJson<ComboDataCollection>(GetCombosData());
-			CombosData = comboDataCollection.CombosData;
-		}
 
 		private void Start()
 		{
@@ -38,47 +32,57 @@ namespace Data
 				Instance = this;
 				dataPath = Path.Combine(Application.persistentDataPath, "data.dat");
 
-				// DontDestroyOnLoad(gameObject);
+				DontDestroyOnLoad(gameObject);
 			}
 
 			LoadData();
-			Coin = 100000;
 		}
 
 		public void LoadData()
 		{
+			var levelDataCollection =
+				JsonUtility.FromJson<LevelDataCollection>(FirebaseServiceController.Instance.GetLevelsData());
+			LevelsData = levelDataCollection.LevelsData;
+
+			var comboDataCollection =
+				JsonUtility.FromJson<ComboDataCollection>(FirebaseServiceController.Instance.GetCombosData());
+			CombosData = comboDataCollection.CombosData;
+
 			LoadLocalData();
 		}
 
-		public void LoadLocalData()
+		private void LoadLocalData()
 		{
 			if (File.Exists(dataPath))
 			{
 				BinaryFormatter binaryFormatter = new BinaryFormatter();
-				using (FileStream fileStream = File.Open(dataPath, FileMode.Open))
+				using FileStream fileStream = File.Open(dataPath, FileMode.Open);
+				try
 				{
-					try
-					{
-						string data = (string)binaryFormatter.Deserialize(fileStream);
-						gameData = JsonUtility.FromJson<GameData>(data);
-					}
-					catch (Exception e)
-					{
-						Debug.LogError(e.Message);
-						ResetData();
-					}
+					string data = (string)binaryFormatter.Deserialize(fileStream);
+					gameData = JsonUtility.FromJson<GameData>(data);
+				}
+				catch (Exception e)
+				{
+					Debug.LogError(e.Message);
+					GenerateNewData();
 				}
 			}
 			else
-				ResetData();
+				GenerateNewData();
 		}
 
-		public void ResetData()
+		private void GenerateNewData()
 		{
 			gameData = new GameData
 			{
-				SkinData = SkinDataController.Instance.InitSkinData()
+				SkinData = SpritesCollection.Instance.InitSkinData(),
+				Profile = new Profile
+				{
+					Name = PlayerNameGenerator.GenerateDefaultName()
+				}
 			};
+
 			SaveData(false);
 		}
 
@@ -118,7 +122,6 @@ namespace Data
 					using (FileStream fileStream = File.Open(dataPath, FileMode.OpenOrCreate))
 					{
 						binaryFormatter.Serialize(fileStream, origin);
-						Debug.Log("save data");
 					}
 
 
@@ -128,11 +131,15 @@ namespace Data
 			);
 		}
 
-		public int GetItemQuantity(ConsumableType consumableType)
+		public int GetBoosterQuantity(BoosterType boosterType)
 		{
-			string itemId = consumableType.ToString();
-			return (from itemState in gameData.ConsumableStates where itemState.Id == itemId select itemState.Quantity)
-				.FirstOrDefault();
+			foreach (var booster in gameData.BoostersState)
+			{
+				if (booster.Type == boosterType)
+					return booster.Quantity;
+			}
+
+			return 0;
 		}
 
 		public bool isFirstOpenPB = true;
@@ -176,33 +183,9 @@ namespace Data
 			return gameData.PiggyBankCoin >= PiggyBankStorageMilestone[PiggyBankLevel - 1];
 		}
 
-		public string GetLevelsData()
+		public void AddBooster(BoosterType boosterType, int quantity)
 		{
-			// string value = Firebase.RemoteConfig.FirebaseRemoteConfig.DefaultInstance.GetValue("piggy_bank").StringValue;
-			// if (value == null || value == "")
-			// {
-			TextAsset data = Resources.Load<TextAsset>("LevelsData");
-			return data.text;
-			// }
-
-			// return value;
-		}
-
-		public string GetCombosData()
-		{
-			// string value = Firebase.RemoteConfig.FirebaseRemoteConfig.DefaultInstance.GetValue("piggy_bank").StringValue;
-			// if (value == null || value == "")
-			// {
-			TextAsset data = Resources.Load<TextAsset>("CombosData");
-			return data.text;
-			// }
-
-			// return value;
-		}
-
-		public void AddConsumable(ConsumableType consumableTypeId, int quantity)
-		{
-			gameData.AddConsumable(consumableTypeId, quantity);
+			gameData.AddBooster(boosterType, quantity);
 		}
 
 		public SkinData SkinData
@@ -210,8 +193,6 @@ namespace Data
 			get => gameData.SkinData;
 			set => gameData.SkinData = value;
 		}
-
-		public int[] PurchasedBackgroundIds => gameData.PurchasedBackgroundIds;
 
 		public static int SecondsToDays(float totalSeconds)
 		{
@@ -233,24 +214,13 @@ namespace Data
 			return (int)(totalSeconds % 60);
 		}
 
-		public static ConsumableType StringToItem(string value)
+		public static RewardType[] StringsToConsumable(string[] values)
 		{
-			if (Enum.IsDefined(typeof(ConsumableType), value))
-			{
-				return (ConsumableType)Enum.Parse(typeof(ConsumableType), value);
-			}
-
-			Debug.LogError("Khong the convert string: \"" + value + "\" sang Item duoc -_-");
-			return ConsumableType.Coin;
-		}
-
-		public static ConsumableType[] StringsToItems(string[] values)
-		{
-			ConsumableType[] items = new ConsumableType[values.Length];
+			RewardType[] items = new RewardType[values.Length];
 
 			for (int i = 0; i < values.Length; i++)
 			{
-				items[i] = StringToItem(values[i]);
+				items[i] = RewardHelper.StringToReward(values[i]);
 			}
 
 			return items;
@@ -267,5 +237,69 @@ namespace Data
 			get => gameData.Profile;
 			set => gameData.Profile = value;
 		}
+
+		public static Sprite GetAvatarSprite(string avatarName) => Resources.Load<Sprite>("Avatars/" + avatarName);
+
+		#region Energy
+
+		public int Energy
+		{
+			get => gameData.Energy;
+			set
+			{
+				if (value > PlayerPrefs.GetInt("MAX_ENERGY", 5) ||
+				    gameData.Energy == PlayerPrefs.GetInt("MAX_ENERGY", 5) &&
+				    value == PlayerPrefs.GetInt("MAX_ENERGY", 5) - 1)
+				{
+					gameData.EnergyTimeStamp = ConvertToUnixTime(DateTime.UtcNow);
+				}
+
+				gameData.Energy = Mathf.Clamp(value, 0, PlayerPrefs.GetInt("MAX_ENERGY", 5));
+				SaveData(false);
+			}
+		}
+
+		public int UnlimitedEnergyDuration
+		{
+			get => gameData.UnlimitedEnergyTime;
+			set => gameData.UnlimitedEnergyTime = Mathf.Max(0, value);
+		}
+
+		public double EnergyTimeStamp
+		{
+			get => gameData.EnergyTimeStamp;
+			set => gameData.EnergyTimeStamp = value;
+		}
+
+		public double UnlimitedEnergyTimeStamp
+		{
+			set => gameData.UnlimitedEnergyTimeStamp = value;
+			get => gameData.UnlimitedEnergyTimeStamp;
+		}
+
+		public void IncreaseOneEnergy()
+		{
+			gameData.Energy = Mathf.Clamp(gameData.Energy + 1, 0, PlayerPrefs.GetInt("MAX_ENERGY", 5));
+		}
+
+		public bool HaveUnlimitedEnergy()
+		{
+			double deltaTime = ConvertToUnixTime(DateTime.UtcNow) - gameData.UnlimitedEnergyTimeStamp;
+			int remainTime = gameData.UnlimitedEnergyTime - Mathf.Max(0, (int)deltaTime);
+			return remainTime > 0;
+		}
+
+		public bool TryUseEnergy()
+		{
+			if (HaveUnlimitedEnergy())
+				return true;
+
+			if (Energy <= 0) return false;
+
+			Energy--;
+			return true;
+		}
+
+		#endregion
 	}
 }

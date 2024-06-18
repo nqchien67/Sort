@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using Controllers;
 using Data;
@@ -7,6 +8,7 @@ using UI;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
+using Utilities;
 
 namespace MainMenu
 {
@@ -24,12 +26,12 @@ namespace MainMenu
 		private bool logEvent;
 		private int _multiple = 1;
 		private List<GameObject> goList;
-		private List<ItemQuantityPair> tmpItemIds;
+		private List<ItemQuantityPair> _rewardQuantityPairs;
 		private bool isWatchedAds;
 
 		public void Init(int coinAmount,
 			int unlimitEnergyTime,
-			ConsumableType[] itemIds,
+			RewardType[] rewardTypes,
 			int[] itemAmounts,
 			bool logEvent = true,
 			bool claimReward = true,
@@ -41,7 +43,7 @@ namespace MainMenu
 			this.logEvent = logEvent;
 			transform.SetAsLastSibling();
 			_multiple = multiple;
-			tmpItemIds = new List<ItemQuantityPair>();
+			_rewardQuantityPairs = new List<ItemQuantityPair>();
 			goList = new List<GameObject>();
 			canClaimReward = true;
 			// FindObjectOfType<MainMenuController>().setIndexTab(5);
@@ -49,7 +51,7 @@ namespace MainMenu
 			onCloseCallback = _closeCallBack;
 			if (coinAmount > 0)
 			{
-				tmpItemIds.Add(new ItemQuantityPair(ConsumableType.Coin, coinAmount));
+				_rewardQuantityPairs.Add(new ItemQuantityPair(RewardType.Coin, coinAmount));
 				if (claimReward) IncreaseCoin(coinAmount, _multiple);
 			}
 
@@ -59,11 +61,11 @@ namespace MainMenu
 			// 	if (_claimReward) IncreaseEnergy(_unlimitEnergyTime, multiple);
 			// }
 
-			if (itemIds.Length > 0)
-				for (int i = 0; i < itemIds.Length; i++)
+			if (rewardTypes.Length > 0)
+				for (int i = 0; i < rewardTypes.Length; i++)
 					if (itemAmounts[i] != 0)
 					{
-						tmpItemIds.Add(new ItemQuantityPair(itemIds[i], itemAmounts[i]));
+						_rewardQuantityPairs.Add(new ItemQuantityPair(rewardTypes[i], itemAmounts[i]));
 						if (claimReward)
 							// if (_itemIds[i] == 121212)
 							// {
@@ -80,7 +82,10 @@ namespace MainMenu
 							// }
 							// else
 							// {
-							InCreaseItem(itemIds[i], itemAmounts[i], _multiple);
+						{
+							// if (EnumConverter.TryConvertToBoosterType(rewardTypes[i], out var boosterType))
+							// 	InCreaseBooster(boosterType, itemAmounts[i], _multiple);
+						}
 						// }
 					}
 
@@ -91,31 +96,32 @@ namespace MainMenu
 				goList.Clear();
 			}
 
-			if (tmpItemIds.Count > 3)
+			if (_rewardQuantityPairs.Count > 3)
 			{
 				bottomRewardLayer.gameObject.SetActive(true);
-				int idHaflLeftList = tmpItemIds.Count / 2;
+				int idHaflLeftList = _rewardQuantityPairs.Count / 2;
 				for (int i = 0; i < idHaflLeftList; i++)
 				{
 					RewardItemController rewardItemController = Instantiate(itemReward, topRewardLayer);
-					rewardItemController.Init(tmpItemIds[i].ConsumableType, tmpItemIds[i].Quantity * multiple);
+					rewardItemController.Init(_rewardQuantityPairs[i].RewardType,
+						_rewardQuantityPairs[i].Quantity * multiple);
 					goList.Add(rewardItemController.gameObject);
 				}
 
-				for (int i = idHaflLeftList; i < tmpItemIds.Count; i++)
+				for (int i = idHaflLeftList; i < _rewardQuantityPairs.Count; i++)
 				{
 					var go = Instantiate(itemReward, bottomRewardLayer);
-					go.Init(tmpItemIds[i].ConsumableType, tmpItemIds[i].Quantity * multiple);
+					go.Init(_rewardQuantityPairs[i].RewardType, _rewardQuantityPairs[i].Quantity * multiple);
 					goList.Add(go.gameObject);
 				}
 			}
 			else
 			{
 				bottomRewardLayer.gameObject.SetActive(false);
-				for (int i = 0; i < tmpItemIds.Count; i++)
+				for (int i = 0; i < _rewardQuantityPairs.Count; i++)
 				{
 					var go = Instantiate(itemReward, topRewardLayer);
-					go.Init(tmpItemIds[i].ConsumableType, tmpItemIds[i].Quantity * multiple);
+					go.Init(_rewardQuantityPairs[i].RewardType, _rewardQuantityPairs[i].Quantity * multiple);
 					goList.Add(go.gameObject);
 				}
 			}
@@ -167,14 +173,17 @@ namespace MainMenu
 		{
 			if (canClaimReward)
 			{
-				int ingameItemQuantity = 0;
 				canClaimReward = false;
-				for (int i = 0; i < tmpItemIds.Count; i++)
-					if (tmpItemIds[i].ConsumableType == ConsumableType.Coin)
+				for (int i = 0; i < _rewardQuantityPairs.Count; i++)
+				{
+					RewardType rewardType = _rewardQuantityPairs[i].RewardType;
+					int quantity = _rewardQuantityPairs[i].Quantity;
+
+					if (rewardType == RewardType.Coin)
 					{
 						if (multiple > 0)
-							IncreaseCoin(tmpItemIds[i].Quantity, multiple);
-						MainMenuController.Instance.StartIncreaseCoin(transform.position, tmpItemIds[i].Quantity);
+							IncreaseCoin(quantity, multiple);
+						MainMenuController.Instance.PlayClaimCoinEffect(transform.position);
 					}
 
 					// else if (tmpItemIds[i].Item == 100600)
@@ -195,23 +204,27 @@ namespace MainMenu
 					// DataController.Instance.AddCustomerSkin(310000);
 					// PlayerPrefs.SetInt("showoff_skin", 1);
 					// }
-					else
+					else if (multiple > 0 &&
+					         RewardHelper.TryConvertEnum(rewardType, out BoosterType boosterType))
 					{
-						if (multiple > 0)
-							InCreaseItem(tmpItemIds[i].ConsumableType, tmpItemIds[i].Quantity, multiple);
-						ingameItemQuantity++;
+						ClaimBooster(multiple, rewardType, quantity);
 					}
-
-				ingameItemQuantity = Mathf.Min(5, ingameItemQuantity);
-				for (int i = 0; i < ingameItemQuantity; i++)
-				{
-					GameObject itemProp = Instantiate(itemEffectPrefabs, transform.position + new Vector3(0, 0, -0.1f),
-						Quaternion.identity, transform.parent);
-					StartCoroutine(IMove(itemProp, shopIcon.transform.position, 1));
 				}
 
 				DataController.Instance.SaveData();
 				Claim();
+			}
+		}
+
+		private void ClaimBooster(int multiple, RewardType rewardType, int quantity)
+		{
+			for (int i = 0; i < quantity; i++)
+			{
+				BoosterType boosterType = (BoosterType)Enum.Parse(typeof(BoosterType),
+					rewardType.ToString());
+
+				InCreaseBooster(boosterType, quantity, multiple);
+				MainMenuController.Instance.PlayClaimRewardEffect(rewardType, transform.position);
 			}
 		}
 
@@ -221,8 +234,8 @@ namespace MainMenu
 			DataController.Instance.Coin += coin;
 			// if (logEvent)
 			// {
-				// APIController.Instance.LogEventEarnGold(coin, "reward");
-				//DWHLog.Log.ResourceLog(DataController.Instance.GetMaxPassedLevelToInt(), FlowType.Source, "reward_panel", "gold", "gold", _gold);
+			// APIController.Instance.LogEventEarnGold(coin, "reward");
+			//DWHLog.Log.ResourceLog(DataController.Instance.GetMaxPassedLevelToInt(), FlowType.Source, "reward_panel", "gold", "gold", _gold);
 			// }
 		}
 
@@ -238,42 +251,16 @@ namespace MainMenu
 			// }
 		}
 
-		public void InCreaseItem(ConsumableType consumableTypeId, int quantity, int multiple)
+		public void InCreaseBooster(BoosterType boosterType, int quantity, int multiple)
 		{
 			quantity *= multiple;
-			DataController.Instance.AddConsumable(consumableTypeId, quantity);
+			DataController.Instance.AddBooster(boosterType, quantity);
 			// if (logEvent)
 			// {
 			// 	//DWHLog.Log.ResourceLog(DataController.Instance.GetMaxPassedLevelToInt(), FlowType.Source, "reward_panel", "" + _itemId.ToString(), DataController.Instance.GetItemName(_itemId), _quantity);
 			// }
 		}
 
-		public IEnumerator IMove(GameObject gameObject, Vector2 pos, float speed)
-		{
-			float time = 0;
-			Vector2 midlePos = new Vector2((gameObject.transform.position.x + pos.x) / 2f + Random.Range(-6f, 0f),
-				(gameObject.transform.position.y + pos.y) / 3f);
-			Vector2 tempPos = gameObject.transform.position;
-			while (Vector2.Distance(gameObject.transform.position, pos) > 0.3f)
-			{
-				gameObject.transform.position = CalculateQuadraticBezierPoint(time, tempPos, midlePos, pos);
-				time += Time.deltaTime * speed * 2;
-				yield return null;
-			}
-
-			DOVirtual.DelayedCall(0.05f, () => { Destroy(gameObject); });
-		}
-
-		public Vector3 CalculateQuadraticBezierPoint(float t1, Vector3 p0, Vector3 p1, Vector3 p2)
-		{
-			float u = 1 - t1;
-			float tt = t1 * t1;
-			float uu = u * u;
-			Vector3 p = uu * p0;
-			p += 2 * u * t1 * p1;
-			p += tt * p2;
-			return p;
-		}
 
 		private void Claim()
 		{
@@ -311,13 +298,13 @@ namespace MainMenu
 
 	public struct ItemQuantityPair
 	{
-		public ConsumableType ConsumableType;
+		public RewardType RewardType;
 		public int Quantity;
 
-		public ItemQuantityPair(ConsumableType consumableType, int quantity)
+		public ItemQuantityPair(RewardType rewardType, int quantity)
 		{
 			Quantity = quantity;
-			ConsumableType = consumableType;
+			RewardType = rewardType;
 		}
 	}
 }

@@ -1,42 +1,85 @@
 ﻿{
   "DailyReward": [
     {
-      "ItemIDs": ["Coin"],
-      "Quantities": [60]
+      "RewardTypes": [
+        "Coin"
+      ],
+      "Quantities": [
+        60
+      ]
     },
     {
-      "ItemIDs": ["LittleHammer"],
-      "Quantities": [1]
+      "RewardTypes": [
+        "LittleHammer"
+      ],
+      "Quantities": [
+        1
+      ]
     },
     {
-      "ItemIDs": ["Coin"],
-      "Quantities": [100]
+      "RewardTypes": [
+        "Coin"
+      ],
+      "Quantities": [
+        100
+      ]
     },
     {
-      "ItemIDs": ["Refresh"],
-      "Quantities": [1]
+      "RewardTypes": [
+        "Refresh"
+      ],
+      "Quantities": [
+        1
+      ]
     },
     {
-      "ItemIDs": ["Coin"],
-      "Quantities": [160]
+      "RewardTypes": [
+        "Coin"
+      ],
+      "Quantities": [
+        160
+      ]
     },
     {
-      "ItemIDs": ["Refresh", "FreezeTime"],
-      "Quantities": [1, 1]
+      "RewardTypes": [
+        "Refresh",
+        "FreezeTime"
+      ],
+      "Quantities": [
+        1,
+        1
+      ]
     },
     {
-      "ItemIDs": ["ItemSkin"],
-      "Quantities": [1]
+      "RewardTypes": [
+        "ItemSkin"
+      ],
+      "Quantities": [
+        1
+      ]
     }
   ],
   "Accumulate": [
     {
-      "ItemIDs": ["LittleHammer", "FreezeTime"],
-      "Quantities": [1, 1]
+      "RewardTypes": [
+        "LittleHammer",
+        "FreezeTime"
+      ],
+      "Quantities": [
+        1,
+        1
+      ]
     },
     {
-      "ItemIDs": ["Coin","Refresh", "Shuffle"],
-      "Quantities": [1, 1]
+      "RewardTypes": [
+        "Coin",
+        "Refresh",
+        "Shuffle"
+      ],
+      "Quantities": [
+        1,
+        1
+      ]
     }
   ]
 }
