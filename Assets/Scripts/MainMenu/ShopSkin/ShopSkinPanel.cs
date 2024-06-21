@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Linq;
+using Controllers;
 using Data;
 using DG.Tweening;
 using TMPro;
@@ -103,7 +104,8 @@ namespace MainMenu.ShopSkin
 			int coinHave = DataController.Instance.Coin;
 			if (coinHave < _buyPrice)
 			{
-				// _notEnoughMoney.SetActive(true);
+				MainMenuUIController.Instance.ShowNotEnoughCoin();
+				MainMenuUIController.Instance.OpenShop();
 				return;
 			}
 
@@ -117,6 +119,8 @@ namespace MainMenu.ShopSkin
 
 		public void OnLickAds()
 		{
+			Debug.Log("Show video ads reward");
+
 			SelectingButton.Unlock();
 			DataController.Instance.SaveData();
 		}

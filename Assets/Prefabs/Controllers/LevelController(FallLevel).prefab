@@ -27,7 +27,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7011591744238157161}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -4.84, y: -11.55, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -45,6 +45,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bb2ed64ac9404e558dede48d7268eac2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _sortEffects:
+  - {fileID: 6447278513215144292, guid: 4d73530b8aafcd0478b95a2a46d2e873, type: 3}
+  - {fileID: 8194992990867289339, guid: 99bc28c0d45f51c4fbac01080b73edc7, type: 3}
+  - {fileID: 25967406099093249, guid: fe4cc178c8b2118428101be4d3ad21e7, type: 3}
+  - {fileID: 106912, guid: 2fb06bf04935a764581c88a65a3850bc, type: 3}
+  - {fileID: 155852, guid: 0de4e807328e2dc40b9516dc50525b3b, type: 3}
+  - {fileID: 4202143865627757165, guid: 92c14bf139fc23e40982795d2d1827ce, type: 3}
+  - {fileID: 5112403345868107898, guid: 6f34ef0d986e9db4199cf75805f79753, type: 3}
   _unplacedItems: []
 --- !u!114 &7011591744430550208
 MonoBehaviour:
@@ -80,7 +88,6 @@ MonoBehaviour:
   LockPrefab: {fileID: 4389405379797761328, guid: e1b6c0f8c5e5a9d4a9af6be97c1ec437, type: 3}
   DisabledMaterial: {fileID: 2100000, guid: 854afd646f757394fa6e09e2f44c38be, type: 2}
   NormalMaterial: {fileID: 2100000, guid: 43e02f601d0b3a44ea8de2dea1da1104, type: 2}
-  UnknownMaterial: {fileID: 2100000, guid: 3cc52aee55c9fa54aa6c692f154cb11c, type: 2}
   LevelData:
     id: 0
     TotalShelves: 0
@@ -98,6 +105,12 @@ MonoBehaviour:
   SortEffect: {fileID: 6447278513215144292, guid: 4d73530b8aafcd0478b95a2a46d2e873, type: 3}
   StarProp: {fileID: 5043075920097340578, guid: fbb1678156591434f9bc30dd9baaf900, type: 3}
   CoinProp: {fileID: 5043075920097340578, guid: 9f47bc15386ba18488067ee6278a0f7d, type: 3}
+  GameplayMusic: {fileID: 8300000, guid: 6aaecbec67a7de14fb9eda5344318fe4, type: 3}
+  PickupItemSfx: {fileID: 8300000, guid: 3becd2d4f934531499466f3e68b22aee, type: 3}
+  PutDownItemSfx: {fileID: 8300000, guid: 58ca63193aea60b48bb5f5c1976fe377, type: 3}
+  RemoveASetSfx: {fileID: 8300000, guid: 7ebeda1dddd99544da4c86da236eab3f, type: 3}
+  ComboSfx: {fileID: 8300000, guid: b54c4423efc792d42a594916da89967b, type: 3}
+  UseBoosterSfx: {fileID: 8300000, guid: ab307831df51d824ba69321063982334, type: 3}
   PausedTime: 0
   _gridColumn: 0
   _gridRow: 0

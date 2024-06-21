@@ -1,4 +1,5 @@
 ﻿using System;
+using Audio;
 using Controllers;
 using Data;
 using TMPro;
@@ -74,7 +75,10 @@ namespace MainMenu
 			else
 			{
 				if (OnBuyCompleted != null)
+				{
 					MainMenuUIController.Instance.OpenShop();
+					MainMenuUIController.Instance.ShowNotEnoughCoin();
+				}
 				else
 					Instantiate(_inGameBuyCoinPrefab, transform.parent);
 			}

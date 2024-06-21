@@ -385,12 +385,13 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 0c86e98d6e71006449c9628bfbb72aa3, type: 3}
   - {fileID: 21300000, guid: 8f89784dc40c96547820fb4207d7c47b, type: 3}
   EffectIconSprites:
-  - {fileID: 21300000, guid: e39f2ed51dfaf5a45aa180539ebcd862, type: 3}
-  - {fileID: 21300000, guid: 4a11827231b9fbd4e8be78c82fc2d60d, type: 3}
-  - {fileID: 21300000, guid: 91838b607eee5ee449fadcdb4daf950e, type: 3}
-  - {fileID: 21300000, guid: bdeb7c10b1b9cb9408863d9beb7582d4, type: 3}
+  - {fileID: 21300000, guid: 153cd1794ded57b40a45ffdd3da3115c, type: 3}
   - {fileID: 21300000, guid: 0c79a8bcf89f06b4e8fd6b099d9561ef, type: 3}
-  - {fileID: 21300000, guid: 5ce640597984b5144989e2a60ffd228b, type: 3}
+  - {fileID: 21300000, guid: bdeb7c10b1b9cb9408863d9beb7582d4, type: 3}
+  - {fileID: 21300000, guid: 04194c78dab1e8449abfe7c5b87ad19e, type: 3}
+  - {fileID: 21300000, guid: c09b655fe3285b84c8d24d2aa9be560c, type: 3}
+  - {fileID: 21300000, guid: 91838b607eee5ee449fadcdb4daf950e, type: 3}
+  - {fileID: 21300000, guid: 57e4e2dbd77ec4242a180c97ac7b62b3, type: 3}
   CurrentAvatarSprite: {fileID: 21300000, guid: 5e5cb18723bbddb44ab07f4d8e8d7317, type: 3}
 --- !u!114 &744237816
 MonoBehaviour:
@@ -408,7 +409,7 @@ MonoBehaviour:
   ProgressData:
     Progresses: []
     CurrentTaskId: 0
-  packs: []
+  TimeResetTask: 0
 --- !u!1 &793958487
 GameObject:
   m_ObjectHideFlags: 0
@@ -535,7 +536,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cnPanelPrefabs: {fileID: 46632232941633150, guid: c1ad983170943824ba72612420bc44f4, type: 3}
-  popUpClip: {fileID: 8300000, guid: d0f64570c825ed44bac7d1960bb0cf4a, type: 3}
+  popUpClip: {fileID: 0}
   cnBtn: {fileID: 0}
   cnBtn0: {fileID: 0}
   cnCountdown: {fileID: 0}
@@ -930,6 +931,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1464429187}
   - component: {fileID: 1464429186}
+  - component: {fileID: 1464429185}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -937,6 +939,14 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!81 &1464429185
+AudioListener:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1464429184}
+  m_Enabled: 1
 --- !u!20 &1464429186
 Camera:
   m_ObjectHideFlags: 0
@@ -1023,7 +1033,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.573
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -1479,7 +1489,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4a0bd134c96d970419126c2d67b55abc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _loadTime: 0.5
+  _loadTime: 1.5
   _fill: {fileID: 242908233612726277}
   _loadingText: {fileID: 242908232200099751}
   verText: {fileID: 242908233148052303}

@@ -1,5 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using MainMenu.BottomBar;
+using MainMenu.Shop;
 using MainMenu.TopBar;
 using UI;
 using UI.MainMenu.BottomBar;
@@ -14,6 +16,7 @@ namespace MainMenu
 		[SerializeField] private Transform _topBar;
 		public BottomBarController BottomBar;
 		[SerializeField] private GameObject _blockInteract;
+		public GameObject NotEnoughCoin;
 
 		[HideInInspector] public int InitialTopBarSiblingIndex;
 
@@ -41,6 +44,9 @@ namespace MainMenu
 			}
 
 			BottomBar.OpenShop();
+			yield return new WaitForSeconds(0.2f);
+			IAPShop.Instance.ScrollToBottom();
+
 			_blockInteract.SetActive(false);
 		}
 
@@ -71,6 +77,12 @@ namespace MainMenu
 		public void ResetTopBarSiblingIndex()
 		{
 			_topBar.SetSiblingIndex(InitialTopBarSiblingIndex);
+		}
+
+		public void ShowNotEnoughCoin()
+		{
+			NotEnoughCoin.SetActive(true);
+			NotEnoughCoin.transform.SetAsLastSibling();
 		}
 	}
 }

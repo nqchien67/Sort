@@ -1,52 +1,69 @@
+using System;
 using Controllers;
 using UnityEngine;
+using Utilities;
 
 namespace MainMenu.LuckySpin
 {
 	public class LuckySpinController : MonoBehaviour
 	{
-		[SerializeField] private GameObject luckySpinPanelPrefab;
+		[SerializeField] private LuckySpinPanel luckySpinPanelPrefab;
 		[SerializeField] private AudioClip popUpClip;
 		public GameObject luckySpinBtn;
-		private float clickTimeStamp = 0, packLifeTime, packTimeStamp, timeStamp;
+		[SerializeField] private NotiDot _notiDot;
+		private float clickTimeStamp;
+		private float packLifeTime;
+		private float packTimeStamp;
+		private float timeStamp;
 
-		public void OnClickOpenPanel()
+		private string TimeLineResetFreeSpin
 		{
-			if (Time.time - clickTimeStamp < 0.5f) 
-				return;
-		
-			clickTimeStamp = Time.time;
-			OpenPanel();
-		}
-
-		public void OpenPanel()
-		{
-			Instantiate(luckySpinPanelPrefab, MainMenuController.Instance.CameraCanvas);
-			// AudioController.Instance.PlaySfx(popUpClip);
-		}
-
-		public void OpenAndSpinIAP()
-		{
-			GameObject luckySpinPanel = Instantiate(luckySpinPanelPrefab, MainMenuController.Instance.CameraCanvas);
-			luckySpinPanel.GetComponent<LuckySpinPanel>().OnSpinIAP();
-			// AudioController.Instance.PlaySfx(popUpClip);
+			get => PlayerPrefs.GetString("TimeLineResetFreeSpin", "");
+			set => PlayerPrefs.SetString("TimeLineResetFreeSpin", value);
 		}
 
 		private void Start()
 		{
-			//Debug.LogError(DataController.Instance.GetLevelState(PlayerClassifyController.Instance.luckySpinData.chapter, PlayerClassifyController.Instance.luckySpinData.level) >= 1);
-			// if (PlayerClassifyController.Instance.luckySpinData.active
-			//     && DataController.Instance.GetLevelState(PlayerClassifyController.Instance.luckySpinData.chapter, PlayerClassifyController.Instance.luckySpinData.level) >= 1
-			//     && DateTime.Now >= PlayerClassifyController.Instance.luckySpinData.timeStart.ToDateTime('/')
-			//     && DateTime.Now < PlayerClassifyController.Instance.luckySpinData.timeEnd.ToDateTime('/'))
-			// {
 			bool isReachLevel5 = MainMenuController.Instance.HighestPassedLevel >= 5;
-			luckySpinBtn.SetActive(isReachLevel5);
-			// }
-			// else
-			// {
-			// 	luckySpinBtn.SetActive(false);
-			// }
+			if (isReachLevel5)
+			{
+				luckySpinBtn.SetActive(true);
+
+				bool haveFreeSpin = TimeLineResetFreeSpin == ""
+				                    || (DateTime.Today.AddDays(1) - DateTime.Parse(TimeLineResetFreeSpin))
+				                    .TotalSeconds >= 86400f;
+
+				_notiDot.SetEnable(haveFreeSpin);
+			}
+			else
+			{
+				luckySpinBtn.SetActive(false);
+			}
+		}
+
+		public void OnClickOpenPanel()
+		{
+			if (Time.time - clickTimeStamp < 0.5f)
+				return;
+
+			clickTimeStamp = Time.time;
+			OpenPanel();
+		}
+
+		private void OpenPanel()
+		{
+			// AudioController.Instance.PlaySfx(popUpClip);
+			var panel = Instantiate(luckySpinPanelPrefab, MainMenuController.Instance.CameraCanvas);
+
+			panel.OnUseFreeSpin += () => _notiDot.SetEnable(false);
+			panel.OnHaveFreeSpin += () => _notiDot.SetEnable(true);
+		}
+
+		public void OpenAndSpinIAP()
+		{
+			var luckySpinPanel = Instantiate(luckySpinPanelPrefab, MainMenuController.Instance.CameraCanvas);
+			luckySpinPanel.OnSpinIAP();
+			// AudioController.Instance.PlaySfx(popUpClip);
 		}
 	}
 }

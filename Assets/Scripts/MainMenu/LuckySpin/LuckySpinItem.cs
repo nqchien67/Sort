@@ -1,8 +1,10 @@
+using System;
 using System.Collections.Generic;
 using Data;
 using DG.Tweening;
 using TMPro;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace MainMenu.LuckySpin
 {
@@ -17,7 +19,7 @@ namespace MainMenu.LuckySpin
 		readonly int time = 0;
 
 		private int initialCoinAmount, initialEnergyAmount;
-		private List<int> initialConsumableQuantities;
+		private List<int> _initialConsumableQuantities;
 
 		private void OnValidate()
 		{
@@ -33,7 +35,8 @@ namespace MainMenu.LuckySpin
 		{
 			initialCoinAmount = coinAmount;
 			initialEnergyAmount = unlimitEnergyAmount;
-			initialConsumableQuantities = new List<int>(_consumableQuantities);
+
+			_initialConsumableQuantities = new List<int>(_consumableQuantities);
 		}
 
 		public void SetAdsRewardValue()
@@ -47,8 +50,11 @@ namespace MainMenu.LuckySpin
 			}
 			else if (_consumableQuantities.Count > 0)
 			{
-				_consumableQuantities[0] = initialConsumableQuantities[0] * 2;
-				amountText.text = "x" + _consumableQuantities[0];
+				for (int i = 0; i < _consumableQuantities.Count; i++)
+					_consumableQuantities[i] = _initialConsumableQuantities[i] * 2;
+
+				if (_consumableQuantities.Count == 1)
+					amountText.text = "x" + _consumableQuantities[0];
 			}
 
 			amountText.transform.DOScale(new Vector3(1.15f, 1.15f, 1), 0.3f).SetLoops(-1, LoopType.Yoyo)
@@ -66,8 +72,11 @@ namespace MainMenu.LuckySpin
 			}
 			else if (_consumableQuantities.Count > 0)
 			{
-				_consumableQuantities[0] = initialConsumableQuantities[0];
-				amountText.text = "x" + _consumableQuantities[0];
+				for (int i = 0; i < _consumableQuantities.Count; i++)
+					_consumableQuantities[i] = _initialConsumableQuantities[i];
+
+				if (_consumableQuantities.Count == 1)
+					amountText.text = "x" + _consumableQuantities[0];
 			}
 
 			amountText.transform.DOKill();
@@ -80,7 +89,7 @@ namespace MainMenu.LuckySpin
 			{
 				//DWHLog.Log.ResourceLog(DataController.Instance.GetMaxPassedLevelToInt(), FlowType.Source, "lucky_spin", "coin", "coin", coinAmount);
 				// APIController.Instance.LogEventEarnGold(coinAmount, "lucky_spin");
-				DataController.Instance.Coin += coinAmount;
+				// DataController.Instance.Coin += coinAmount;
 			}
 
 			if (unlimitEnergyAmount > 0)
@@ -118,9 +127,36 @@ namespace MainMenu.LuckySpin
 
 		public void OnOpenRewardPanel()
 		{
+			List<RewardType> rewardTypes;
+			List<int> quantities;
+
+			if (_consumables.Count > 1) //Chi lay 1 phan thuong thoi
+				(rewardTypes, quantities) = ChooseOneReward();
+			else
+			{
+				rewardTypes = _consumables;
+				quantities = _consumableQuantities;
+			}
+
 			FindObjectOfType<RewardPanelController>()
-				.Init(coinAmount, time, _consumables.ToArray(), _consumableQuantities.ToArray(), false, false);
+				.Init(coinAmount, time, rewardTypes.ToArray(), quantities.ToArray(), false, false);
 			DataController.Instance.SaveData();
+		}
+
+		private (List<RewardType>, List<int>) ChooseOneReward()
+		{
+			int randomIndex = Random.Range(0, _consumables.Count);
+			List<RewardType> rewardTypes = new List<RewardType>
+			{
+				_consumables[randomIndex]
+			};
+
+			List<int> quantities = new List<int>
+			{
+				_consumableQuantities[randomIndex]
+			};
+
+			return (rewardTypes, quantities);
 		}
 	}
 }

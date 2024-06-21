@@ -3,6 +3,7 @@ using System.IO;
 using System.Linq;
 using Data;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -40,7 +41,7 @@ namespace MainMenu.CollectionTask
 
 		private void Start()
 		{
-			_saveFilePath = Application.persistentDataPath + "/collection_task_progress.dat";
+			_saveFilePath = Path.Combine(Application.persistentDataPath, "collection_task_progress.dat");
 			LoadTasksData();
 			LoadProgressData();
 		}
@@ -66,8 +67,16 @@ namespace MainMenu.CollectionTask
 		{
 			if (File.Exists(_saveFilePath))
 			{
-				string data = File.ReadAllText(_saveFilePath);
-				ProgressData = JsonUtility.FromJson<CTProgressData>(data);
+				try
+				{
+					string data = File.ReadAllText(_saveFilePath);
+					ProgressData = JsonUtility.FromJson<CTProgressData>(data);
+				}
+				catch (Exception e)
+				{
+					Debug.LogError(e.Message);
+					GenerateNewProgressData();
+				}
 			}
 			else
 			{
@@ -122,7 +131,7 @@ namespace MainMenu.CollectionTask
 
 		public void ResetProgresses()
 		{
-			foreach (CTProgress progress in Progresses) 
+			foreach (CTProgress progress in Progresses)
 				progress.Reset();
 
 			StartFirstTask();

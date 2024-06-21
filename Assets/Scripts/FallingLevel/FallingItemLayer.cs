@@ -1,6 +1,4 @@
-﻿using Gameplay;
-using InGame.Gameplay;
-using UnityEngine;
+﻿using InGame.Gameplay;
 
 namespace FallingLevel
 {
@@ -10,7 +8,7 @@ namespace FallingLevel
 		{
 			if (ItemsCount != 0)
 				return;
-			
+
 			Shelf.RemoveFrontLayer();
 			if (reRenderShelf)
 				Shelf.RenderLayers();

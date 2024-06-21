@@ -22,10 +22,17 @@ namespace MainMenu.CollectionTask
 
 		[SerializeField] private Button _button;
 		[SerializeField] private GameObject _highlight;
+		[SerializeField] private Color _completedLineColor;
 		public GameObject Line;
 
 		private CTProgress _progress;
 		private CTTaskData _task;
+		private Image _lineImage;
+
+		private void Awake()
+		{
+			_lineImage = Line.GetComponent<Image>();
+		}
 
 		public void Init(CTTaskData task, CTProgress progress)
 		{
@@ -35,6 +42,9 @@ namespace MainMenu.CollectionTask
 			DisplayByState(progress.State);
 			_rewardImage.sprite = RewardHelper.Instance.GetRewardSprite(task.RewardType);
 			_rewardAmount.text = "x" + task.RewardAmount;
+
+			if (progress.Id < CollectionTaskController.Instance.CurrentTaskId) 
+				_lineImage.color = _completedLineColor;
 		}
 
 		public void OnClickClaim()
@@ -45,13 +55,19 @@ namespace MainMenu.CollectionTask
 			_progress.State = State.Claimed;
 			DisplayByState(_progress.State);
 
-			if (_task.RewardType == RewardType.Coin)
+			RewardType rewardType = _task.RewardType;
+			if (rewardType == RewardType.Coin)
 			{
 				DataController.Instance.Coin += _task.RewardAmount;
 				MainMenuController.Instance.PlayClaimCoinEffect(_rewardImage.transform.position);
 				CollectionTaskBar.Instance.CheckAndShowNotiDot();
 			}
-			
+			else if (RewardHelper.TryConvertRewardToBooster(rewardType, out BoosterType boosterType))
+			{
+				DataController.Instance.AddBooster(boosterType, _task.RewardAmount);
+				MainMenuController.Instance.PlayClaimRewardEffect(rewardType, transform.position);
+			}
+
 			CollectionTaskController.Instance.SaveData();
 		}
 

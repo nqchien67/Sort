@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using Controllers;
 using DG.Tweening;
-using MainMenu.TopCharts;
 using TMPro;
 using UnityEngine;
 using Utilities;
@@ -18,8 +16,11 @@ namespace InGame.Gameplay
 		[SerializeField] private Rigidbody2D[] _glassFragments;
 		[SerializeField] private RangeFloat _explosionForce;
 		[SerializeField] private float _explosionRadius;
+		public Shelf Shelf;
 
 		private GameObject _currentGlass;
+
+		private int _number;
 
 		public int Number
 		{
@@ -33,9 +34,6 @@ namespace InGame.Gameplay
 					Shelf.IsLocked = false;
 			}
 		}
-
-		private int _number;
-		public Shelf Shelf;
 
 		private void Start()
 		{
@@ -56,10 +54,7 @@ namespace InGame.Gameplay
 				_chains.RemoveAt(index);
 			}
 
-			for (int i = number; i < _glass.Count - 2; i++)
-			{
-				_glass.RemoveAt(i);
-			}
+			for (int i = number; i < _glass.Count - 2; i++) _glass.RemoveAt(i);
 		}
 
 		public void ReduceLocksNumber()
@@ -75,10 +70,8 @@ namespace InGame.Gameplay
 			ChangeGlass(Number);
 
 			if (Number == 0)
-			{
 				ApplyExplosionForce(_currentGlass.transform.position, _glassFragments, _explosionForce.GetRandomValue(),
 					_explosionRadius);
-			}
 		}
 
 		private void ChangeGlass(int index)

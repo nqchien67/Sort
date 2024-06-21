@@ -223,6 +223,7 @@ MonoBehaviour:
   Sprite: {fileID: 0}
   Renderer: {fileID: 0}
   _targetShelf: {fileID: 0}
+  _text: {fileID: 0}
 --- !u!1 &104808343
 GameObject:
   m_ObjectHideFlags: 0
@@ -441,6 +442,7 @@ MonoBehaviour:
   Sprite: {fileID: 0}
   Renderer: {fileID: 0}
   _targetShelf: {fileID: 0}
+  _text: {fileID: 0}
 --- !u!1001 &298968684
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -537,6 +539,7 @@ MonoBehaviour:
   Sprite: {fileID: 0}
   Renderer: {fileID: 0}
   _targetShelf: {fileID: 0}
+  _text: {fileID: 0}
 --- !u!20 &519420031 stripped
 Camera:
   m_CorrespondingSourceObject: {fileID: 1782046269589326260, guid: 084a2098e46630c4c80a9d9dd2b65e9c, type: 3}
@@ -879,6 +882,7 @@ MonoBehaviour:
   Sprite: {fileID: 0}
   Renderer: {fileID: 0}
   _targetShelf: {fileID: 1312743454}
+  _text: {fileID: 0}
 --- !u!1 &881846241
 GameObject:
   m_ObjectHideFlags: 0
@@ -1105,6 +1109,7 @@ MonoBehaviour:
   Sprite: {fileID: 0}
   Renderer: {fileID: 0}
   _targetShelf: {fileID: 0}
+  _text: {fileID: 0}
 --- !u!4 &1312743452 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4454619300260392223, guid: 8e64247cb21f14f46a3ffb2706b47eca, type: 3}
@@ -1304,6 +1309,7 @@ MonoBehaviour:
   Sprite: {fileID: 0}
   Renderer: {fileID: 0}
   _targetShelf: {fileID: 1794316527}
+  _text: {fileID: 0}
 --- !u!1001 &1621589690
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1370,7 +1376,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2092639037369388439, guid: 8e64247cb21f14f46a3ffb2706b47eca, type: 3}
       propertyPath: m_Name
-      value: Shelf
+      value: Shelf (2)
       objectReference: {fileID: 0}
     - target: {fileID: 2359224635988406267, guid: 8e64247cb21f14f46a3ffb2706b47eca, type: 3}
       propertyPath: m_Size.x
@@ -1592,14 +1598,13 @@ MonoBehaviour:
   LockPrefab: {fileID: 4389405379797761328, guid: e1b6c0f8c5e5a9d4a9af6be97c1ec437, type: 3}
   DisabledMaterial: {fileID: 2100000, guid: 854afd646f757394fa6e09e2f44c38be, type: 2}
   NormalMaterial: {fileID: 2100000, guid: 43e02f601d0b3a44ea8de2dea1da1104, type: 2}
-  UnknownMaterial: {fileID: 2100000, guid: 3cc52aee55c9fa54aa6c692f154cb11c, type: 2}
   LevelData:
     id: 0
     TotalShelves: 0
     ItemTypes: 0
     LayerPerShelf: 0
     LockShelves: 0
-    UnknownItem: 0
+    HaveUnknownItems: 0
   LockedShelves: []
   RemainItemTypes: []
   CanDrag: 1
@@ -1610,8 +1615,15 @@ MonoBehaviour:
   SortEffect: {fileID: 6447278513215144292, guid: 4d73530b8aafcd0478b95a2a46d2e873, type: 3}
   StarProp: {fileID: 5043075920097340578, guid: fbb1678156591434f9bc30dd9baaf900, type: 3}
   CoinProp: {fileID: 5043075920097340578, guid: 9f47bc15386ba18488067ee6278a0f7d, type: 3}
+  GameplayMusic: {fileID: 8300000, guid: 6aaecbec67a7de14fb9eda5344318fe4, type: 3}
+  PickupItemSfx: {fileID: 8300000, guid: 3becd2d4f934531499466f3e68b22aee, type: 3}
+  PutDownItemSfx: {fileID: 8300000, guid: 58ca63193aea60b48bb5f5c1976fe377, type: 3}
+  RemoveASetSfx: {fileID: 8300000, guid: 7ebeda1dddd99544da4c86da236eab3f, type: 3}
+  ComboSfx: {fileID: 8300000, guid: b54c4423efc792d42a594916da89967b, type: 3}
+  UseBoosterSfx: {fileID: 8300000, guid: ab307831df51d824ba69321063982334, type: 3}
   PausedTime: 0
   _hand: {fileID: 104808344}
+  _tutShelf: {fileID: 886287628}
 --- !u!1001 &1831324393
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -29,7 +29,8 @@ namespace MainMenu.TopCharts
 		public SuperChefDataNameUserFakesPos PlayerCardPosCollection;
 
 		public PlayerNameGenerator PlayerNameGenerator =>
-			_playerNameGenerator ??= new PlayerNameGenerator(_nationalFlagAvatars, _animalFlagAvatars, _humanFlagAvatars);
+			_playerNameGenerator ??=
+				new PlayerNameGenerator(_nationalFlagAvatars, _animalFlagAvatars, _humanFlagAvatars);
 
 		private PlayerNameGenerator _playerNameGenerator;
 
@@ -39,16 +40,11 @@ namespace MainMenu.TopCharts
 		[SerializeField] private Sprite[] _animalFlagAvatars;
 		[SerializeField] private Sprite[] _humanFlagAvatars;
 
-		protected override void Awake()
-		{
-			base.Awake();
-			saveFilePath = Application.persistentDataPath + "/top_charts_data.dat";
-			LoadPlayerData();
-		}
-
 		private void Start()
 		{
 			DontDestroyOnLoad(gameObject);
+			saveFilePath = Path.Combine(Application.persistentDataPath, "top_charts_data.dat");
+			LoadPlayerData();
 		}
 
 		public void SavePlayersData()
@@ -61,8 +57,16 @@ namespace MainMenu.TopCharts
 		{
 			if (File.Exists(saveFilePath))
 			{
-				string loadPlayerData = File.ReadAllText(saveFilePath);
-				PlayersDataCollection = JsonUtility.FromJson<PlayersDataCollection>(loadPlayerData);
+				try
+				{
+					string loadPlayerData = File.ReadAllText(saveFilePath);
+					PlayersDataCollection = JsonUtility.FromJson<PlayersDataCollection>(loadPlayerData);
+				}
+				catch (Exception e)
+				{
+					Debug.LogError(e.Message);
+					GenerateNewPLayersData();
+				}
 			}
 			else
 			{
@@ -116,7 +120,6 @@ namespace MainMenu.TopCharts
 				PlayersData[i].Rank = i;
 				if (PlayersData[i].Name == "You")
 				{
-					Debug.Log("asldjalskdas: " + i + "  " + PlayersData[i].Star);
 					PlayerPrefs.SetInt("RankUser", i);
 				}
 			}

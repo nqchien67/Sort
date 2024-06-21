@@ -32,7 +32,13 @@ namespace Utilities
 		{
 			yield return new WaitUntil(predicate);
 			action.Invoke();
-		} 
+		}
+
+		public static IEnumerator Wait(YieldInstruction yieldInstruction, Action action)
+		{
+			yield return yieldInstruction;
+			action.Invoke();
+		}
 
 		public static IEnumerator IMove(GameObject gameObject, Vector2 destination, float speed,
 			Action onComplete = null)

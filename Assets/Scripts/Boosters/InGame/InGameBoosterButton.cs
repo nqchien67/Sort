@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Audio;
 using Controllers;
 using Data;
-using Gameplay;
+using InGame.Gameplay;
+using InGame.UI;
 using Spine.Unity;
 using TMPro;
 using UnityEngine;
@@ -23,6 +25,7 @@ namespace Boosters.InGame
 		[SerializeField] private Image _buyIcon;
 		[SerializeField] private GameObject _lock;
 		protected Transform _spawnedEffect;
+		[SerializeField] private BuyBoosterPanel _boosterPanelPrefab;
 
 		protected LevelController LevelController => LevelController.Instance;
 		protected int _quantity;
@@ -32,7 +35,7 @@ namespace Boosters.InGame
 			_icon.sprite = Data.Sprite;
 			Button = GetComponent<Button>();
 			_quantityText = GetComponentInChildren<TextMeshProUGUI>();
-			Button.onClick.AddListener(Active);
+			Button.onClick.AddListener(OnClick);
 		}
 
 		private void Start()
@@ -49,9 +52,26 @@ namespace Boosters.InGame
 			RefreshQuantity();
 		}
 
-		public abstract void Active();
+		public void OnClick()
+		{
+			if (_quantity > 0)
+			{
+				if (CanUse())
+					Use();
+			}
+			else
+			{
+				var buyBoosterPanel = LevelUIController.Instance.SpawnBuyBoosterPanel();
+				buyBoosterPanel.Show(Data, RefreshQuantity);
+			}
+		}
 
-		protected List<Item> GetAllFrontItems()
+		public virtual void Use()
+		{
+			AudioController.Instance.PlaySfx(LevelController.Instance.UseBoosterSfx);
+		}
+
+		public List<Item> GetAllFrontItems()
 		{
 			List<Item> items = new List<Item>();
 
@@ -60,7 +80,7 @@ namespace Boosters.InGame
 			return items;
 		}
 
-		protected List<Item> FindSameItems(Item baseItem)
+		public List<Item> FindSameItems(Item baseItem)
 		{
 			List<Item> items = new List<Item>();
 
@@ -78,12 +98,14 @@ namespace Boosters.InGame
 		}
 
 		protected abstract Transform SpawnEffect();
+		protected abstract bool CanUse();
 
 		protected void ReduceQuantity()
 		{
 			_quantity--;
 			DataController.Instance.AddBooster(Data.Type, -1);
 			_quantityText.text = _quantity.ToString();
+			_buyIcon.gameObject.SetActive(_quantity <= 0);
 		}
 
 		public void RefreshQuantity()

@@ -88,4 +88,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5414c9b7273941bb94a2d5b33d22bd06, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _blinkDuration: 0.2
+  _blinkDuration: 0.25
+  _blinkScale: 1.2

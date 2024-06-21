@@ -1,8 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using Data;
 using DG.Tweening;
-using Gameplay;
+using InGame.Gameplay;
 using Spine;
 using Spine.Unity;
 using UnityEngine;
@@ -13,13 +12,11 @@ namespace Boosters.InGame
 	{
 		private SkeletonAnimation _effectSkeletonAnimation;
 
-		public override void Active()
+		public override void Use()
 		{
-			if (LevelController.CanDrag && _quantity > 0)
-			{
-				CollectItems();
-				ReduceQuantity();
-			}
+			base.Use();
+			CollectItems();
+			ReduceQuantity();
 		}
 
 		protected override Transform SpawnEffect()
@@ -37,7 +34,12 @@ namespace Boosters.InGame
 			return _spawnedEffect;
 		}
 
-		public Coroutine CollectItems(bool playEffect = true)
+		protected override bool CanUse()
+		{
+			return LevelController.CanDrag;
+		}
+
+		private Coroutine CollectItems(bool playEffect = true)
 		{
 			List<Item> items = GetAllFrontItems();
 			if (items.Count == 0)
@@ -47,7 +49,7 @@ namespace Boosters.InGame
 			return StartCoroutine(DestroyItems(foundItems, playEffect));
 		}
 
-		protected IEnumerator DestroyItems(List<Item> items, bool playEffect)
+		private IEnumerator DestroyItems(List<Item> items, bool playEffect)
 		{
 			LevelController.CanDrag = false;
 			const float duration = 0.4f;

@@ -1,13 +1,11 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Controllers;
 using Data;
-using DG.Tweening;
-using Gameplay;
+using UI;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace UI
+namespace MainMenu
 {
 	public class UnlockNewItemPanel : Popup
 	{

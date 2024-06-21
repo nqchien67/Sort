@@ -1,6 +1,7 @@
-﻿using UnityEngine;
+﻿using UI.MainMenu.BottomBar;
+using UnityEngine;
 
-namespace UI.MainMenu.BottomBar
+namespace MainMenu.BottomBar
 {
 	public class BottomBarController : MonoBehaviour
 	{

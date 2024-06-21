@@ -1,15 +1,10 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Data;
-using Gameplay;
 using InGame.Gameplay;
-using MainMenu.TopCharts;
-using UnityEditor;
 using UnityEngine;
 using Utilities;
-using Item = Gameplay.Item;
 using Random = UnityEngine.Random;
 
 namespace Controllers
@@ -50,6 +45,14 @@ namespace Controllers
 			foreach (var shelf in Shelves)
 				shelf.RenderLayers();
 
+			// var itemCount = new List<Item>();
+			// foreach (var s in Shelves)
+			// {
+			// 	itemCount.AddRange(s.GetAllItems());
+			// }
+			//
+			// Debug.Log(itemCount.Count); 
+			
 			_skinManager.SetShelfAndBackgroundSkin(Shelves);
 		}
 
@@ -138,25 +141,14 @@ namespace Controllers
 				}
 
 				if (unknownItems <= 0 || Random.value >= probabilityIsUnknown || item == null)
+				{
+					probabilityIsUnknown *= 1.5f;
 					continue;
-				item.Renderer.material = LevelController.Instance.UnknownMaterial;
+				}
+
+				ChangeToUnknownItem(item);
 				unknownItems--;
 			}
-
-			// yield return null;
-		}
-
-		private int CalculateUnknownItemsNumber()
-		{
-			Range number = new Range(6, 10);
-
-			if (!LevelData.IsHardLevel())
-				return number.GetRandomValue();
-
-			if (LevelController.IsReducedDifficulty())
-				return number.Max - 3;
-
-			return number.Max;
 		}
 
 		private void CalculateMaxItemPerLayer()
@@ -197,21 +189,16 @@ namespace Controllers
 				FillLockedShelves();
 
 			foreach (Shelf shelf in Shelves)
-			{
 				for (int i = shelf.Layers.Count - 1; i >= 0; i--)
 				{
 					var layer = shelf.Layers[i];
 					layer.CheckShouldDestroy(false);
 				}
-			}
 
 			if (this is FallingLevelSetupManager)
 				LevelController.Instance.Shelves = ToolHelper.RemoveNulls(Shelves);
 
-			foreach (var shelf in Shelves)
-			{
-				shelf.RenderLayers();
-			}
+			foreach (var shelf in Shelves) shelf.RenderLayers();
 		}
 
 		private void PlaceItemsShuffle(List<ShelfIndexPair> shelfIndexPairs, List<Item> refreshItems)
@@ -220,7 +207,6 @@ namespace Controllers
 			int count = 0;
 			cloneShelfIndexPairs = ShuffleList(shelfIndexPairs);
 			while (refreshItems.Count > 0)
-			{
 				for (int i = 0; i < 3; i++)
 				{
 					Item item = refreshItems[0];
@@ -241,7 +227,6 @@ namespace Controllers
 					currentLayer++;
 					cloneShelfIndexPairs = ShuffleList(shelfIndexPairs);
 				}
-			}
 		}
 
 		private void PlaceLastTwoTypeShuffle(List<Item> remainItems)
@@ -262,8 +247,7 @@ namespace Controllers
 				fixedItems.Add(item);
 			}
 		}
-
-
+		
 		private ShelfIndexPair GetValidShelfIndexPair(Sprite itemSprite, List<ShelfIndexPair> shelfIndexPairs,
 			int currentLayer)
 		{
@@ -395,6 +379,32 @@ namespace Controllers
 					frontLayer.PlaceItemAtIndex(item, i);
 				}
 			}
+		}
+
+		private static void ChangeToUnknownItem(Item item)
+		{
+			string spriteName = item.Type;
+			Sprite unknownSprite = Resources.Load<Sprite>("UnknownItems/" + spriteName);
+			if (unknownSprite == null)
+			{
+				Debug.LogError("khong tim thay: " + spriteName);
+				return;
+			}
+
+			item.SetSprite(unknownSprite);
+		}
+
+		private int CalculateUnknownItemsNumber()
+		{
+			Range number = new Range(6, 10);
+
+			if (!LevelData.IsHardLevel())
+				return number.GetRandomValue();
+
+			if (LevelController.IsReducedDifficulty())
+				return number.Max - 3;
+
+			return number.Max;
 		}
 
 		private void ReduceDifficult()

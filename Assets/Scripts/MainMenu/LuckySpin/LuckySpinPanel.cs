@@ -1,11 +1,11 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using Data;
 using DG.Tweening;
 using TMPro;
 using UI;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
@@ -29,6 +29,8 @@ namespace MainMenu.LuckySpin
 		private Sprite _freeWheelSprite;
 
 		[SerializeField] private GameObject _tutorial;
+		public UnityAction OnHaveFreeSpin;
+		public UnityAction OnUseFreeSpin;
 
 		private string TimeLineResetFreeSpin
 		{
@@ -52,13 +54,11 @@ namespace MainMenu.LuckySpin
 
 			string timeLineResetFreeSpin = TimeLineResetFreeSpin;
 			if (timeLineResetFreeSpin != "")
-			{
 				if ((DateTime.Today.AddDays(1) - DateTime.Parse(timeLineResetFreeSpin)).TotalSeconds < 86400f)
 				{
 					timeToFreeSpin = (int)(DateTime.Parse(timeLineResetFreeSpin) - DateTime.Now).TotalSeconds;
 					StartCountDownTimeToSpinFree();
 				}
-			}
 
 			if (PlayerPrefs.GetInt("level", 0) == 5 && PlayerPrefs.GetInt("LuckySpinPanelTutorial", 0) != 1)
 				_tutorial.SetActive(true);
@@ -106,7 +106,6 @@ namespace MainMenu.LuckySpin
 			iapButton.enabled = false;
 			float probability = Random.Range(0f, 100f);
 			for (int i = 0; i < luckySpinItems.Count; i++)
-			{
 				if (probability <= luckySpinItems[i].probability)
 				{
 					finalItem = luckySpinItems[i];
@@ -116,7 +115,6 @@ namespace MainMenu.LuckySpin
 				{
 					probability -= luckySpinItems[i].probability;
 				}
-			}
 
 			finalItem.OnCollect();
 			float timeRotate = 0.4f * (numberSpin + finalItem.rotationZ / 360f);
@@ -138,6 +136,7 @@ namespace MainMenu.LuckySpin
 			ResetTimeFreeSpin();
 			SwitchAdsAndFreeButton();
 			OnSpin(ChangeWheelAndRewardValue);
+			OnUseFreeSpin?.Invoke();
 		}
 
 		private void ResetTimeFreeSpin()
@@ -197,6 +196,7 @@ namespace MainMenu.LuckySpin
 				timeToFreeSpinText.gameObject.SetActive(false);
 
 				ChangeWheelAndRewardValue();
+				OnHaveFreeSpin?.Invoke();
 			}
 		}
 

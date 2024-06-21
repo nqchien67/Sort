@@ -405,6 +405,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _scrollRect: {fileID: 5334737676461209762}
   ShopSkinPanel: {fileID: 0}
+  SkinInUse: {fileID: 0}
 --- !u!1 &9068676793020716392
 GameObject:
   m_ObjectHideFlags: 0
@@ -458,7 +459,7 @@ MonoBehaviour:
     m_Left: 0
     m_Right: 0
     m_Top: 33
-    m_Bottom: 0
+    m_Bottom: 33
   m_ChildAlignment: 1
   m_StartCorner: 0
   m_StartAxis: 0

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using Audio;
 using Boosters;
 using Data;
 using DG.Tweening;
@@ -40,29 +41,33 @@ namespace Controllers
 		public Transform CameraCanvas;
 
 		public int HighestPassedLevel;
-		private int _nextLevel;
+		[HideInInspector] public int NextLevel;
 		[HideInInspector] public bool HardLevelComing;
 
 		public UnityAction<int> OnStartLevelAction;
 
+		[Header("Audio")] [SerializeField] private AudioClip _backgroundMusic;
+		public AudioClip CollectCoinSfx;
+		public AudioClip OpenRewardSfx;
+		public AudioClip ButtonClickSfx;
+
 		protected override void Awake()
 		{
-			HighestPassedLevel = DataController.Instance.HighestPassedLevel;
 			base.Awake();
-			// PlayerPrefs.SetInt("ReducedDifficulty", 0);
+			HighestPassedLevel = DataController.Instance.HighestPassedLevel;
+			NextLevel = HighestPassedLevel + 1;
+			HardLevelComing = NextLevel % 5 == 0 && HighestPassedLevel >= 10;
+
+			DataController.Instance.SaveData();
+
+			OnStartLevelAction += OnStartLevel;
+			AudioController.Instance.PlayMusic(_backgroundMusic, true);
+
+			DisplayMenuPanel();
 		}
 
 		private void Start()
 		{
-			_nextLevel = HighestPassedLevel + 1;
-			_buttonPlayText.text = "LEVEL " + _nextLevel;
-
-			HardLevelComing = _nextLevel % 5 == 0 && HighestPassedLevel > 5;
-
-			DataController.Instance.SaveData();
-
-			OnStartLevelAction += OnStartLevel; 
-			DisplayMenuPanel();
 		}
 
 		public void DisplayMenuPanel()
@@ -114,6 +119,8 @@ namespace Controllers
 
 				SceneController.Instance.LoadScene("Level" + level);
 				OnStartLevelAction?.Invoke(level);
+
+				AudioController.Instance.StopMusic();
 			}
 			else
 				EnergyController.Instance.OpenBuyEnergyPanel();
@@ -128,6 +135,7 @@ namespace Controllers
 		{
 			// isLockUpdateData = true;
 
+			AudioController.Instance.PlaySfx(CollectCoinSfx);
 			for (int i = 0; i < 5; i++)
 			{
 				StartCoroutine(CoinPropEffect(spawnPos));
@@ -159,13 +167,19 @@ namespace Controllers
 
 		public void PlayClaimRewardEffect(RewardType rewardType, Vector3 spawnPos)
 		{
+			PlayClaimRewardEffect(rewardType, spawnPos, MainMenuUIController.Instance.Avatar.Position);
+		}
+
+		public void PlayClaimRewardEffect(RewardType rewardType, Vector3 spawnPos, Vector3 targetPos,
+			Action onComplete = null)
+		{
 			var position = spawnPos;
 			RewardProp prop = Instantiate(_rewardPropPrefab, position, Quaternion.identity, CameraCanvas);
 			prop.Init(rewardType);
 
-			StartCoroutine(CommonIEnumerator.IMove(prop.gameObject, MainMenuUIController.Instance.Avatar.Position, 1));
+			StartCoroutine(CommonIEnumerator.IMove(prop.gameObject, targetPos, 1, onComplete));
 		}
-		
+
 		private void OnStartLevel(int level)
 		{
 			// if (level == 4)

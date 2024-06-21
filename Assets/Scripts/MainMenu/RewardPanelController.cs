@@ -34,7 +34,7 @@ namespace MainMenu
 			RewardType[] rewardTypes,
 			int[] itemAmounts,
 			bool logEvent = true,
-			bool claimReward = true,
+			bool claimReward = false,
 			bool canDouble = false,
 			string adsName = null,
 			int multiple = 1,
@@ -205,9 +205,9 @@ namespace MainMenu
 					// PlayerPrefs.SetInt("showoff_skin", 1);
 					// }
 					else if (multiple > 0 &&
-					         RewardHelper.TryConvertEnum(rewardType, out BoosterType boosterType))
+					         RewardHelper.TryConvertRewardToBooster(rewardType, out BoosterType boosterType))
 					{
-						ClaimBooster(multiple, rewardType, quantity);
+						ClaimBooster(multiple, quantity, boosterType, rewardType);
 					}
 				}
 
@@ -216,13 +216,10 @@ namespace MainMenu
 			}
 		}
 
-		private void ClaimBooster(int multiple, RewardType rewardType, int quantity)
+		private void ClaimBooster(int multiple, int quantity, BoosterType boosterType, RewardType rewardType)
 		{
-			for (int i = 0; i < quantity; i++)
+			for (int j = 0; j < quantity; j++)
 			{
-				BoosterType boosterType = (BoosterType)Enum.Parse(typeof(BoosterType),
-					rewardType.ToString());
-
 				InCreaseBooster(boosterType, quantity, multiple);
 				MainMenuController.Instance.PlayClaimRewardEffect(rewardType, transform.position);
 			}

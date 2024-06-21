@@ -1,11 +1,12 @@
 ﻿using System.Linq;
 using Data;
-using UnityEngine;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 
 namespace IAP
 {
 	[System.Serializable]
-	public class Packs
+	public class PacksData
 	{
 		public Pack[] packs;
 
@@ -22,14 +23,6 @@ namespace IAP
 			foreach (var pack in packs)
 				if (pack.Id == packId)
 					return pack.Price;
-			return 0;
-		}
-
-		public int GetPackCoinAmount(string packId)
-		{
-			foreach (var pack in packs)
-				if (pack.Id == packId)
-					return pack.coinAmount;
 			return 0;
 		}
 
@@ -55,10 +48,22 @@ namespace IAP
 	{
 		public string Id;
 		public float Price;
-		public int coinAmount;
+
+		[JsonProperty("RewardTypes", ItemConverterType=typeof(StringEnumConverter))]
 		public RewardType[] RewardTypes;
 		public int[] Quantities;
 		public string tag;
+
+		public int GetCoinAmount()
+		{
+			for (int i = 0; i < RewardTypes.Length; i++)
+			{
+				if (RewardTypes[i] == RewardType.Coin)
+					return Quantities[i];
+			}
+
+			return 0;
+		}
 	}
 
 	[System.Serializable]
@@ -82,37 +87,36 @@ namespace IAP
 		public int active;
 	}
 
-	public class IAPPackHelper
+	public static class IAPPackHelper
 	{
-		public const string IAP_VALUE = "user_iap_value";
+		// public const string IAP_VALUE = "user_iap_value";
 
 		public static Pack GetPack(string packId)
 		{
-			string packsData = FirebaseServiceController.Instance.GetShopPacksData();
-			Packs packs = JsonUtility.FromJson<Packs>(packsData);
-			return packs.packs.FirstOrDefault(pack => pack.Id == packId);
+			string stringData = FirebaseServiceController.Instance.GetShopPacksData();
+			PacksData packsData = JsonConvert.DeserializeObject<PacksData>(stringData);
+			return packsData.packs.FirstOrDefault(pack => pack.Id == packId);
 		}
 
 		public static float GetPackPrice(string packId)
 		{
-			string packsData = FirebaseServiceController.Instance.GetShopPacksData();
-			Packs packs = JsonUtility.FromJson<Packs>(packsData);
-			return packs.GetPackPrice(packId);
+			string stringData = FirebaseServiceController.Instance.GetShopPacksData();
+			PacksData packsData = JsonConvert.DeserializeObject<PacksData>(stringData);
+			return packsData.GetPackPrice(packId);
 		}
 
 		public static RewardType[] GetPackReward(string packId)
 		{
-			string packsData = FirebaseServiceController.Instance.GetShopPacksData();
-			Packs packs = JsonUtility.FromJson<Packs>(packsData);
-			return packs.GetPackReward(packId);
+			string stringData = FirebaseServiceController.Instance.GetShopPacksData();
+			PacksData packsData = JsonConvert.DeserializeObject<PacksData>(stringData);
+			return packsData.GetPackReward(packId);
 		}
 
 		public static int[] GetPackRewardAmounts(string packId)
 		{
-			string packsData = FirebaseServiceController.Instance.GetShopPacksData();
-			Packs packs = JsonUtility.FromJson<Packs>(packsData);
-			return packs.GetPackRewardAmounts(packId);
+			string stringData = FirebaseServiceController.Instance.GetShopPacksData();
+			PacksData packsData = JsonConvert.DeserializeObject<PacksData>(stringData);
+			return packsData.GetPackRewardAmounts(packId);
 		}
-		
 	}
 }

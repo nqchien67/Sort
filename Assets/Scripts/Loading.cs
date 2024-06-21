@@ -36,6 +36,7 @@ public class Loading : SingletonCore<Loading>
 		_fillRectTransform = _fill.rectTransform;
 		_fillMaxSizeX = _fillRectTransform.sizeDelta.x;
 
+		FillLoadingBar(0);
 		StartCoroutine(LoadingTexAnimation());
 	}
 
@@ -53,13 +54,13 @@ public class Loading : SingletonCore<Loading>
 		while (elapsedTime <= _loadTime)
 		{
 			yield return new WaitForSecondsRealtime(1);
-			FillLoadingbar(elapsedTime / _loadTime);
+			FillLoadingBar(elapsedTime / _loadTime);
 			elapsedTime++;
 		}
 
 		asyncLoad.allowSceneActivation = true;
 
-		FillLoadingbar(1);
+		FillLoadingBar(1);
 		while (!asyncLoad.isDone)
 			yield return null;
 
@@ -97,7 +98,7 @@ public class Loading : SingletonCore<Loading>
 		}
 	}
 
-	private void FillLoadingbar(float fillAmount)
+	private void FillLoadingBar(float fillAmount)
 	{
 		var sizeDelta = _fillRectTransform.sizeDelta;
 		sizeDelta.x = Mathf.Lerp(0, _fillMaxSizeX, fillAmount);

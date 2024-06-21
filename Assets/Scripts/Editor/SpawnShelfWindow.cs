@@ -1,6 +1,7 @@
 ﻿using InGame.Gameplay;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class SpawnShelfWindow : EditorWindow
 {
@@ -34,7 +35,7 @@ public class SpawnShelfWindow : EditorWindow
 
 			for (int x = 0; x < _columnCount; x++)
 				toggleStates[x, y] = EditorGUILayout.Toggle(toggleStates[x, y]);
-
+			
 			EditorGUILayout.EndHorizontal();
 		}
 

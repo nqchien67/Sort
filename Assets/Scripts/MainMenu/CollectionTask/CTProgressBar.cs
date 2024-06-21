@@ -1,4 +1,5 @@
 ﻿using Data;
+using DG.Tweening;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -49,14 +50,15 @@ namespace MainMenu.CollectionTask
 
 		private void UpdateProgressBar(int currentAmount, int requestAmount)
 		{
-			Debug.Log(currentAmount + ", " + requestAmount);
 			var sizeDelta = _progressBarFill.sizeDelta;
 			var maxFillBarLength = sizeDelta.x;
 
 			float fillPercent = (float)currentAmount / requestAmount;
 			sizeDelta.x = maxFillBarLength * fillPercent;
 
-			_progressBarFill.sizeDelta = sizeDelta;
+			// _progressBarFill.sizeDelta = sizeDelta;
+			_progressBarFill.sizeDelta = new Vector2(0, sizeDelta.y);
+			_progressBarFill.DOSizeDelta(sizeDelta, 1.1f);
 			_progressAmountText.text = currentAmount + "/" + requestAmount;
 		}
 	}

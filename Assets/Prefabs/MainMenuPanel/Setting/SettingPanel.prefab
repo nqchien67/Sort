@@ -1744,7 +1744,7 @@ MonoBehaviour:
   m_OnEndEdit:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 47587864309447161}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: Menu.Setting.Profile.EditProfilePanel, Assembly-CSharp
         m_MethodName: OnEndNameEdit
         m_Mode: 1
@@ -3430,7 +3430,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 47587864309447161}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: Menu.Setting.Profile.EditProfilePanel, Assembly-CSharp
         m_MethodName: OnClickCloseAvatarList
         m_Mode: 1
@@ -4555,7 +4555,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 31.5092, y: -76}
+  m_AnchoredPosition: {x: -4.3999805, y: 37.594482}
   m_SizeDelta: {x: 896.5463, y: 843.5114}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2982708269320768536
@@ -7446,7 +7446,6 @@ GameObject:
   - component: {fileID: 4244454616550755249}
   - component: {fileID: 2852143698173296461}
   - component: {fileID: 6759998106638017864}
-  - component: {fileID: 47587864309447161}
   m_Layer: 5
   m_Name: SettingPanel
   m_TagString: Untagged
@@ -7533,226 +7532,6 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &47587864309447161
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6140817698772805657}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6668a535a6424d8d98d947d8665e415c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _sprites:
-  - {fileID: 21300000, guid: c26c92b54c1366749b8992bf4b957ff0, type: 3}
-  - {fileID: 21300000, guid: e02bb6d861b0882468f94a9162d8769c, type: 3}
-  - {fileID: 21300000, guid: 998e364d0d7076245ab51944fd4e2de6, type: 3}
-  - {fileID: 21300000, guid: 5e5cb18723bbddb44ab07f4d8e8d7317, type: 3}
-  - {fileID: 21300000, guid: 8d0f6636567b68c4da2af924a09f0a98, type: 3}
-  - {fileID: 21300000, guid: d0f7a7fd1bb76d24fad75b793ce2f78c, type: 3}
-  - {fileID: 21300000, guid: f10fb28e59977d540b6724de58e85f35, type: 3}
-  - {fileID: 21300000, guid: f83001ace6a421344b87be86e6dc5e95, type: 3}
-  - {fileID: 21300000, guid: 8fb26e8cd91abae4c96035321b1ec11d, type: 3}
-  - {fileID: 21300000, guid: 806b36ff1c3536c4f91c78e9ffcad8e7, type: 3}
-  - {fileID: 21300000, guid: c74e9b06fe4dabb49afdf09085bd0ab7, type: 3}
-  - {fileID: 21300000, guid: 87850c1598f6684429adcdb7b3ec1a28, type: 3}
-  - {fileID: 21300000, guid: a9a23178ddcf5e14d91a69c86de3e9bd, type: 3}
-  - {fileID: 21300000, guid: 3232cadaa5686dc48a935cb68ccd9c96, type: 3}
-  - {fileID: 21300000, guid: 2ca57e619bd8eae47a5ddfaa14a9091f, type: 3}
-  - {fileID: 21300000, guid: f241f75c09894194d89551210dabc7bc, type: 3}
-  - {fileID: 21300000, guid: 8c7bf73fc7e04d2418a3059c03fe8c10, type: 3}
-  - {fileID: 21300000, guid: fd22da12cffee6744b970d2e9340e87a, type: 3}
-  - {fileID: 21300000, guid: b1b2c0ad39c342b4d8da3f4b60a4b298, type: 3}
-  - {fileID: 21300000, guid: 28cf5f136de766048acd30807385614d, type: 3}
-  - {fileID: 21300000, guid: 2a3c2dada41bb084d96ac2a05129be66, type: 3}
-  - {fileID: 21300000, guid: 77e724863518ae044ab4fe7c06aa9c68, type: 3}
-  - {fileID: 21300000, guid: eb134b446df554b49976d9fea674ce00, type: 3}
-  - {fileID: 21300000, guid: 3a95358e305fc844589ab604356a84ef, type: 3}
-  - {fileID: 21300000, guid: 45ac993f56ef29244a68790f2e15f15f, type: 3}
-  - {fileID: 21300000, guid: 920ab3da3b6132546b950a023a8cac1a, type: 3}
-  - {fileID: 21300000, guid: 514eb5860b272ce448916802ea19c18e, type: 3}
-  - {fileID: 21300000, guid: 5f1707480ebf9b54fb188c4c0183466b, type: 3}
-  - {fileID: 21300000, guid: c7567c01817cfea44882f043733d71ca, type: 3}
-  - {fileID: 21300000, guid: 3e2714de6ce44b24ca48acfdcb88ef7a, type: 3}
-  - {fileID: 21300000, guid: 7b5632e21b2b6e947aab462dab35f27f, type: 3}
-  - {fileID: 21300000, guid: afead6a033d69054689f15e8d806704b, type: 3}
-  - {fileID: 21300000, guid: 809ea93a056a72146a589b07c8f974ed, type: 3}
-  - {fileID: 21300000, guid: 640b1b24bc4e9434b858260ad8d21046, type: 3}
-  - {fileID: 21300000, guid: e87c77cca2ba27149b5ed0b520e020ce, type: 3}
-  - {fileID: 21300000, guid: 27d706831d4ed584abae197e7fdf4a4e, type: 3}
-  - {fileID: 21300000, guid: 4401943b5cb5d92428533e8c77d73770, type: 3}
-  - {fileID: 21300000, guid: 6de240d9f5bd6fe4d8b87eab41880818, type: 3}
-  - {fileID: 21300000, guid: 0d1e30a53731f824083e92b07c7b6dcb, type: 3}
-  - {fileID: 21300000, guid: 03a005531b61513479708e41fbb387d5, type: 3}
-  - {fileID: 21300000, guid: c7bf00d04f5c6c74a944811520619b60, type: 3}
-  - {fileID: 21300000, guid: 2bf7fc122e8790240900a3dc3c5d694c, type: 3}
-  - {fileID: 21300000, guid: 22b412bab5377b848ba3ee9887dae77f, type: 3}
-  - {fileID: 21300000, guid: e2ede599f2974b34ea00b605d953053d, type: 3}
-  - {fileID: 21300000, guid: 5af5d06aac233734db3f351253716ec8, type: 3}
-  - {fileID: 21300000, guid: 529096a2133ccc5408b5fd3ce091f5f1, type: 3}
-  - {fileID: 21300000, guid: 31438fb37362f5b4fa1f567331712be3, type: 3}
-  - {fileID: 21300000, guid: bd45a45ee49b7224d9858db68a368061, type: 3}
-  - {fileID: 21300000, guid: 2032986b7cb3ce642a6f06e325ac3242, type: 3}
-  - {fileID: 21300000, guid: b6e9013ee7a549c4a8a4602ca9fb4b16, type: 3}
-  Avatars:
-  - id: 0
-    sprite: {fileID: 21300000, guid: c26c92b54c1366749b8992bf4b957ff0, type: 3}
-    howToUnlock: 1
-  - id: 1
-    sprite: {fileID: 21300000, guid: e02bb6d861b0882468f94a9162d8769c, type: 3}
-    howToUnlock: 2
-  - id: 2
-    sprite: {fileID: 21300000, guid: 998e364d0d7076245ab51944fd4e2de6, type: 3}
-    howToUnlock: 2
-  - id: 3
-    sprite: {fileID: 21300000, guid: 5e5cb18723bbddb44ab07f4d8e8d7317, type: 3}
-    howToUnlock: 0
-  - id: 4
-    sprite: {fileID: 21300000, guid: 8d0f6636567b68c4da2af924a09f0a98, type: 3}
-    howToUnlock: 1
-  - id: 5
-    sprite: {fileID: 21300000, guid: d0f7a7fd1bb76d24fad75b793ce2f78c, type: 3}
-    howToUnlock: 1
-  - id: 6
-    sprite: {fileID: 21300000, guid: f10fb28e59977d540b6724de58e85f35, type: 3}
-    howToUnlock: 2
-  - id: 7
-    sprite: {fileID: 21300000, guid: f83001ace6a421344b87be86e6dc5e95, type: 3}
-    howToUnlock: 1
-  - id: 8
-    sprite: {fileID: 21300000, guid: 8fb26e8cd91abae4c96035321b1ec11d, type: 3}
-    howToUnlock: 1
-  - id: 9
-    sprite: {fileID: 21300000, guid: 806b36ff1c3536c4f91c78e9ffcad8e7, type: 3}
-    howToUnlock: 1
-  - id: 10
-    sprite: {fileID: 21300000, guid: c74e9b06fe4dabb49afdf09085bd0ab7, type: 3}
-    howToUnlock: 1
-  - id: 11
-    sprite: {fileID: 21300000, guid: 87850c1598f6684429adcdb7b3ec1a28, type: 3}
-    howToUnlock: 2
-  - id: 12
-    sprite: {fileID: 21300000, guid: a9a23178ddcf5e14d91a69c86de3e9bd, type: 3}
-    howToUnlock: 0
-  - id: 13
-    sprite: {fileID: 21300000, guid: 3232cadaa5686dc48a935cb68ccd9c96, type: 3}
-    howToUnlock: 0
-  - id: 14
-    sprite: {fileID: 21300000, guid: 2ca57e619bd8eae47a5ddfaa14a9091f, type: 3}
-    howToUnlock: 0
-  - id: 15
-    sprite: {fileID: 21300000, guid: f241f75c09894194d89551210dabc7bc, type: 3}
-    howToUnlock: 0
-  - id: 16
-    sprite: {fileID: 21300000, guid: 8c7bf73fc7e04d2418a3059c03fe8c10, type: 3}
-    howToUnlock: 0
-  - id: 17
-    sprite: {fileID: 21300000, guid: fd22da12cffee6744b970d2e9340e87a, type: 3}
-    howToUnlock: 0
-  - id: 18
-    sprite: {fileID: 21300000, guid: b1b2c0ad39c342b4d8da3f4b60a4b298, type: 3}
-    howToUnlock: 0
-  - id: 19
-    sprite: {fileID: 21300000, guid: 28cf5f136de766048acd30807385614d, type: 3}
-    howToUnlock: 0
-  - id: 20
-    sprite: {fileID: 21300000, guid: 2a3c2dada41bb084d96ac2a05129be66, type: 3}
-    howToUnlock: 0
-  - id: 21
-    sprite: {fileID: 21300000, guid: 77e724863518ae044ab4fe7c06aa9c68, type: 3}
-    howToUnlock: 0
-  - id: 22
-    sprite: {fileID: 21300000, guid: eb134b446df554b49976d9fea674ce00, type: 3}
-    howToUnlock: 0
-  - id: 23
-    sprite: {fileID: 21300000, guid: 3a95358e305fc844589ab604356a84ef, type: 3}
-    howToUnlock: 0
-  - id: 24
-    sprite: {fileID: 21300000, guid: 45ac993f56ef29244a68790f2e15f15f, type: 3}
-    howToUnlock: 0
-  - id: 25
-    sprite: {fileID: 21300000, guid: 920ab3da3b6132546b950a023a8cac1a, type: 3}
-    howToUnlock: 0
-  - id: 26
-    sprite: {fileID: 21300000, guid: 514eb5860b272ce448916802ea19c18e, type: 3}
-    howToUnlock: 0
-  - id: 27
-    sprite: {fileID: 21300000, guid: 5f1707480ebf9b54fb188c4c0183466b, type: 3}
-    howToUnlock: 0
-  - id: 28
-    sprite: {fileID: 21300000, guid: c7567c01817cfea44882f043733d71ca, type: 3}
-    howToUnlock: 0
-  - id: 29
-    sprite: {fileID: 21300000, guid: 3e2714de6ce44b24ca48acfdcb88ef7a, type: 3}
-    howToUnlock: 0
-  - id: 30
-    sprite: {fileID: 21300000, guid: 7b5632e21b2b6e947aab462dab35f27f, type: 3}
-    howToUnlock: 0
-  - id: 31
-    sprite: {fileID: 21300000, guid: afead6a033d69054689f15e8d806704b, type: 3}
-    howToUnlock: 0
-  - id: 32
-    sprite: {fileID: 21300000, guid: 809ea93a056a72146a589b07c8f974ed, type: 3}
-    howToUnlock: 0
-  - id: 33
-    sprite: {fileID: 21300000, guid: 640b1b24bc4e9434b858260ad8d21046, type: 3}
-    howToUnlock: 0
-  - id: 34
-    sprite: {fileID: 21300000, guid: e87c77cca2ba27149b5ed0b520e020ce, type: 3}
-    howToUnlock: 0
-  - id: 35
-    sprite: {fileID: 21300000, guid: 27d706831d4ed584abae197e7fdf4a4e, type: 3}
-    howToUnlock: 0
-  - id: 36
-    sprite: {fileID: 21300000, guid: 4401943b5cb5d92428533e8c77d73770, type: 3}
-    howToUnlock: 0
-  - id: 37
-    sprite: {fileID: 21300000, guid: 6de240d9f5bd6fe4d8b87eab41880818, type: 3}
-    howToUnlock: 0
-  - id: 38
-    sprite: {fileID: 21300000, guid: 0d1e30a53731f824083e92b07c7b6dcb, type: 3}
-    howToUnlock: 0
-  - id: 39
-    sprite: {fileID: 21300000, guid: 03a005531b61513479708e41fbb387d5, type: 3}
-    howToUnlock: 0
-  - id: 40
-    sprite: {fileID: 21300000, guid: c7bf00d04f5c6c74a944811520619b60, type: 3}
-    howToUnlock: 0
-  - id: 41
-    sprite: {fileID: 21300000, guid: 2bf7fc122e8790240900a3dc3c5d694c, type: 3}
-    howToUnlock: 0
-  - id: 42
-    sprite: {fileID: 21300000, guid: 22b412bab5377b848ba3ee9887dae77f, type: 3}
-    howToUnlock: 0
-  - id: 43
-    sprite: {fileID: 21300000, guid: e2ede599f2974b34ea00b605d953053d, type: 3}
-    howToUnlock: 0
-  - id: 44
-    sprite: {fileID: 21300000, guid: 5af5d06aac233734db3f351253716ec8, type: 3}
-    howToUnlock: 0
-  - id: 45
-    sprite: {fileID: 21300000, guid: 529096a2133ccc5408b5fd3ce091f5f1, type: 3}
-    howToUnlock: 0
-  - id: 46
-    sprite: {fileID: 21300000, guid: 31438fb37362f5b4fa1f567331712be3, type: 3}
-    howToUnlock: 0
-  - id: 47
-    sprite: {fileID: 21300000, guid: bd45a45ee49b7224d9858db68a368061, type: 3}
-    howToUnlock: 0
-  - id: 48
-    sprite: {fileID: 21300000, guid: 2032986b7cb3ce642a6f06e325ac3242, type: 3}
-    howToUnlock: 0
-  - id: 49
-    sprite: {fileID: 21300000, guid: b6e9013ee7a549c4a8a4602ca9fb4b16, type: 3}
-    howToUnlock: 0
-  _avatarImage: {fileID: 6344333238468362977}
-  _popupMinSize: {x: 200, y: 300.9}
-  _avatarsGroup: {fileID: 1243177118357767698}
-  _editNameButton: {fileID: 4958222820706769729}
-  _nameInputField: {fileID: 144062371076213808}
-  AvatarCoinPrice: 200
 --- !u!1 &6172605490478576029
 GameObject:
   m_ObjectHideFlags: 0
@@ -8285,7 +8064,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 47587864309447161}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: Menu.Setting.Profile.EditProfilePanel, Assembly-CSharp
         m_MethodName: OnClickEditName
         m_Mode: 1
@@ -8898,8 +8677,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -30.700195, y: 5.300049}
-  m_SizeDelta: {x: 196.67407, y: 194.27612}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &9208988474421480479
 CanvasRenderer:
@@ -9154,7 +8933,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 47587864309447161}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: Menu.Setting.Profile.EditProfilePanel, Assembly-CSharp
         m_MethodName: OnClickShowAvatarList
         m_Mode: 1
@@ -10702,7 +10481,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 415.90915, y: 279.40552}
+  m_AnchoredPosition: {x: 380, y: 393}
   m_SizeDelta: {x: 84, y: 88}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1120922150149934805
@@ -10981,6 +10760,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: -79.5904
       objectReference: {fileID: 0}
+    - target: {fileID: 999436929567380731, guid: 3c97961a48bdfb348a5a86a75eca772e, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1777873711802013122, guid: 3c97961a48bdfb348a5a86a75eca772e, type: 3}
       propertyPath: m_IsActive
       value: 0
@@ -11180,7 +10963,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1937235795475962875, guid: 5f3cfed984de4af4395d1c5149196f90, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1942989089549653218, guid: 5f3cfed984de4af4395d1c5149196f90, type: 3}
       propertyPath: m_AnchorMax.y

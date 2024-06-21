@@ -1,9 +1,11 @@
-﻿using MainMenu.Setting.Profile;
+﻿using Audio;
+using MainMenu.Setting.Profile;
 using TMPro;
+using UI;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace UI.MainMenu.Setting
+namespace MainMenu.Setting
 {
 	public class SettingPanel : Popup
 	{
@@ -26,15 +28,15 @@ namespace UI.MainMenu.Setting
 		[SerializeField] TextMeshProUGUI textLanguage;
 		private AudioController audioController;
 		bool isIOS, isShowRate, isShowFeedBack;
-		string policyURL = "https://publish.bravestars.com/privacy.txt";
+		private const string _policyURL = "";
 
-		private EditProfilePanel _editProfilePanel;
+		// private EditProfilePanel _editProfilePanel;
 		
 		protected override void Awake()
 		{
 			base.Awake();
 			audioController = AudioController.Instance;
-			_editProfilePanel = GetComponent<EditProfilePanel>();
+			// _editProfilePanel = GetComponent<EditProfilePanel>();
 		}
 
 		public override void Show()
@@ -123,8 +125,8 @@ namespace UI.MainMenu.Setting
 
 		public void OnClickRateUs()
 		{
-			//FindObjectOfType<MainMenuController>().UIRateUsController.Spawn(transform.parent, true);
-			rateUsPrefab.Spawn(true);
+			// FindObjectOfType<MainMenuController>().UIRateUsController.Spawn(transform.parent, true);
+			 rateUsPrefab.Spawn(true);
 		}
 
 		public void OnClickContactUs()
@@ -208,7 +210,7 @@ namespace UI.MainMenu.Setting
 		
 		public void BTN_ClickPolicy()
 		{
-			Application.OpenURL(policyURL);
+			Application.OpenURL(_policyURL);
 		}
 
 		// public override void Close()

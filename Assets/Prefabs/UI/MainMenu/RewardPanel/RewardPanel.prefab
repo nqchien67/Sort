@@ -145,6 +145,7 @@ GameObject:
   - component: {fileID: 6139207211948772489}
   - component: {fileID: 597475476113337337}
   - component: {fileID: 6009611720691902067}
+  - component: {fileID: 8783246590043002655}
   m_Layer: 5
   m_Name: VideoRewards
   m_TagString: Untagged
@@ -238,6 +239,20 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &8783246590043002655
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1600480450289649122}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 094c4108b5fec694b9327f59da7ee5b0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  btnClickAudio: {fileID: 0}
+  isNotScale: 0
 --- !u!1 &1953905388603587588
 GameObject:
   m_ObjectHideFlags: 0
@@ -1076,6 +1091,7 @@ GameObject:
   - component: {fileID: 3881761314779731699}
   - component: {fileID: 3881761314779731700}
   - component: {fileID: 3881761314779731698}
+  - component: {fileID: 3795421778134940548}
   m_Layer: 5
   m_Name: Claim
   m_TagString: Untagged
@@ -1168,6 +1184,20 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &3795421778134940548
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3881761314779731696}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 094c4108b5fec694b9327f59da7ee5b0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  btnClickAudio: {fileID: 0}
+  isNotScale: 0
 --- !u!1 &5193899564997713236
 GameObject:
   m_ObjectHideFlags: 0
@@ -1254,6 +1284,7 @@ GameObject:
   - component: {fileID: 6168915291854911242}
   - component: {fileID: 6080166871698027312}
   - component: {fileID: 4697516993937859828}
+  - component: {fileID: 4086739471859665288}
   m_Layer: 5
   m_Name: Claim (1)
   m_TagString: Untagged
@@ -1346,6 +1377,20 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &4086739471859665288
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5522148646601451843}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 094c4108b5fec694b9327f59da7ee5b0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  btnClickAudio: {fileID: 0}
+  isNotScale: 0
 --- !u!1 &5910788505964451532
 GameObject:
   m_ObjectHideFlags: 0

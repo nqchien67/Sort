@@ -1,10 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Audio;
 using Controllers;
-using Gameplay;
 using UnityEngine;
-using Utilities;
 
 namespace InGame.Gameplay
 {
@@ -14,6 +13,7 @@ namespace InGame.Gameplay
 		[SerializeField] private float _placeItemAnimDuration;
 
 		public Item[] Items;
+		public Shelf Shelf;
 
 		public Vector3 Position
 		{
@@ -28,9 +28,8 @@ namespace InGame.Gameplay
 		}
 
 		public int ItemsCount => Items.Count(i => i != null);
-		public Shelf Shelf;
 
-		private void Awake()
+		protected virtual void Awake()
 		{
 			Items = new Item[3];
 		}
@@ -59,6 +58,8 @@ namespace InGame.Gameplay
 					continue;
 
 				yield return MoveItemToIndex(item, index);
+				AudioController.Instance.PlaySfx(LevelController.Instance.PutDownItemSfx);
+
 				yield return null;
 				StartCoroutine(CheckCorrect());
 				yield break;
@@ -96,23 +97,16 @@ namespace InGame.Gameplay
 
 			LevelController.Instance.RemainItemTypes.Remove(Items[0].Sprite);
 
-			for (int i = 1; i < Items.Length; i++)
-			{
-				StartCoroutine(Items[i].Disappear());
-			}
+			for (int i = 1; i < Items.Length; i++) StartCoroutine(Items[i].Disappear());
 
 			SpawnCoinProp();
+			AudioController.Instance.PlaySfx(LevelController.Instance.RemoveASetSfx);
 			yield return StartCoroutine(Items[0].Disappear());
-			
+
 			yield return null;
 			CheckShouldDestroy();
 			LevelController.Instance.EatASet();
 		}
-
-		private static readonly List<int> indexes = new List<int>
-		{
-			0, 1, 2
-		};
 
 		private void SpawnCoinProp()
 		{
@@ -176,10 +170,8 @@ namespace InGame.Gameplay
 				return false;
 
 			foreach (var i in Items)
-			{
 				if (i != null && i.Type != itemSprite.name)
 					return false;
-			}
 
 			return true;
 		}

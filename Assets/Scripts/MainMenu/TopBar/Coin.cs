@@ -47,7 +47,8 @@ namespace MainMenu.TopBar
 
 			_updateTween = DOTween.Sequence()
 				.Join(Text.DOCounter(currentValue, endValue, _updateDuration, false))
-				.Join(Icon.transform.DOScale(_originalScale * 1.25f, 0.06f).SetLoops(2, LoopType.Yoyo));
+				.Join(Icon.transform.DOScale(_originalScale * 1.25f, 0.06f).SetLoops(2, LoopType.Yoyo))
+				.SetUpdate(true);
 		}
 	}
 }

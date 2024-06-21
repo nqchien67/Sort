@@ -1,6 +1,4 @@
-﻿using System;
-using MainMenu.TopBar;
-using TMPro;
+﻿using TMPro;
 using UI;
 using UnityEngine;
 using UnityEngine.Events;

@@ -47,7 +47,7 @@ namespace MainMenu.CollectionTask
 			{
 				RectTransform currentTask =
 					_tasksUI[CollectionTaskController.CurrentTaskId].GetComponent<RectTransform>();
-				_tasksScrollRect.FocusOnItem(currentTask);
+				StartCoroutine(_tasksScrollRect.FocusOnItemCoroutine(currentTask, 2.2f));
 			}));
 		}
 
@@ -66,7 +66,6 @@ namespace MainMenu.CollectionTask
 			}
 
 			taskPrefab.Init(Tasks[0], Progresses[0]);
-
 			_tasksUI[_tasksUI.Count - 1].Line.SetActive(false);
 		}
 
@@ -83,7 +82,8 @@ namespace MainMenu.CollectionTask
 
 		private void OnDisable()
 		{
-			CollectionTaskController.Instance.OnResetProgress -= Inits;
+			if (CollectionTaskController.Instance != null)
+				CollectionTaskController.Instance.OnResetProgress -= Inits;
 		}
 	}
 }

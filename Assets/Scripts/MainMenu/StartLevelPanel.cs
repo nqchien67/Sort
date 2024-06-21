@@ -1,6 +1,7 @@
 ﻿using Boosters.Start;
 using Controllers;
 using Data;
+using DG.Tweening;
 using TMPro;
 using UI;
 using UnityEngine;
@@ -31,12 +32,27 @@ namespace MainMenu
 		{
 			Debug.Log("Show reward video");
 
-			foreach (var boosterButton in _startBoosterButtons)
-			{
-				DataController.Instance.AddBooster(boosterButton.boosterType, 1);
+			StartBoosterButton randomBoosterButton = _startBoosterButtons[Random.Range(0, _startBoosterButtons.Length)];
+			BoosterType boosterType = randomBoosterButton.boosterType;
+			DataController.Instance.AddBooster(boosterType, 1);
+			DataController.Instance.SaveData();
 
-				boosterButton.RefreshQuantityText();
+			if (RewardHelper.TryConvertBoosterToReward(boosterType, out var rewardType))
+			{
+				MainMenuController.Instance.PlayClaimRewardEffect(rewardType, _freeGifButton.transform.position,
+					randomBoosterButton.transform.position, () =>
+					{
+						randomBoosterButton.RefreshQuantityText();
+						randomBoosterButton.transform.DOScale(1.1f, 0.098f).SetLoops(2, LoopType.Yoyo);
+					});
 			}
+
+			// foreach (StartBoosterButton boosterButton in _startBoosterButtons)
+			// {
+			// 	DataController.Instance.AddBooster(boosterButton.boosterType, 1);
+			//
+			// 	boosterButton.RefreshQuantityText();
+			// }
 		}
 
 		public override void EndCloseAnimationTrigger()

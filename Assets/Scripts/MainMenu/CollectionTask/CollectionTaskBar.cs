@@ -50,7 +50,7 @@ namespace MainMenu.CollectionTask
 
 		public void CheckAndShowNotiDot()
 		{
-			_notiDot.Enable(CollectionTaskController.Instance.HaveUnclaimedReward());
+			_notiDot.SetEnable(CollectionTaskController.Instance.HaveUnclaimedReward());
 		}
 
 		private bool CanShowBar()

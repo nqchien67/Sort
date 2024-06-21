@@ -23,10 +23,12 @@ namespace Boosters
 			_unlockBoosterPanel.Data = _booster.Data;
 		}
 
-		private void Start()
+		private IEnumerator Start()
 		{
 			if (PlayerPrefs.GetInt(gameObject.name, 0) != 1)
 			{
+				yield return new WaitUntil(() => LevelController.Instance.CanDrag);
+				
 				_unlockBoosterPanel.OnClickClaim += OnClickClaimBooster;
 				_unlockBoosterPanel.Show();
 
@@ -84,7 +86,7 @@ namespace Boosters
 			LevelController.Instance.CanDrag = true;
 			LevelController.Instance.PausedTime = false;
 			
-			_booster.Active();
+			_booster.Use();
 			Destroy(gameObject);
 			PlayerPrefs.SetInt(gameObject.name, 1);
 

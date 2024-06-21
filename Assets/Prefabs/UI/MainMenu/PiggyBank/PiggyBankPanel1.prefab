@@ -5460,6 +5460,7 @@ GameObject:
   - component: {fileID: 8418095080629099937}
   - component: {fileID: 886327813034575794}
   - component: {fileID: 6800462711626266614}
+  - component: {fileID: 7019115847800777210}
   m_Layer: 5
   m_Name: AddCoinAdsBtn
   m_TagString: Untagged
@@ -5541,9 +5542,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: OnClick
+      - m_Target: {fileID: 3538449615492159779}
+        m_TargetAssemblyTypeName: MainMenu.PiggyBank.PiggyBankPanel, Assembly-CSharp
+        m_MethodName: OnClickAddCoinAds
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -5583,6 +5584,20 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 0.6
+--- !u!114 &7019115847800777210
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1827869790725483070}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 094c4108b5fec694b9327f59da7ee5b0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  btnClickAudio: {fileID: 0}
+  isNotScale: 0
 --- !u!1 &2178103165118206239
 GameObject:
   m_ObjectHideFlags: 0
@@ -7812,6 +7827,7 @@ GameObject:
   - component: {fileID: 4930514670823045672}
   - component: {fileID: 4930514670823045678}
   - component: {fileID: 8417389551175923247}
+  - component: {fileID: 686276082038158166}
   m_Layer: 5
   m_Name: BuyBtn
   m_TagString: Untagged
@@ -7933,6 +7949,20 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 0.6
+--- !u!114 &686276082038158166
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4930514670823045676}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 094c4108b5fec694b9327f59da7ee5b0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  btnClickAudio: {fileID: 0}
+  isNotScale: 0
 --- !u!1 &4930514670972471526
 GameObject:
   m_ObjectHideFlags: 0
@@ -9031,8 +9061,9 @@ GameObject:
   - component: {fileID: 7485830355941367629}
   - component: {fileID: 6186274592075481618}
   - component: {fileID: 7506260916554637367}
+  - component: {fileID: 614954394931777899}
   m_Layer: 5
-  m_Name: Close
+  m_Name: CloseButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -9151,6 +9182,20 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &614954394931777899
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6767598984205851167}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 094c4108b5fec694b9327f59da7ee5b0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  btnClickAudio: {fileID: 8300000, guid: d15080e446e4ce24486cc5611ab31cff, type: 3}
+  isNotScale: 0
 --- !u!1 &6841067694332624642
 GameObject:
   m_ObjectHideFlags: 0
@@ -9984,6 +10029,7 @@ GameObject:
   - component: {fileID: 6469713130109812551}
   - component: {fileID: 6008940638673580010}
   - component: {fileID: 403691339114819281}
+  - component: {fileID: 5790627715927875013}
   m_Layer: 5
   m_Name: BuyBtn
   m_TagString: Untagged
@@ -10105,6 +10151,20 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 0.6
+--- !u!114 &5790627715927875013
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9029221624166982437}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 094c4108b5fec694b9327f59da7ee5b0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  btnClickAudio: {fileID: 0}
+  isNotScale: 0
 --- !u!1001 &7819465236477014932
 PrefabInstance:
   m_ObjectHideFlags: 0

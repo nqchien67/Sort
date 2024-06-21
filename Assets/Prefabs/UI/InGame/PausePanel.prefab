@@ -1611,9 +1611,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 5727232936727376910}
         m_TargetAssemblyTypeName: 
-        m_MethodName: ChangeSfx
+        m_MethodName: OnClick
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1623,9 +1623,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 5727232936727376910}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: OnClick
+      - m_Target: {fileID: 5989756260049190438}
+        m_TargetAssemblyTypeName: UI.InGame.PausePanel, Assembly-CSharp
+        m_MethodName: ChangeSfx
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1770,9 +1770,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 5727232937924354558}
         m_TargetAssemblyTypeName: 
-        m_MethodName: ChangeVibration
+        m_MethodName: OnClick
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1782,9 +1782,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 5727232937924354558}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: OnClick
+      - m_Target: {fileID: 5989756260049190438}
+        m_TargetAssemblyTypeName: UI.InGame.PausePanel, Assembly-CSharp
+        m_MethodName: ChangeVibration
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1929,9 +1929,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 5727232938010312459}
         m_TargetAssemblyTypeName: 
-        m_MethodName: ChangeMusic
+        m_MethodName: OnClick
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1941,9 +1941,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 5727232938010312459}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: OnClick
+      - m_Target: {fileID: 5989756260049190438}
+        m_TargetAssemblyTypeName: UI.InGame.PausePanel, Assembly-CSharp
+        m_MethodName: ChangeMusic
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2534,7 +2534,7 @@ MonoBehaviour:
   sfxIconOn: {fileID: 21300000, guid: d3b07fd0fe984014d8b239658ef0ba94, type: 3}
   sfxIconOff: {fileID: 21300000, guid: 9443fb83dad9e3a43912d28e8e04aaf2, type: 3}
   vibrationIconOn: {fileID: 21300000, guid: 4cdc5a43cf9ebf34fa9a3a4438ed74d1, type: 3}
-  vibrationIconOff: {fileID: 21300000, guid: 9443fb83dad9e3a43912d28e8e04aaf2, type: 3}
+  vibrationIconOff: {fileID: 21300000, guid: c5945ecd92bda9544ac0af688eb203a1, type: 3}
   musicIcon: {fileID: 5727232938010312456}
   sfxIcon: {fileID: 5727232936727376907}
   vibrationIcon: {fileID: 5727232937924354554}

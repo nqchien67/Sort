@@ -1,8 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using Data;
 using DG.Tweening;
-using Gameplay;
+using InGame.Gameplay;
 using Spine;
 using Spine.Unity;
 using UnityEngine;
@@ -14,11 +13,9 @@ namespace Boosters.InGame
 		private List<Item> _items;
 		private SkeletonAnimation _effectSkeletonAnimation;
 
-		public override void Active()
+		public override void Use()
 		{
-			if (!LevelController.CanDrag )
-				return;
-
+			base.Use();
 			LevelController.CanDrag = false;
 			_items = GetAllItems();
 			foreach (var i in _items)
@@ -63,6 +60,11 @@ namespace Boosters.InGame
 			return _spawnedEffect;
 		}
 
+		protected override bool CanUse()
+		{
+			return LevelController.CanDrag;
+		}
+
 		private List<Item> GetAllItems()
 		{
 			List<Item> items = new List<Item>();
@@ -85,10 +87,9 @@ namespace Boosters.InGame
 			if (_spawnedEffect != null)
 				_effectSkeletonAnimation.AnimationState.Complete -= OnAnimationComplete;
 		}
-		
+
 		protected override bool IsBoosterUnlocked()
 		{
-			return true;
 			int highestPassedLevel = PlayerPrefs.GetInt("level", 0);
 			return highestPassedLevel >= 3;
 		}

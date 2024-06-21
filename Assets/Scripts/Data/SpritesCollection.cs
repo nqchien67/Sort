@@ -38,12 +38,12 @@ namespace Data
 		{
 			get
 			{
-				if (SkinData.BackgroundSkinInUse != null
-				    && SkinData.BackgroundSkinInUse.Id != 0
-				    && SkinData.BackgroundSkinInUse.InUse)
-				{
-					return SkinData.BackgroundSkinInUse;
-				}
+				// if (SkinData.BackgroundSkinInUse != null
+				//     && SkinData.BackgroundSkinInUse.Id != 0
+				//     && SkinData.BackgroundSkinInUse.InUse)
+				// {
+				// 	return SkinData.BackgroundSkinInUse;
+				// }
 
 				foreach (var skin in BackgroundSkins)
 				{
@@ -61,8 +61,14 @@ namespace Data
 		{
 			get
 			{
-				if (SkinData.EffectInUse != null)
-					return SkinData.EffectInUse;
+				// Debug.Log(SkinData.EffectInUse.Id);
+				// Debug.Log(SkinData.EffectInUse.InUse);
+				// if (SkinData.EffectInUse != null
+				//     && SkinData.EffectInUse.Id != 0
+				//     && SkinData.EffectInUse.InUse)
+				// {
+				// 	return SkinData.EffectInUse;
+				// }
 
 				foreach (var skin in Effects)
 				{
@@ -72,7 +78,7 @@ namespace Data
 					return skin;
 				}
 
-				return null;
+				return Effects[0];
 			}
 		}
 
@@ -204,7 +210,7 @@ namespace Data
 
 		public ItemSkin[] PriorityItems = Array.Empty<ItemSkin>();
 
-		public SkinData(int purchasableItemCount, int unlockableItemsCount, int shelfSkinsCount, int effectsCount)
+		public SkinData(int purchasableItemCount, int unlockableItemsCount, int backgroundSkinsCount, int effectsCount)
 		{
 			PurchasableItemSkins = new ItemSkin[purchasableItemCount];
 			for (int i = 0; i < purchasableItemCount; i++)
@@ -214,13 +220,19 @@ namespace Data
 			for (int i = 0; i < unlockableItemsCount; i++)
 				UnlockableItemSkins[i] = new UnlockableItemSkin(i);
 
-			BackgroundSkins = new Skin[shelfSkinsCount];
-			for (int i = 0; i < shelfSkinsCount; i++)
+			BackgroundSkins = new Skin[backgroundSkinsCount];
+			for (int i = 0; i < backgroundSkinsCount; i++)
 				BackgroundSkins[i] = new Skin(i);
+
+			BackgroundSkins[0].Unlocked = true;
+			BackgroundSkins[0].InUse = true;
 
 			Effects = new Skin[effectsCount];
 			for (int i = 0; i < effectsCount; i++)
 				Effects[i] = new Skin(i);
+
+			Effects[0].Unlocked = true;
+			Effects[0].InUse = true;
 		}
 	}
 

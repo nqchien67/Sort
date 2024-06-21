@@ -6,7 +6,7 @@ using Controllers;
 using Data;
 using DG.Tweening;
 using DigitalRuby.LightningBolt;
-using Gameplay;
+using InGame.Gameplay;
 using Spine;
 using Spine.Unity;
 using UnityEngine;
@@ -26,11 +26,9 @@ namespace Boosters.InGame
 		private List<Item> _effectedItems;
 		private SkeletonAnimation _effectSkeletonAnimation;
 
-		public override void Active()
+		public override void Use()
 		{
-			if (!LevelController.CanDrag || _quantity <= 0)
-				return;
-			
+			base.Use();
 			_x = 0;
 
 			int maxLayerCount = 0;
@@ -68,7 +66,7 @@ namespace Boosters.InGame
 
 				if (uniqueItems.Count == 0)
 					return;
-				
+
 				int randomIndex = Random.Range(0, uniqueItems.Count);
 				Item randomItem = uniqueItems[randomIndex];
 				uniqueItems.RemoveAt(randomIndex);
@@ -97,6 +95,11 @@ namespace Boosters.InGame
 			_effectSkeletonAnimation.AnimationState.SetAnimation(0, "animation", false);
 			_spawnedEffect.transform.position = spawnPos;
 			return _spawnedEffect;
+		}
+
+		protected override bool CanUse()
+		{
+			return LevelController.CanDrag;
 		}
 
 		private List<Item> RemoveDuplicate(List<Item> items)
@@ -172,7 +175,7 @@ namespace Boosters.InGame
 
 			return new WaitForSeconds(duration);
 		}
-		
+
 		protected override bool IsBoosterUnlocked()
 		{
 			int highestPassedLevel = PlayerPrefs.GetInt("level", 0);

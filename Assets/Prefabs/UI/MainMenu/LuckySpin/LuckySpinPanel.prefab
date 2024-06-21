@@ -575,8 +575,8 @@ MonoBehaviour:
   rotationZ: -270
   coinAmount: 0
   unlimitEnergyAmount: 0
-  _consumables: 
-  _consumableQuantities: 
+  _consumables: 010000000200000003000000
+  _consumableQuantities: 010000000100000001000000
 --- !u!1 &1771129863865963897
 GameObject:
   m_ObjectHideFlags: 0
@@ -1310,6 +1310,7 @@ GameObject:
   - component: {fileID: 3192281219989712880}
   - component: {fileID: 3192281219989712883}
   - component: {fileID: 1758920121569901938}
+  - component: {fileID: 5885224702974338581}
   m_Layer: 5
   m_Name: Close
   m_TagString: Untagged
@@ -1430,18 +1431,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: OnClick
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
 --- !u!95 &1758920121569901938
 Animator:
   serializedVersion: 3
@@ -1461,6 +1450,20 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &5885224702974338581
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3192281219989712845}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 094c4108b5fec694b9327f59da7ee5b0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  btnClickAudio: {fileID: 8300000, guid: d15080e446e4ce24486cc5611ab31cff, type: 3}
+  isNotScale: 1
 --- !u!1 &3192281220150403350
 GameObject:
   m_ObjectHideFlags: 0
@@ -8972,6 +8975,7 @@ GameObject:
   - component: {fileID: 8521593896128860654}
   - component: {fileID: 8521593896128860653}
   - component: {fileID: 8521593896128860652}
+  - component: {fileID: 3429908232381371184}
   m_Layer: 5
   m_Name: FreeBtn
   m_TagString: Untagged
@@ -9093,6 +9097,20 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &3429908232381371184
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8521593896128860657}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 094c4108b5fec694b9327f59da7ee5b0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  btnClickAudio: {fileID: 0}
+  isNotScale: 0
 --- !u!1 &8521593896337756287
 GameObject:
   m_ObjectHideFlags: 0
@@ -9256,6 +9274,7 @@ GameObject:
   - component: {fileID: 8521593896621460849}
   - component: {fileID: 8521593896621460848}
   - component: {fileID: 8521593896621460855}
+  - component: {fileID: 8828680818326687757}
   m_Layer: 5
   m_Name: AdsBtn
   m_TagString: Untagged
@@ -9378,6 +9397,20 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &8828680818326687757
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8521593896621460852}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 094c4108b5fec694b9327f59da7ee5b0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  btnClickAudio: {fileID: 0}
+  isNotScale: 0
 --- !u!1 &8521593896662704395
 GameObject:
   m_ObjectHideFlags: 0

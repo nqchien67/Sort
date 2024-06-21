@@ -6,6 +6,9 @@ TagManager:
   tags:
   - FxTemporaire
   - UserTopChartsCard
+  - x2
+  - x3
+  - x4
   layers:
   - Default
   - TransparentFX

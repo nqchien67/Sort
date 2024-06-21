@@ -43,7 +43,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f020123ee8404c0ab0e3fcbaee836fb9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _itemDistance: 0.965
+  _itemDistance: 1.03
   _placeItemAnimDuration: 0.1
   Items: []
   Shelf: {fileID: 0}

@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using Controllers;
-using Gameplay;
 using UnityEngine;
 
 namespace InGame.Gameplay
@@ -8,7 +7,18 @@ namespace InGame.Gameplay
 	public class Shelf : MonoBehaviour
 	{
 		public List<ItemLayer> Layers = new List<ItemLayer>();
+
+		public Sprite[] _centerSprites;
+		public Sprite[] _leftSprites;
+		public Sprite[] _rightSprites;
+
+		[SerializeField] private float _centerY;
+
+		[HideInInspector] public Lock Lock;
+		[HideInInspector] public bool IsLocked;
 		private BoxCollider2D _boxCollider;
+
+		private SpriteRenderer _renderer;
 
 		public SpriteRenderer Renderer
 		{
@@ -21,22 +31,11 @@ namespace InGame.Gameplay
 			}
 		}
 
-		private SpriteRenderer _renderer;
-
-		public Sprite[] _centerSprites;
-		public Sprite[] _leftSprites;
-		public Sprite[] _rightSprites;
-
-		[SerializeField] private float _centerY;
-
 		public Vector3 Position
 		{
 			get => transform.position;
 			set => transform.position = value;
 		}
-
-		[HideInInspector] public Lock Lock;
-		[HideInInspector] public bool IsLocked;
 
 		public ItemLayer FrontLayer => Layers[Layers.Count - 1];
 
@@ -158,20 +157,14 @@ namespace InGame.Gameplay
 		public List<Item> GetAllItems()
 		{
 			List<Item> items = new List<Item>();
-			foreach (var layer in Layers)
-			{
-				items.AddRange(layer.GetAllItems());
-			}
+			foreach (var layer in Layers) items.AddRange(layer.GetAllItems());
 
 			return items;
 		}
 
 		public void RefreshItemsPos()
 		{
-			foreach (var l in Layers)
-			{
-				l.RefreshItemPos();
-			}
+			foreach (var l in Layers) l.RefreshItemPos();
 		}
 	}
 }

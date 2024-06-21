@@ -1,16 +1,13 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using Audio;
 using Controllers;
 using DG.Tweening;
-using InGame;
-using InGame.Gameplay;
-using Spine.Unity;
 using UnityEngine;
-using UnityEngine.Jobs;
 using Utilities;
 
-namespace Gameplay
+namespace InGame.Gameplay
 {
 	public class Item : MonoBehaviour, IDraggable
 	{
@@ -20,9 +17,11 @@ namespace Gameplay
 		public Sprite Sprite;
 
 		[HideInInspector] public SpriteRenderer Renderer;
+
+		protected readonly List<Shelf> _touchingShelves = new List<Shelf>();
 		private Collider2D _collider;
 
-		protected List<Shelf> _touchingShelves = new List<Shelf>();
+		private ItemLayer _layer;
 		private int _originIndex;
 		protected ItemLayer _originLayer;
 
@@ -54,8 +53,6 @@ namespace Gameplay
 			}
 		}
 
-		private ItemLayer _layer;
-
 		private LevelController LevelController => LevelController.Instance;
 
 		private void Awake()
@@ -65,23 +62,14 @@ namespace Gameplay
 			_collider.enabled = false;
 		}
 
-		public void Init(Sprite sprite)
+		private void OnTriggerEnter2D(Collider2D other)
 		{
-			SetSprite(sprite);
-			gameObject.name = Type;
+			if (IsMoving && other.TryGetComponent(out Shelf shelf)) _touchingShelves.Add(shelf);
 		}
 
-		public void SetSprite(Sprite sprite)
+		private void OnTriggerExit2D(Collider2D other)
 		{
-			Type = sprite.name;
-			Sprite = sprite;
-			Renderer.sprite = sprite;
-		}
-
-		public void Active(bool active)
-		{
-			_collider.enabled = active;
-			Renderer.material = active ? LevelController.NormalMaterial : LevelController.DisabledMaterial;
+			if (other.TryGetComponent(out Shelf shelf)) _touchingShelves.Remove(shelf);
 		}
 
 		public virtual void OnStartDrag()
@@ -94,6 +82,7 @@ namespace Gameplay
 			transform.parent = null;
 
 			Renderer.sortingOrder = 1;
+			AudioController.Instance.PlaySfx(LevelController.Instance.PickupItemSfx);
 		}
 
 		public virtual bool CanDrag()
@@ -119,14 +108,39 @@ namespace Gameplay
 				LevelController.Instance.CheckFull();
 			}
 			else
+			{
 				MoveBack();
+			}
 
 			_touchingShelves.Clear();
 		}
 
+		public void Init(Sprite sprite)
+		{
+			SetSprite(sprite);
+			gameObject.name = Type;
+		}
+
+		public void SetSprite(Sprite sprite)
+		{
+			Type = sprite.name;
+			Sprite = sprite;
+			Renderer.sprite = sprite;
+		}
+
+		public void Active(bool active)
+		{
+			_collider.enabled = active;
+			Renderer.material = active ? LevelController.NormalMaterial : LevelController.DisabledMaterial;
+		}
+
 		protected void MoveBack()
 		{
-			_originLayer.MoveItemToIndex(this, _originIndex);
+			YieldInstruction yieldInstruction = _originLayer.MoveItemToIndex(this, _originIndex);
+
+			StartCoroutine(CommonIEnumerator.Wait(yieldInstruction,
+				() => AudioController.Instance.PlaySfx(LevelController.Instance.PutDownItemSfx)
+			));
 		}
 
 		public YieldInstruction LocalMove(Vector3 position, float duration)
@@ -153,27 +167,6 @@ namespace Gameplay
 			}
 
 			return nearestShelf;
-		}
-
-		public bool Equals(Item item2)
-		{
-			return Type == item2.Type;
-		}
-
-		private void OnTriggerEnter2D(Collider2D other)
-		{
-			if (IsMoving && other.TryGetComponent(out Shelf shelf))
-			{
-				_touchingShelves.Add(shelf);
-			}
-		}
-
-		private void OnTriggerExit2D(Collider2D other)
-		{
-			if (other.TryGetComponent(out Shelf shelf))
-			{
-				_touchingShelves.Remove(shelf);
-			}
 		}
 
 		public IEnumerator Disappear()

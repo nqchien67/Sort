@@ -14,7 +14,7 @@ namespace Controllers
 	{
 		public FallingShelf[,] Grid;
 
-		public int _gridColumn;
+		[Space] public int _gridColumn;
 		public int _gridRow;
 
 		[SerializeField] private float _cellSizeX;
@@ -63,12 +63,16 @@ namespace Controllers
 
 		private IEnumerator Fall(Vector2Int emptyCell)
 		{
-			_falling = true;
-			yield return null;
 			int x = emptyCell.x;
+			if (IsOutsideBound(new Vector2Int(x, emptyCell.y + 1)) || Grid[x, emptyCell.y + 1] == null)
+				yield break;
+
+			_falling = true;
+			CanDrag = false;
+			yield return null;
 
 			YieldInstruction wait = MoveEntityToCell(Grid[x, emptyCell.y + 1], new Vector2Int(x, emptyCell.y));
-			//TODO: kho hieu vai
+
 			for (int y = emptyCell.y + 1; y < _gridRow; y++)
 			{
 				if (!IsOutsideBound(new Vector2Int(x, y + 1)) && Grid[x, y + 1] != null)
@@ -79,6 +83,7 @@ namespace Controllers
 
 			yield return wait;
 			_falling = false;
+			CanDrag = true;
 		}
 
 		private YieldInstruction MoveEntityToCell(FallingShelf entity, Vector2Int endCell)
@@ -122,6 +127,7 @@ namespace Controllers
 
 		public void RemoveShelf(Shelf shelf)
 		{
+			Debug.Log(shelf.gameObject.name);
 			List<Shelf> temp = Shelves.ToList();
 			temp.Remove(shelf);
 			Shelves = temp.ToArray();
@@ -129,17 +135,17 @@ namespace Controllers
 
 		private void OnDrawGizmos()
 		{
-			// 	if (!Application.isPlaying)
-			// 		return;
-			//
-			// 	for (int x = 0; x < _gridColumn; x++)
-			// 	for (int y = 0; y < _gridRow; y++)
-			// 	{
-			// 		if (Grid[x, y] == null)
-			// 			continue;
-			//
-			// 		Gizmos.DrawSphere(ConvertWorldPosition(new Vector2Int(x, y)), 0.5f);
-			// 	}
+			if (!Application.isPlaying)
+				return;
+
+			for (int x = 0; x < _gridColumn; x++)
+			for (int y = 0; y < _gridRow; y++)
+			{
+				if (Grid[x, y] == null)
+					continue;
+
+				Gizmos.DrawSphere(ConvertToWorldPosition(new Vector2Int(x, y)), 0.5f);
+			}
 		}
 	}
 }

@@ -35,7 +35,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -174.9}
+  m_AnchoredPosition: {x: 0, y: 19.20001}
   m_SizeDelta: {x: 146.58, y: 147.08}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &24032814076304166
@@ -347,7 +347,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.16, y: -174.1}
+  m_AnchoredPosition: {x: -0.16, y: 20}
   m_SizeDelta: {x: 150.46, y: 150.46}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &24032814856761799
@@ -497,7 +497,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -174.89998}
+  m_AnchoredPosition: {x: 0, y: 19.200026}
   m_SizeDelta: {x: 159.76, y: 159.76}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &24032814908137973
@@ -717,7 +717,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 2, y: -408}
+  m_AnchoredPosition: {x: 2, y: -213.9}
   m_SizeDelta: {x: 1084, y: 236}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &844285539061738444
@@ -770,6 +770,7 @@ GameObject:
   - component: {fileID: 7462895439894964500}
   - component: {fileID: 2459464654749423400}
   - component: {fileID: 8120848765821145382}
+  - component: {fileID: 1271827169658032370}
   m_Layer: 5
   m_Name: Continue
   m_TagString: Untagged
@@ -794,7 +795,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -676}
+  m_AnchoredPosition: {x: 0, y: -481.9}
   m_SizeDelta: {x: 360, y: 140}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7462895439894964500
@@ -891,6 +892,20 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &1271827169658032370
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3382589733263621174}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 094c4108b5fec694b9327f59da7ee5b0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  btnClickAudio: {fileID: 0}
+  isNotScale: 0
 --- !u!1 &4267703327214504418
 GameObject:
   m_ObjectHideFlags: 0

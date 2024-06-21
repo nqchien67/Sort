@@ -9999,6 +9999,7 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 051481e441964d74b9331c9bcef1ca5f, type: 3}
   _button: {fileID: 5812286411723513842}
   _highlight: {fileID: 3439466593520701110}
+  _completedLineColor: {r: 0.105882354, g: 0.8980392, b: 0.5019608, a: 1}
   Line: {fileID: 5665671174744389022}
 --- !u!1 &5665671173928240464
 GameObject:
@@ -10244,7 +10245,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -231.15, y: -100.4}
+  m_AnchoredPosition: {x: -231.15, y: -114}
   m_SizeDelta: {x: 12, y: 166.35}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5665671174744388993
@@ -10506,6 +10507,7 @@ GameObject:
   - component: {fileID: 5665671175164724532}
   - component: {fileID: 5665671175164724531}
   - component: {fileID: 5812286411723513842}
+  - component: {fileID: 2681815403471342183}
   m_Layer: 5
   m_Name: RewardBox
   m_TagString: Untagged
@@ -10630,6 +10632,20 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &2681815403471342183
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5665671175164724529}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 094c4108b5fec694b9327f59da7ee5b0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  btnClickAudio: {fileID: 0}
+  isNotScale: 0
 --- !u!1 &6049042771890995522
 GameObject:
   m_ObjectHideFlags: 0

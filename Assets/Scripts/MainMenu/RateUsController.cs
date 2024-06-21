@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Audio;
 using TMPro;
 using UI;
 using UnityEngine;
@@ -34,7 +35,11 @@ public class RateUsController : Popup
 		if (rateconfig == "0")
 			GetComponent<Animator>().Play("Appear");
 		else
-			GetComponent<Animator>().Play("Appear1");
+		{
+			// GetComponent<Animator>().Play("Appear1");
+			GetComponent<Animator>().Play("Appear");
+		}
+
 		AudioController.Instance.PlaySfx(popUpClip);
 		continueBtn.gameObject.SetActive(false);
 	}

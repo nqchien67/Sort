@@ -2,14 +2,16 @@
 using System.Collections;
 using DG.Tweening;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace MainMenu
 {
 	public class NotiDot : MonoBehaviour
 	{
 		[SerializeField] private float _blinkDuration;
+		[SerializeField] private float _blinkScale;
 
-		public void Enable(bool enable)
+		public void SetEnable(bool enable)
 		{
 			if (enable)
 			{
@@ -22,10 +24,12 @@ namespace MainMenu
 
 		private IEnumerator Blink()
 		{
+			yield return new WaitForSeconds(Random.value);
 			while (enabled)
 			{
-				yield return transform.DOScale(1.1f, _blinkDuration);
-				yield return new WaitForSeconds(0.2f);
+				yield return transform.DOScale(_blinkScale, _blinkDuration).WaitForCompletion();
+				yield return new WaitForSeconds(_blinkDuration * 2f);
+				yield return transform.DOScale(1, _blinkDuration).WaitForCompletion();
 			}
 		}
 

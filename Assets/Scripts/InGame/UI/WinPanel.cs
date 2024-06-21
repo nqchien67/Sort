@@ -1,18 +1,21 @@
 ﻿using System;
 using System.Collections;
+using System.Globalization;
 using Controllers;
 using Data;
 using DG.Tweening;
+using MainMenu;
 using MainMenu.TopCharts;
 using Spine.Unity;
 using TMPro;
+using UI;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using Utilities;
 using Random = UnityEngine.Random;
 
-namespace UI
+namespace InGame.UI
 {
 	public class WinPanel : MonoBehaviour
 	{
@@ -25,9 +28,14 @@ namespace UI
 		[SerializeField] private Button _claimItemButton;
 		[SerializeField] private UnlockNewItemPanel _unlockNewItemPanelPrefab;
 		[SerializeField] private GameObject _highlight;
+		[SerializeField] private TextMeshProUGUI _multiStarAdsText;
+		[SerializeField] private TextMeshProUGUI _totalStarAdsText;
+
+		[SerializeField] private AdsMultiplierCatcher _adsMultiplierCatcher;
 
 		private Animator _animator;
 		private float _maxFillBarLength;
+		private int _levelGainedStar;
 
 		private void Awake()
 		{
@@ -47,6 +55,8 @@ namespace UI
 				_claimItemButton.onClick.AddListener(OnClickClaimFreeItem);
 				_highlight.SetActive(true);
 			}
+
+			_levelGainedStar = LevelController.Instance.Star;
 		}
 
 		private IEnumerator ShowCoroutine()
@@ -61,9 +71,9 @@ namespace UI
 				_piggyBank.SetActive(true);
 				_piggyBankAnim.AnimationState.SetAnimation(1, "jumpin_x", false);
 
-				int bonusGoldPiggy =
+				int bonusCoinPiggy =
 					DataController.Instance.CurrentPbStorage / (DataController.Instance.PiggyBankLevel * 2 + 3);
-				bonusGoldPiggy += Random.Range(-1, bonusGoldPiggy / 10 + 1);
+				bonusCoinPiggy += Random.Range(-1, bonusCoinPiggy / 10 + 1);
 				int averageGold = DataController.Instance.CurrentPbStorage /
 				                  ((DataController.Instance.PiggyBankLevel * 2 + 3) * 12);
 				int tmp = 0;
@@ -71,7 +81,7 @@ namespace UI
 				_piggyBankAnim.AnimationState.SetAnimation(1, "suckindiamond_x", false);
 				yield return new WaitForSeconds(0.4f);
 				var delay = new WaitForSeconds(0.03f);
-				while (tmp < bonusGoldPiggy)
+				while (tmp < bonusCoinPiggy)
 				{
 					tmp += averageGold;
 					_piggyGoldBonusTxt.text = "+" + tmp;
@@ -79,9 +89,9 @@ namespace UI
 					yield return delay;
 				}
 
-				_piggyGoldBonusTxt.text = "+" + bonusGoldPiggy;
+				_piggyGoldBonusTxt.text = "+" + bonusCoinPiggy;
 				yield return new WaitForSeconds(0.8f);
-				DataController.Instance.PiggyBankCoin += bonusGoldPiggy;
+				DataController.Instance.PiggyBankCoin += bonusCoinPiggy;
 				if (DataController.Instance.IsPiggyBankFull() && DataController.Instance.PbTimeDuration <= 0)
 				{
 					DataController.Instance.PbTimeDuration = 7200;
@@ -103,6 +113,20 @@ namespace UI
 		public void OnClickClaim()
 		{
 			//TODO: Nhét piggy bank hiện khi bấm nút này
+			OnClickCLose();
+		}
+
+		public void OnLickClaimAds()
+		{
+			Debug.Log("Show video ads reward");
+
+			int extraStar = _levelGainedStar * _adsMultiplierCatcher.MultiTime - _levelGainedStar;
+
+			LevelController.Instance.UpdateTopCharts(extraStar);
+
+			DataController.Instance.Star += extraStar;
+			DataController.Instance.SaveData();
+
 			OnClickCLose();
 		}
 
@@ -135,8 +159,15 @@ namespace UI
 			Instantiate(_unlockNewItemPanelPrefab, LevelUIController.Instance.Canvas);
 			PlayerPrefs.SetInt("FreeItemProgress", 0);
 			_claimItemButton.enabled = false;
-
+			_highlight.SetActive(false);
 			UpdateUnlockItemProgress(0, 5);
+		}
+
+		private void FixedUpdate()
+		{
+			_multiStarAdsText.text = "Claim x" + _adsMultiplierCatcher.MultiTime;
+			_totalStarAdsText.text = (_levelGainedStar * _adsMultiplierCatcher.MultiTime).ToString(CultureInfo
+				.InvariantCulture);
 		}
 
 		private void EndCloseAnimationTrigger()

@@ -4,8 +4,6 @@ using System.Linq;
 using Controllers;
 using Data;
 using DG.Tweening;
-using Gameplay;
-using Gameplay.Tutorial.Level1;
 using UnityEngine;
 using Utilities;
 
@@ -14,6 +12,7 @@ namespace InGame.Gameplay.Tutorial.Level1
 	public class TutLevelController : LevelController
 	{
 		[SerializeField] private Transform _hand;
+		[SerializeField] private Shelf _tutShelf;
 
 		protected override IEnumerator Start()
 		{
@@ -22,17 +21,18 @@ namespace InGame.Gameplay.Tutorial.Level1
 			Ui.DisplayStar(0);
 			yield return StartCoroutine(Tutorial());
 		}
- 
+
 		private IEnumerator Tutorial()
 		{
-			yield return null;
-			List<TutItem> items = Shelves[0].GetAllItems().Cast<TutItem>().ToList();
+			TutItem[] items = _tutShelf.GetAllItems().Cast<TutItem>().ToArray();
 
-			Vector2[] startPos = new Vector2[items.Count];
-			for (int i = 0; i < items.Count; i++)
+			Vector2[] startPos = new Vector2[items.Length];
+			for (int i = 0; i < items.Length; i++)
 				startPos[i] = items[i].Position;
 
-			for (int i = 0; i < items.Count; i++)
+			foreach (var pos in startPos) Debug.Log("start pos: " + pos);
+
+			for (int i = 0; i < items.Length; i++)
 			{
 				var item = items[i];
 				Vector2 correctPos = FindCorrectPosition(item);
@@ -58,7 +58,10 @@ namespace InGame.Gameplay.Tutorial.Level1
 			ItemLayer correctLayer = FindCorrectLayer(item);
 
 			if (correctLayer == null)
+			{
+				Debug.LogError("khong tim thay layer");
 				return Vector2.zero;
+			}
 
 			for (int i = 0; i < correctLayer.Items.Length; i++)
 			{
@@ -68,13 +71,17 @@ namespace InGame.Gameplay.Tutorial.Level1
 				return correctLayer.transform.TransformPoint(localPos);
 			}
 
+			Debug.LogError("khong tim thay vi tri trong");
 			return Vector2.zero;
 		}
 
 		private ItemLayer FindCorrectLayer(TutItem item)
 		{
-			for (int i = 1; i < Shelves.Length; i++)
+			for (int i = 0; i < Shelves.Length; i++)
 			{
+				if (Shelves[i] == _tutShelf)
+					continue;
+
 				var layer = Shelves[i].FrontLayer;
 				var allItems = layer.GetAllItems();
 				if (allItems[0].Type == item.Type)
@@ -84,7 +91,7 @@ namespace InGame.Gameplay.Tutorial.Level1
 			return null;
 		}
 
-		public override void GainScore()
+		protected override void GainScore()
 		{
 			AddCoin(1);
 			AddStar(3);

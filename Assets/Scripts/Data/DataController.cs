@@ -7,6 +7,7 @@ using DG.Tweening;
 using MainMenu;
 using MainMenu.CollectionTask;
 using MainMenu.TopCharts;
+using Newtonsoft.Json.Converters;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -34,8 +35,12 @@ namespace Data
 
 				DontDestroyOnLoad(gameObject);
 			}
-
+			new StringEnumConverter();
 			LoadData();
+
+#if UNITY_EDITOR
+			AddBooster(BoosterType.LittleHammer, 100);
+#endif
 		}
 
 		public void LoadData()

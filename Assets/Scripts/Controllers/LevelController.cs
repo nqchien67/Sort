@@ -1,21 +1,16 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
+using Audio;
 using Boosters;
 using Data;
 using DG.Tweening;
-using Gameplay;
 using InGame;
 using InGame.Gameplay;
 using MainMenu.CollectionTask;
 using MainMenu.TopCharts;
-using Spine.Unity;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using Utilities;
-using Item = Gameplay.Item;
-using Random = UnityEngine.Random;
 
 namespace Controllers
 {
@@ -30,7 +25,6 @@ namespace Controllers
 
 		public Material DisabledMaterial;
 		public Material NormalMaterial;
-		public Material UnknownMaterial;
 
 		public LevelData LevelData;
 		public List<Shelf> LockedShelves;
@@ -53,6 +47,13 @@ namespace Controllers
 		public Prop StarProp;
 		public Prop CoinProp;
 
+		[Header("Audio")] public AudioClip GameplayMusic;
+		public AudioClip PickupItemSfx;
+		public AudioClip PutDownItemSfx;
+		public AudioClip RemoveASetSfx;
+		public AudioClip ComboSfx;
+		public AudioClip UseBoosterSfx;
+
 		protected override void Awake()
 		{
 			base.Awake();
@@ -67,13 +68,15 @@ namespace Controllers
 
 		protected virtual IEnumerator Start()
 		{
+			AudioController.Instance.PlayMusic(GameplayMusic, true);
 			_levelSetupManager = GetComponent<LevelSetupManager>();
 			_levelSetupManager.SetUpLevel();
-			yield return new WaitForSeconds(0.5f);
-			CanDrag = false;
+			SortEffect = SkinManager.Instance.GetSortEffect();
 
 			Ui.DisplayCoin(0);
 			Ui.DisplayStar(0);
+
+			yield return new WaitForSeconds(0.5f);
 
 			LevelTime = CalculateTime();
 			Ui.RenderTimer(LevelTime);
@@ -113,10 +116,8 @@ namespace Controllers
 
 			LockedShelves[0].Lock.ReduceLocksNumber();
 			if (LockedShelves[0].Lock.Number <= 0)
-			{
 				// LockedShelves[0].Lock.Remove();
 				LockedShelves.RemoveAt(0);
-			}
 		}
 
 		[HideInInspector] public bool PausedTime;
@@ -149,10 +150,8 @@ namespace Controllers
 			StartCoroutine(CommonIEnumerator.WaitForFrames(1, () =>
 			{
 				foreach (var shelf in Shelves)
-				{
 					if (shelf.FrontLayer.ItemsCount < 3)
 						return;
-				}
 
 				Lose();
 			}));
@@ -189,11 +188,7 @@ namespace Controllers
 			StartCoroutine(CommonIEnumerator.WaiForSeconds(0.5f, () => Ui.ShowWinPanel()));
 			GainReward();
 
-			int prevPoint = PlayerPrefs.GetInt("PointUser", 0);
-			PlayerPrefs.SetInt("PointUser", prevPoint + Star);
-			PlayerPrefs.SetInt("PrevPointUser", prevPoint);
-
-			TopChartsPlayerDataManager.Instance.UpdateRank();
+			UpdateTopCharts(Star);
 
 			int currentFreeItemProgress = PlayerPrefs.GetInt("FreeItemProgress", 0);
 			currentFreeItemProgress = Mathf.Min(currentFreeItemProgress + 1, 5);
@@ -271,20 +266,19 @@ namespace Controllers
 			Ui.DisplayStar(Star);
 		}
 
-		public void AddTime(int amount)
-		{
-		}
-
 		private int _currentCombo;
 		private Coroutine _comboTimer;
 		private int _highestCombo;
 
-		public virtual void GainScore()
+		protected virtual void GainScore()
 		{
 			AddCoin(1);
 
 			_currentCombo++;
 			_currentCombo = Mathf.Min(_currentCombo, DataController.Instance.CombosData.Length);
+
+			if (_currentCombo % 5 == 0)
+				AudioController.Instance.PlaySfx(ComboSfx);
 
 			if (_highestCombo < _currentCombo) _highestCombo = _currentCombo;
 
@@ -327,7 +321,10 @@ namespace Controllers
 			SceneController.Instance.LoadScene("MainScene");
 		}
 
-		public static bool IsReducedDifficulty() => PlayerPrefs.GetInt("ReducedDifficulty", 0) > 0;
+		public static bool IsReducedDifficulty()
+		{
+			return PlayerPrefs.GetInt("ReducedDifficulty", 0) > 0;
+		}
 
 		private void CollectionTaskHandle()
 		{
@@ -336,13 +333,17 @@ namespace Controllers
 				return;
 
 			if (cTController.Current.Type == TaskType.Star)
-			{
 				cTController.AddProgress(Star);
-			}
-			else if (cTController.Current.Type == TaskType.Combo)
-			{
-				cTController.AddProgress(_highestCombo);
-			}
+			else if (cTController.Current.Type == TaskType.Combo) cTController.AddProgress(_highestCombo);
+		}
+
+		public void UpdateTopCharts(int star)
+		{
+			int prevPoint = PlayerPrefs.GetInt("PointUser", 0);
+			PlayerPrefs.SetInt("PointUser", prevPoint + star);
+			PlayerPrefs.SetInt("PrevPointUser", prevPoint);
+
+			TopChartsPlayerDataManager.Instance.UpdateRank();
 		}
 	}
 }

@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Linq;
 using Data;
-using Gameplay;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -26,8 +25,11 @@ namespace MainMenu.ShopSkin
 			SkinGroup = skinGroup;
 
 			if (skin.Unlocked) _frame.sprite = _unlockedFrame;
-
+			
 			_tick.SetActive(_skin.InUse);
+
+			if (_skin.InUse)
+				skinGroup.SkinInUse = this;
 		}
 
 		public virtual void Unlock()

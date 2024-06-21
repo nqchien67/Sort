@@ -17,13 +17,20 @@ namespace Data
 			return RewardIcons[(int)rewardType];
 		}
 
-		public static bool TryConvertEnum(RewardType reward, out BoosterType result)
+		public static bool TryConvertRewardToBooster(RewardType reward, out BoosterType result)
 		{
 			string valueString = reward.ToString();
 			result = default;
 			return Enum.TryParse(valueString, true, out result);
 		}
-		
+
+		public static bool TryConvertBoosterToReward(BoosterType boosterType, out RewardType result)
+		{
+			string valueString = boosterType.ToString();
+			result = default;
+			return Enum.TryParse(valueString, true, out result);
+		}
+
 		public static RewardType StringToReward(string value)
 		{
 			if (Enum.IsDefined(typeof(RewardType), value))

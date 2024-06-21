@@ -1,6 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using InGame.Gameplay;
 using UnityEngine;
+using Utilities;
 
 namespace Controllers
 {
@@ -14,6 +17,35 @@ namespace Controllers
 			_fallingLevelController = GetComponent<FallingLevelController>();
 			SpawnShelves();
 			base.SetUpLevel();
+		}
+
+		private void Update()
+		{
+			if (Input.GetKeyDown(KeyCode.S))
+			{
+				StartCoroutine(Test());
+			}
+		}
+
+		private IEnumerator Test()
+		{
+			foreach (var s in _fallingLevelController.Shelves)
+			{
+				Destroy(s.gameObject);
+			}
+
+			yield return null;
+			SpawnShelves();
+			base.SetUpLevel();
+			yield return null;
+			foreach (var s in _fallingLevelController.Shelves)	
+			{
+				if (s.GetAllItems().Count == 0)
+				{
+					Debug.Log("alsjdlasjdaslkj");
+					Debug.Break();	
+				}
+			}
 		}
 
 		private void SpawnShelves()
@@ -37,7 +69,7 @@ namespace Controllers
 			for (int i = shelves.Count - 1; i >= 0; i--)
 			{
 				Shelf shelf = shelves[i];
-				foreach (var layer in shelf.Layers) 
+				foreach (var layer in shelf.Layers)
 					layer.CheckShouldDestroy();
 			}
 

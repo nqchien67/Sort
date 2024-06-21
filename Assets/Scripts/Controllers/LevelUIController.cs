@@ -1,5 +1,6 @@
 ﻿using Data;
 using DG.Tweening;
+using InGame.UI;
 using TMPro;
 using UI;
 using UnityEngine;
@@ -29,6 +30,10 @@ namespace Controllers
 		public RectTransform TopBar;
 		public RectTransform BottomBar;
 
+		[SerializeField] private Sprite _hardLevelTopBar;
+		[SerializeField] private BuyBoosterPanel _buyBoosterPanelPrefab;
+		public GameObject NotEnoughCoin;
+
 		private void Start()
 		{
 			_avatarImage.sprite = SpritesCollection.Instance.CurrentAvatarSprite;
@@ -44,6 +49,9 @@ namespace Controllers
 
 			DisplayCombo(0);
 			DisplayComboTimeBar(0, 1);
+
+			if (LevelController.Instance.LevelData.IsHardLevel())
+				TopBar.Find("Background").GetComponent<Image>().sprite = _hardLevelTopBar;
 		}
 
 		public void RenderTimer(int secondsLeft)
@@ -122,6 +130,17 @@ namespace Controllers
 			_coinIconBlink = DOTween.Sequence()
 				.Append(CoinIcon.DOScale(new Vector3(1.4f, 1.4f, 1), 0.1f))
 				.Append(CoinIcon.DOScale(1, 0.1f));
+		}
+
+		public BuyBoosterPanel SpawnBuyBoosterPanel()
+		{
+			return Instantiate(_buyBoosterPanelPrefab, Canvas);
+		}
+
+		public void ShowNotEnoughCoin()
+		{
+			NotEnoughCoin.SetActive(true);
+			NotEnoughCoin.transform.SetAsLastSibling();
 		}
 	}
 }

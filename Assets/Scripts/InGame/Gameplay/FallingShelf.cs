@@ -2,16 +2,15 @@
 using Controllers;
 using DG.Tweening;
 using UnityEngine;
-using Utilities;
 
 namespace InGame.Gameplay
 {
 	public class FallingShelf : Shelf
 	{
 		public Vector2Int _cell;
-		private Tween _moveTween;
 
 		private FallingLevelController _fallingLevelController;
+		private Tween _moveTween;
 
 		private Sprite[] _sprites;
 
@@ -51,18 +50,24 @@ namespace InGame.Gameplay
 
 		public override void RemoveFrontLayer()
 		{
-			if (_cell.y + 1 < _fallingLevelController._gridRow &&
-			    _fallingLevelController.Grid[_cell.x, _cell.y + 1] == null && _cell.y - 1 >= 0)
+			bool haveNoShelfAbove = _cell.y + 1 < _fallingLevelController._gridRow &&
+			                        _fallingLevelController.Grid[_cell.x, _cell.y + 1] == null;
+
+			if (haveNoShelfAbove && _cell.y - 1 >= 0)
 			{
 				var shelfBellow = _fallingLevelController.Grid[_cell.x, _cell.y - 1];
 				if (shelfBellow != null)
-					shelfBellow.Renderer.sprite = _sprites[0];
+					shelfBellow.Renderer.sprite = SkinManager.Instance.GetShelfSkin(_sprites[0].name);
 			}
 
 			_fallingLevelController.StartFall(_cell);
 
 			_fallingLevelController.RemoveShelf(this);
-			Destroy(gameObject);
+
+			if (haveNoShelfAbove)
+				transform.DOScale(0, 0.2f).SetEase(Ease.InBack).OnComplete(() => Destroy(gameObject));
+			else
+				Destroy(gameObject);
 		}
 	}
 }

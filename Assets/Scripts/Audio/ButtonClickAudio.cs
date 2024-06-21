@@ -1,34 +1,46 @@
+using System;
+using Controllers;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class ButtonClickAudio : MonoBehaviour, IPointerUpHandler, IPointerDownHandler, IPointerClickHandler
+namespace Audio
 {
-	[SerializeField] private AudioClip btnClickAudio;
-	public bool isNotScale;
-	private Vector3 originScale;
-
-	public void OnPointerDown(PointerEventData eventData)
+	public class ButtonClickAudio : MonoBehaviour, IPointerUpHandler, IPointerDownHandler, IPointerClickHandler
 	{
-		originScale = transform.localScale;
-		if (isNotScale)
-			return;
-		transform.localScale = transform.localScale * 0.85f;
-	}
+		[SerializeField] private AudioClip btnClickAudio;
+		public bool isNotScale;
+		private Vector3 originScale;
 
-	public void OnPointerUp(PointerEventData eventData)
-	{
-		if (isNotScale)
-			return;
-		transform.localScale = originScale;
-	}
+		private void Start()
+		{
+			if (btnClickAudio == null && MainMenuController.Instance != null)
+				btnClickAudio = MainMenuController.Instance.ButtonClickSfx;
+		}
 
-	public void OnPointerClick(PointerEventData eventData)
-	{
-		if (btnClickAudio != null)
-			AudioController.Instance.PlaySfx(btnClickAudio);
-	}
+		public void OnPointerDown(PointerEventData eventData)
+		{
+			originScale = transform.localScale;
+			if (isNotScale)
+				return;
+		
+			transform.localScale *= 0.85f;
+		}
 
-	public void OnClick()
-	{
+		public void OnPointerUp(PointerEventData eventData)
+		{
+			if (isNotScale)
+				return;
+			transform.localScale = originScale;
+		}
+
+		public void OnPointerClick(PointerEventData eventData)
+		{
+			if (btnClickAudio != null)
+				AudioController.Instance.PlaySfx(btnClickAudio);
+		}
+
+		public void OnClick()
+		{
+		}
 	}
 }

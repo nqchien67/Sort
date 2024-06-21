@@ -15,11 +15,11 @@ public class MovingRow : MonoBehaviour
 
 	[SerializeField] private float _moveSpeed = 5;
 	[SerializeField] public MoveDirection _moveDirection;
-	[SerializeField] private LinkedList<Shelf> _shelves;
+	private Shelf _endOfLine;
 
 	private Vector2 _moveVector;
 	private float _shelfDistance;
-	private Shelf _endOfLine;
+	[SerializeField] private LinkedList<Shelf> _shelves;
 
 	private void Start()
 	{
@@ -32,6 +32,7 @@ public class MovingRow : MonoBehaviour
 
 		_moveVector = new Vector2((int)_moveDirection, 0);
 	}
+
 // anh chiến ăn cứt 
 	private void Update()
 	{

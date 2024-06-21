@@ -1,10 +1,7 @@
-﻿using System;
-using Controllers;
-using InGame.Gameplay;
+﻿using TMPro;
 using UnityEngine;
-using Utilities;
 
-namespace Gameplay.Tutorial.Level1
+namespace InGame.Gameplay.Tutorial.Level1
 {
 	public class TutItem : Item
 	{
@@ -40,7 +37,9 @@ namespace Gameplay.Tutorial.Level1
 				// StartCoroutine(CommonIEnumerator.WaitForFrames(1, () => LevelController.Instance.CheckFull()));
 			}
 			else
+			{
 				MoveBack();
+			}
 
 			_touchingShelves.Clear();
 		}

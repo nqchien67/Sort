@@ -1,12 +1,15 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using Audio;
 using Boosters.InGame;
 using Controllers;
 using Data;
 using DG.Tweening;
+using InGame.Gameplay;
 using Spine.Unity;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 
 namespace Boosters
@@ -51,6 +54,7 @@ namespace Boosters
 
 			foreach (StartBooster booster in SelectedBoosters)
 			{
+				AudioController.Instance.PlaySfx(LevelController.Instance.UseBoosterSfx);
 				switch (booster)
 				{
 					case StartBooster.HugeHammer:
@@ -69,7 +73,6 @@ namespace Boosters
 			}
 
 			SelectedBoosters.Clear();
-			LevelController.Instance.CanDrag = true;
 		}
 
 		public void DeselectBooster(StartBooster booster)
@@ -115,14 +118,52 @@ namespace Boosters
 			effect.AnimationState.Complete += entry => animCompleted = true;
 
 			LittleHammer littleHammer = FindObjectOfType<LittleHammer>();
+
+			List<Item> frontItems = littleHammer.GetAllFrontItems();
+			List<Item> items = new List<Item>();
+
 			for (int i = 0; i < 3; i++)
 			{
-				yield return littleHammer.CollectItems(false);
+				Item randomItem = frontItems[Random.Range(0, frontItems.Count)];
+				var foundItems = littleHammer.FindSameItems(randomItem);
+				items.AddRange(foundItems);
+
+				foreach (var item in foundItems)
+					frontItems.Remove(item);
 			}
+
+			yield return StartCoroutine(DestroyItems(items));
 
 			yield return new WaitUntil(() => animCompleted);
 			yield return effect.transform.DOMoveX(CameraController.BottomLeft.x - 4, 0.4f).WaitForCompletion();
 			Destroy(effect.gameObject);
+		}
+
+		private IEnumerator DestroyItems(List<Item> items)
+		{
+			const float duration = 0.4f;
+
+			foreach (var item in items)
+			{
+				item.Renderer.sortingOrder = 1;
+				item.Renderer.material = LevelController.Instance.NormalMaterial;
+
+				var layer = item.Layer;
+				layer.RemoveItem(item);
+				layer.CheckShouldDestroy();
+
+				item.transform.DOMove(Vector3.zero, duration)
+					.SetEase(Ease.InBack)
+					.OnComplete(() => Destroy(item.gameObject));
+				yield return new WaitForSeconds(0.1f);
+			}
+
+			// yield return new WaitForSeconds(0.05f);
+			for (int i = 0; i < 3; i++)
+			{
+				LevelController.Instance.EatASet();
+				yield return null;
+			}
 		}
 
 		private IEnumerator PlayTimeEffect()

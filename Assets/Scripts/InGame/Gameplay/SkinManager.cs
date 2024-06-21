@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Data;
 using UnityEngine;
@@ -9,13 +10,24 @@ namespace InGame.Gameplay
 {
 	public class SkinManager : SingletonCore<SkinManager>
 	{
-		private List<Sprite> _notPriorityItems;
+		[SerializeField] private GameObject[] _sortEffects;
 
-		public List<Sprite> _unplacedItems;
+		[HideInInspector] public List<Sprite> _unplacedItems;
+
+		private List<Sprite> _notPriorityItems;
 		private List<Sprite> _priorityItems;
-		private SpritesCollection SpritesCollection => SpritesCollection.Instance;
 
 		private int _totalItemTypes;
+		private SpritesCollection SpritesCollection => SpritesCollection.Instance;
+
+		private const string SkinFolder = "BackgroundSkins/";
+		private Skin _backgroundSkin;
+
+		protected override void Awake()
+		{
+			base.Awake();
+			_backgroundSkin = SpritesCollection.BackgroundSkinInUse;
+		}
 
 		public void InitUnplacedItems(int totalItemTypes, int level)
 		{
@@ -34,27 +46,29 @@ namespace InGame.Gameplay
 					_notPriorityItems.Add(sprite);
 			}
 
-			for (int i = 0; i < totalItemTypes; i++)
+			while (_unplacedItems.Count < totalItemTypes)
 				_unplacedItems.Add(GetRandomItem());
 		}
 
 		public void SetShelfAndBackgroundSkin(Shelf[] shelves)
 		{
-			Skin backgroundSkin = SpritesCollection.BackgroundSkinInUse;
-			if (backgroundSkin == null || backgroundSkin.Id == 0)
-				return;
-
-			const string skinFolder = "BackgroundSkins/";
-			Sprite bgSprite = Resources.Load<Sprite>(skinFolder + (backgroundSkin.Id + 1));
-			GameObject.Find("Background").GetComponent<Image>().sprite = bgSprite;
+			Sprite bgSprite = Resources.Load<Sprite>(SkinFolder + (_backgroundSkin.Id + 1));
+			GameObject.Find("BackgroundWall").GetComponent<Image>().sprite = bgSprite;
 
 			foreach (var shelf in shelves)
 			{
-				string spriteName = shelf.Renderer.sprite.name;
-				Sprite sprite = Resources.Load<Sprite>($"{skinFolder}{backgroundSkin.Id + 1}/{spriteName}");
-
+				Sprite sprite = GetShelfSkin(shelf.Renderer.sprite.name);
 				shelf.Renderer.sprite = sprite;
 			}
+		}
+
+		public Sprite GetShelfSkin(string name) =>
+			Resources.Load<Sprite>($"{SkinFolder}{_backgroundSkin.Id + 1}/{name}");
+
+		public GameObject GetSortEffect()
+		{
+			Skin effect = SpritesCollection.EffectInUse;
+			return _sortEffects[effect.Id];
 		}
 
 		private void AddPriorityItems()
@@ -65,7 +79,9 @@ namespace InGame.Gameplay
 			{
 				var item = priorityItems[0];
 				if (item is UnlockableItemSkin _)
+				{
 					_unplacedItems.Add(SpritesCollection.GetUnlockableItemSprite(item.Id));
+				}
 				else
 				{
 					if (item.InUse)
@@ -74,6 +90,7 @@ namespace InGame.Gameplay
 
 				priorityItems.RemoveAt(0);
 
+				Debug.Log(_unplacedItems.Count + ", " + _totalItemTypes);
 				if (_unplacedItems.Count >= _totalItemTypes)
 					break;
 			}

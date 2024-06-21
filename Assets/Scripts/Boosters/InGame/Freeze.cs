@@ -12,19 +12,22 @@ namespace Boosters.InGame
 
 		private GameObject _effectGO;
 
-		public override void Active()
+		public override void Use()
 		{
-			if (!LevelController.PausedTime && _quantity > 0)
-			{
-				StartCoroutine(Freezing());
-				ReduceQuantity();
-			}
+			base.Use();
+			StartCoroutine(Freezing());
+			ReduceQuantity();
 		}
 
 		protected override Transform SpawnEffect()
 		{
 			_effectGO = Instantiate(_effectPrefab, LevelUIController.Instance.Canvas).gameObject;
 			return null;
+		}
+
+		protected override bool CanUse()
+		{
+			return !LevelController.PausedTime;
 		}
 
 		protected override bool IsBoosterUnlocked()

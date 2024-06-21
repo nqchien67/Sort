@@ -116,7 +116,6 @@ namespace MainMenu.TopCharts
 
 				PlayerData centerPlayerData = PlayersData[centerIndex];
 				var centerPlayerCard = _userCell.GetComponent<PlayerCard>();
-				Debug.Log(centerPlayerData.Name);
 
 				centerPlayerCard.InitItem(centerPlayerData.Name, centerPlayerData.Rank, centerPlayerData.AvatarName,
 					centerPlayerData.Star);
@@ -138,8 +137,7 @@ namespace MainMenu.TopCharts
 			_spawnedCells.Sort((x, y) =>
 				x.GetComponent<PlayerCard>().rankTemp
 					.CompareTo(y.GetComponent<PlayerCard>().rankTemp));
-
-
+			
 			for (int i = 0; i < _spawnedCells.Count; i++)
 			{
 				var item = _spawnedCells[i];

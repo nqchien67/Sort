@@ -27,9 +27,6 @@ namespace MainMenu.ShopSkin
 				SkinButton newButton = Instantiate(_skinButton, _scrollRect.content).GetComponent<SkinButton>();
 				newButton.gameObject.name = i.ToString();
 				newButton.Init(skins[i], this);
-
-				if (skins[i].InUse)
-					SkinInUse = newButton;
 			}
 
 			_skinButton.Init(skins[0], this);
