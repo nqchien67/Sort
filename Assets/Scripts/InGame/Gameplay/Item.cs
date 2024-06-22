@@ -102,7 +102,7 @@ namespace InGame.Gameplay
 			var closetShelf = GetClosetShelf();
 			if (closetShelf.CanTakeItem())
 			{
-				closetShelf.TakeItem(this);
+				closetShelf.ReceiveItem(this);
 				_originLayer.CheckShouldDestroy();
 
 				LevelController.Instance.CheckFull();

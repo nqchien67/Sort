@@ -50,10 +50,17 @@ namespace InGame.UI
 
 			int freeItemProgress = PlayerPrefs.GetInt("FreeItemProgress", 0);
 			UpdateUnlockItemProgress(freeItemProgress, 5);
-			if (freeItemProgress >= 5 && SpritesCollection.Instance.GetNotUnlockedItems().Count > 0)
+
+			bool canClaimFreeItem = freeItemProgress >= 5 && SpritesCollection.Instance.GetNotUnlockedItems().Count > 0;
+			if (canClaimFreeItem)
 			{
+				_claimItemButton.enabled = true;
 				_claimItemButton.onClick.AddListener(OnClickClaimFreeItem);
 				_highlight.SetActive(true);
+			}
+			else
+			{
+				_claimItemButton.enabled = false;
 			}
 
 			_levelGainedStar = LevelController.Instance.Star;
@@ -113,7 +120,11 @@ namespace InGame.UI
 		public void OnClickClaim()
 		{
 			//TODO: Nhét piggy bank hiện khi bấm nút này
-			OnClickCLose();
+
+			if (_claimItemButton.enabled)
+				ClaimFreeItemAndClose();
+			else
+				OnClickCLose();
 		}
 
 		public void OnLickClaimAds()
@@ -127,7 +138,10 @@ namespace InGame.UI
 			DataController.Instance.Star += extraStar;
 			DataController.Instance.SaveData();
 
-			OnClickCLose();
+			if (_claimItemButton.enabled)
+				ClaimFreeItemAndClose();
+			else
+				OnClickCLose();
 		}
 
 		public void NextLevel()
@@ -154,9 +168,19 @@ namespace InGame.UI
 				value => _progressCount.text = Mathf.RoundToInt(value) + "/" + total);
 		}
 
+		private UnlockNewItemPanel _unlockNewItemPanel;
+
+		private void ClaimFreeItemAndClose()
+		{
+			OnClickClaimFreeItem();
+			StartCoroutine(CommonIEnumerator.WaitUntil(
+				() => _unlockNewItemPanel == null,
+				OnClickCLose));
+		}
+
 		private void OnClickClaimFreeItem()
 		{
-			Instantiate(_unlockNewItemPanelPrefab, LevelUIController.Instance.Canvas);
+			_unlockNewItemPanel = Instantiate(_unlockNewItemPanelPrefab, LevelUIController.Instance.Canvas);
 			PlayerPrefs.SetInt("FreeItemProgress", 0);
 			_claimItemButton.enabled = false;
 			_highlight.SetActive(false);

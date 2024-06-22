@@ -31,7 +31,7 @@ namespace InGame.Gameplay.Tutorial.Level1
 			var closetShelf = GetClosetShelf();
 			if (closetShelf == _targetShelf && closetShelf.CanTakeItem())
 			{
-				closetShelf.TakeItem(this);
+				closetShelf.ReceiveItem(this);
 				_originLayer.CheckShouldDestroy();
 
 				// StartCoroutine(CommonIEnumerator.WaitForFrames(1, () => LevelController.Instance.CheckFull()));

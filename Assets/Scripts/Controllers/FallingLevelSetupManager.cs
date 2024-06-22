@@ -17,6 +17,7 @@ namespace Controllers
 			_fallingLevelController = GetComponent<FallingLevelController>();
 			SpawnShelves();
 			base.SetUpLevel();
+			KhongMotTuNaoBiBoLaiPhiaSau();
 		}
 
 		private void Update()
@@ -37,13 +38,15 @@ namespace Controllers
 			yield return null;
 			SpawnShelves();
 			base.SetUpLevel();
+			KhongMotTuNaoBiBoLaiPhiaSau();
+
 			yield return null;
-			foreach (var s in _fallingLevelController.Shelves)	
+			foreach (var s in _fallingLevelController.Shelves)
 			{
 				if (s.GetAllItems().Count == 0)
 				{
 					Debug.Log("alsjdlasjdaslkj");
-					Debug.Break();	
+					Debug.Break();
 				}
 			}
 		}
@@ -75,6 +78,51 @@ namespace Controllers
 
 			_fallingLevelController.Shelves = shelves.ToArray();
 			SkinManager.Instance.SetShelfAndBackgroundSkin(shelves.ToArray());
+		}
+
+		public override void ShuffleItems(List<Item> refreshItems)
+		{
+			foreach (var shelf in Shelves)
+			{
+				ItemLayer layer = shelf.Layers[0];
+				shelf.RemoveLayer(layer);
+				Destroy(layer.gameObject);
+			}
+
+			CreateShelfIndexPairs();
+
+			base.ShuffleItems(refreshItems);
+
+			_itemsSafeToTake = FindSafeItemsFromFrontLayers();
+			KhongMotTuNaoBiBoLaiPhiaSau();
+			LevelController.Instance.Shelves = ToolHelper.RemoveNulls(Shelves);
+		}
+
+		private void KhongMotTuNaoBiBoLaiPhiaSau()
+		{
+			_itemsSafeToTake ??= FindSafeItemsFromFrontLayers();
+			
+			foreach (var shelf in Shelves)
+			{
+				if (shelf.IsLocked || shelf.FrontLayer.ItemsCount > 0)
+					continue;
+
+				if (_itemsSafeToTake.Count == 0)
+					break;
+				Item item = _itemsSafeToTake[0];
+				_itemsSafeToTake.RemoveAt(0);
+				ItemLayer prevLayer = item.Layer;
+				prevLayer.RemoveItem(item);
+
+				shelf.FrontLayer.PlaceItemAnywhere(item);
+			}
+
+			foreach (Shelf shelf in Shelves)
+				for (int i = shelf.Layers.Count - 1; i >= 0; i--)
+				{
+					var layer = shelf.Layers[i];
+					layer.CheckShouldDestroy(false);
+				}
 		}
 	}
 }

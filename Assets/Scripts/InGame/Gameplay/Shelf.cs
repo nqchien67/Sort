@@ -67,15 +67,15 @@ namespace InGame.Gameplay
 
 		public bool CanTakeItem()
 		{
-			return Layers[Layers.Count - 1].CanTakeItem() && !IsLocked;
+			return Layers[Layers.Count - 1].CanReceiveItem() && !IsLocked;
 		}
 
-		public void TakeItem(Item item)
+		public void ReceiveItem(Item item)
 		{
 			int[] desiredIndexes = CalculateDesiredIndexes(item);
 
-			if (Layers[Layers.Count - 1].CanTakeItem())
-				Layers[Layers.Count - 1].StartTakeItem(item, desiredIndexes);
+			if (Layers[Layers.Count - 1].CanReceiveItem())
+				Layers[Layers.Count - 1].StartReceiveItem(item, desiredIndexes);
 		}
 
 		private int[] CalculateDesiredIndexes(Item item)

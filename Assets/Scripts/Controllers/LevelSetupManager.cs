@@ -52,11 +52,19 @@ namespace Controllers
 			// }
 			//
 			// Debug.Log(itemCount.Count); 
-			
+
 			_skinManager.SetShelfAndBackgroundSkin(Shelves);
 		}
 
 		private void SetUpItems()
+		{
+			CreateShelfIndexPairs();
+
+			// StartCoroutine(PlaceItems(shelfIndexPairs));
+			PlaceItems(shelfIndexPairs);
+		}
+
+		protected void CreateShelfIndexPairs()
 		{
 			shelfIndexPairs = new List<ShelfIndexPair>();
 
@@ -67,9 +75,6 @@ namespace Controllers
 				for (int i = 0; i < ItemNumbEachLayer; i++)
 					shelfIndexPairs.Add(new ShelfIndexPair(shelf, i));
 			}
-
-			// StartCoroutine(PlaceItems(shelfIndexPairs));
-			PlaceItems(shelfIndexPairs);
 		}
 
 		public List<Item> fixedItems;
@@ -134,6 +139,7 @@ namespace Controllers
 
 					if (count < _maxItemPerLayer)
 						continue;
+
 					Fill(currentLayer);
 					count = 0;
 					currentLayer++;
@@ -160,7 +166,7 @@ namespace Controllers
 			_maxItemPerLayer -= emptySpace;
 		}
 
-		public void ShuffleItems(List<Item> refreshItems)
+		public virtual void ShuffleItems(List<Item> refreshItems)
 		{
 			List<Item> savingItems = new List<Item>();
 			for (int i = 0; i < 2; i++)
@@ -188,15 +194,6 @@ namespace Controllers
 			if (LockedShelves != null && LockedShelves.Count > 0)
 				FillLockedShelves();
 
-			foreach (Shelf shelf in Shelves)
-				for (int i = shelf.Layers.Count - 1; i >= 0; i--)
-				{
-					var layer = shelf.Layers[i];
-					layer.CheckShouldDestroy(false);
-				}
-
-			if (this is FallingLevelSetupManager)
-				LevelController.Instance.Shelves = ToolHelper.RemoveNulls(Shelves);
 
 			foreach (var shelf in Shelves) shelf.RenderLayers();
 		}
@@ -207,6 +204,7 @@ namespace Controllers
 			int count = 0;
 			cloneShelfIndexPairs = ShuffleList(shelfIndexPairs);
 			while (refreshItems.Count > 0)
+			{
 				for (int i = 0; i < 3; i++)
 				{
 					Item item = refreshItems[0];
@@ -215,7 +213,7 @@ namespace Controllers
 					ShelfIndexPair shelfIndexPair =
 						GetValidShelfIndexPair(item.Sprite, cloneShelfIndexPairs, currentLayer);
 
-					var layer = shelfIndexPair.Shelf.Layers[currentLayer];
+					ItemLayer layer = shelfIndexPair.Shelf.Layers[currentLayer];
 					// layer.PlaceItemAtIndex(item, shelfIndexPair.Index);
 					layer.MoveItemToIndex(item, shelfIndexPair.Index);
 					count++;
@@ -227,6 +225,7 @@ namespace Controllers
 					currentLayer++;
 					cloneShelfIndexPairs = ShuffleList(shelfIndexPairs);
 				}
+			}
 		}
 
 		private void PlaceLastTwoTypeShuffle(List<Item> remainItems)
@@ -247,7 +246,7 @@ namespace Controllers
 				fixedItems.Add(item);
 			}
 		}
-		
+
 		private ShelfIndexPair GetValidShelfIndexPair(Sprite itemSprite, List<ShelfIndexPair> shelfIndexPairs,
 			int currentLayer)
 		{
@@ -313,12 +312,12 @@ namespace Controllers
 				if (shelf.GetLayerAtIndex(layerIndex).ItemsCount > 0)
 					continue;
 
-				var item = GetItemFromLayer(layerIndex);
+				var item = GetAItemFromLayer(layerIndex);
 				shelf.Layers[layerIndex].PlaceItemAtIndex(item, Random.Range(0, 3));
 			}
 		}
 
-		private Item GetItemFromLayer(int layerIndex)
+		private Item GetAItemFromLayer(int layerIndex)
 		{
 			foreach (var shelf in Shelves)
 			{
@@ -340,43 +339,52 @@ namespace Controllers
 			return null;
 		}
 
-		private void FillLockedShelves()
+		protected List<Item> _itemsSafeToTake;
+
+		protected List<Item> FindSafeItemsFromFrontLayers()
 		{
-			List<Item> items = new List<Item>();
+			List<Item> result = new List<Item>();
 			foreach (var shelf in Shelves)
 			{
-				if (LockedShelves.Contains(shelf) || shelf.Layers.Count == 0 || shelf.FrontLayer.ItemsCount < 2)
+				if (shelf.IsLocked || shelf.Layers.Count == 0 || shelf.FrontLayer.ItemsCount < 2)
 					continue;
 
 				foreach (var item in shelf.FrontLayer.GetAllItems())
 				{
 					if (fixedItems.Contains(item))
 						continue;
-					items.Add(item);
+					result.Add(item);
 					break;
 				}
 			}
 
+			return result;
+		}
+
+		private void FillLockedShelves()
+		{
+			_itemsSafeToTake = FindSafeItemsFromFrontLayers();
+
 			foreach (var lockedShelf in LockedShelves)
 			{
-				ItemLayer frontLayer = lockedShelf.FrontLayer;
+				ItemLayer lockedShelfFrontLayer = lockedShelf.FrontLayer;
 
-				for (int i = 0; i < ItemNumbEachLayer; i++)
+				for (int i = 0; i < lockedShelfFrontLayer.Items.Length; i++)
 				{
-					if (items.Count == 0)
+					if (_itemsSafeToTake.Count == 0)
 						return;
 
-					if (frontLayer.Items[i] != null)
+					if (lockedShelfFrontLayer.Items[i] != null)
 						continue;
 
-					Item item = items[0];
-					items.RemoveAt(0);
+					Item item = _itemsSafeToTake[0];
+					_itemsSafeToTake.RemoveAt(0);
 					ItemLayer prevLayer = item.Layer;
 
 					prevLayer.RemoveItem(item);
 					prevLayer.CheckShouldDestroy(false);
 
-					frontLayer.PlaceItemAtIndex(item, i);
+					lockedShelfFrontLayer.PlaceItemAtIndex(item, i);
 				}
 			}
 		}

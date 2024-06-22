@@ -122,14 +122,22 @@
     },
     {
       "id": 16,
-      "TotalShelves": 39,
-      "ItemTypes": 30,
+      "TotalShelves": 36,
+      "ItemTypes": 27,
       "LayerPerShelf": 1,
-      "LockShelves": 4,
+      "LockShelves": 3,
       "HaveUnknownItems": true
     },
     {
       "id": 17,
+      "TotalShelves": 39,
+      "ItemTypes": 30,
+      "LayerPerShelf": 1,
+      "LockShelves": 3,
+      "HaveUnknownItems": true
+    },
+    {
+      "id": 18,
       "TotalShelves": 42,
       "ItemTypes": 33,
       "LayerPerShelf": 1,
@@ -137,17 +145,9 @@
       "HaveUnknownItems": true
     },
     {
-      "id": 18,
+      "id": 19,
       "TotalShelves": 45,
       "ItemTypes": 36,
-      "LayerPerShelf": 1,
-      "LockShelves": 5,
-      "HaveUnknownItems": true
-    },
-    {
-      "id": 19,
-      "TotalShelves": 48,
-      "ItemTypes": 39,
       "LayerPerShelf": 1,
       "LockShelves": 5,
       "HaveUnknownItems": true

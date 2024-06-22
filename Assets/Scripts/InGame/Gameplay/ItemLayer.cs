@@ -39,18 +39,18 @@ namespace InGame.Gameplay
 			Shelf = shelf;
 		}
 
-		public bool CanTakeItem()
+		public bool CanReceiveItem()
 		{
 			bool canTakeItem = Items.Any(i => i == null);
 			return canTakeItem;
 		}
 
-		public void StartTakeItem(Item item, int[] desiredIndexes)
+		public void StartReceiveItem(Item item, int[] desiredIndexes)
 		{
-			StartCoroutine(TakeItem(item, desiredIndexes));
+			StartCoroutine(ReceiveItem(item, desiredIndexes));
 		}
 
-		private IEnumerator TakeItem(Item item, int[] desiredIndexes)
+		private IEnumerator ReceiveItem(Item item, int[] desiredIndexes)
 		{
 			foreach (int index in desiredIndexes)
 			{
@@ -83,6 +83,18 @@ namespace InGame.Gameplay
 			Items[index] = item;
 
 			item.LocalPosition = new Vector2(GetItemLocalPosX(index), 0);
+		}
+
+		public void PlaceItemAnywhere(Item item)
+		{
+			for (int i = 0; i < Items.Length; i++)
+			{
+				if (Items[i] != null) 
+					continue;
+				
+				PlaceItemAtIndex(item, i);
+				return;
+			}
 		}
 
 		private IEnumerator CheckCorrect()

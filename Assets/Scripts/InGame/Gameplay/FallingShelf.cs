@@ -50,6 +50,11 @@ namespace InGame.Gameplay
 
 		public override void RemoveFrontLayer()
 		{
+			Disappear();
+		}
+
+		private void Disappear()
+		{
 			bool haveNoShelfAbove = _cell.y + 1 < _fallingLevelController._gridRow &&
 			                        _fallingLevelController.Grid[_cell.x, _cell.y + 1] == null;
 
@@ -60,8 +65,8 @@ namespace InGame.Gameplay
 					shelfBellow.Renderer.sprite = SkinManager.Instance.GetShelfSkin(_sprites[0].name);
 			}
 
-			_fallingLevelController.StartFall(_cell);
-
+			_fallingLevelController.Grid[_cell.x, _cell.y] = null;
+			_fallingLevelController.StartFall();
 			_fallingLevelController.RemoveShelf(this);
 
 			if (haveNoShelfAbove)

@@ -24,6 +24,7 @@ namespace Controllers
 		public float ActionTime;
 
 		private bool _falling;
+		private List<FallingShelf> _fallingShelves = new List<FallingShelf>();
 
 		protected override IEnumerator Start()
 		{
@@ -56,41 +57,47 @@ namespace Controllers
 			Grid = new FallingShelf[_gridColumn, _gridRow];
 		}
 
-		public void StartFall(Vector2Int emptyCell)
+		public void StartFall()
 		{
-			StartCoroutine(Fall(emptyCell));
+			_refillThisFrame = true;
 		}
 
-		private IEnumerator Fall(Vector2Int emptyCell)
+		private bool _refillThisFrame;
+
+		private void LateUpdate()
 		{
-			int x = emptyCell.x;
-			if (IsOutsideBound(new Vector2Int(x, emptyCell.y + 1)) || Grid[x, emptyCell.y + 1] == null)
-				yield break;
-
-			_falling = true;
-			CanDrag = false;
-			yield return null;
-
-			YieldInstruction wait = MoveEntityToCell(Grid[x, emptyCell.y + 1], new Vector2Int(x, emptyCell.y));
-
-			for (int y = emptyCell.y + 1; y < _gridRow; y++)
+			if (_refillThisFrame)
 			{
-				if (!IsOutsideBound(new Vector2Int(x, y + 1)) && Grid[x, y + 1] != null)
+				_refillThisFrame = false;
+				StartCoroutine(Refill());
+			}
+		}
+
+		private IEnumerator Refill()
+		{
+			_falling = true;
+			// CanDrag = false;
+			for (int i = 0; i < _gridRow; i++)
+			for (int y = _gridRow - 1; y >= 0; y--)
+			for (int x = 0; x < _gridColumn; x++)
+			{
+				if (Grid[x, y] == null && !IsOutsideBound(new Vector2Int(x, y + 1)) && Grid[x, y + 1] != null)
 				{
-					MoveEntityToCell(Grid[x, y + 1], new Vector2Int(x, y));
+					MoveShelfToCell(Grid[x, y + 1], new Vector2Int(x, y));
+					yield return null;
 				}
 			}
 
-			yield return wait;
+			yield return new WaitUntil(() => _fallingShelves.Count == 0);
 			_falling = false;
-			CanDrag = true;
 		}
 
-		private YieldInstruction MoveEntityToCell(FallingShelf entity, Vector2Int endCell)
+		private YieldInstruction MoveShelfToCell(FallingShelf shelf, Vector2Int endCell)
 		{
-			Grid[entity._cell.x, entity._cell.y] = null;
-			Grid[endCell.x, endCell.y] = entity;
-			return entity.SetCell(endCell);
+			_fallingShelves.Add(shelf);
+			Grid[shelf._cell.x, shelf._cell.y] = null;
+			Grid[endCell.x, endCell.y] = shelf;
+			return shelf.SetCell(endCell, () => _fallingShelves.Remove(shelf));
 		}
 
 		public Vector3 ConvertToWorldPosition(Vector2Int cellPos)
@@ -104,19 +111,36 @@ namespace Controllers
 		{
 			return cell.x < 0 || cell.x >= _gridColumn || cell.y < 0 || cell.y >= _gridRow;
 		}
-
+		
 		public override void CheckFull()
 		{
-			StartCoroutine(CommonIEnumerator.WaitUntil(() => !_falling, () =>
-			{
-				foreach (var shelf in GetShelvesOnScreen())
-				{
-					if (shelf.FrontLayer.ItemsCount < 3)
-						return;
-				}
+			StartCoroutine(CheckFullRoutine());
+		}
 
-				Lose();
-			}));
+		private IEnumerator CheckFullRoutine()
+		{
+			yield return null;
+			yield return new WaitUntil(() => !_falling);
+			
+			var shelvesOnScreen = GetShelvesOnScreen();
+			if (shelvesOnScreen.Count <= 1)
+				yield break;
+
+			foreach (var shelf in shelvesOnScreen)
+			{
+				if (shelf.FrontLayer.ItemsCount < 3)
+					yield break;
+			}
+
+			if (shelvesOnScreen.Count > 0)
+			{
+				foreach (var s in shelvesOnScreen)
+				{
+					Debug.Log(s.gameObject.name);
+				}
+			}
+
+			Lose();
 		}
 
 		private List<Shelf> GetShelvesOnScreen()
@@ -127,7 +151,6 @@ namespace Controllers
 
 		public void RemoveShelf(Shelf shelf)
 		{
-			Debug.Log(shelf.gameObject.name);
 			List<Shelf> temp = Shelves.ToList();
 			temp.Remove(shelf);
 			Shelves = temp.ToArray();
