@@ -28,7 +28,6 @@ namespace Boosters.InGame
 
 		public override void Use()
 		{
-			base.Use();
 			_x = 0;
 
 			int maxLayerCount = 0;
@@ -43,6 +42,7 @@ namespace Boosters.InGame
 			List<Item> uniqueItems = new List<Item>();
 			_effectedItems = new List<Item>();
 
+			//cai quai gi day :v
 			for (int i = 0; i < 3; i++)
 			{
 				if (uniqueItems.Count == 0)
@@ -74,6 +74,7 @@ namespace Boosters.InGame
 				_effectedItems.AddRange(FindSameItems(randomItem));
 			}
 
+			base.Use();
 			ReduceQuantity();
 			StartCoroutine(TransformItems(_effectedItems));
 			time++;
@@ -99,7 +100,7 @@ namespace Boosters.InGame
 
 		protected override bool CanUse()
 		{
-			return LevelController.CanDrag;
+			return LevelController.CanDrag && !LevelController.MovingItem;
 		}
 
 		private List<Item> RemoveDuplicate(List<Item> items)

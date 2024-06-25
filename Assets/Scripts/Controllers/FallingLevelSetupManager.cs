@@ -17,7 +17,7 @@ namespace Controllers
 			_fallingLevelController = GetComponent<FallingLevelController>();
 			SpawnShelves();
 			base.SetUpLevel();
-			KhongMotTuNaoBiBoLaiPhiaSau();
+			DestroyUnusedLayer();
 		}
 
 		private void Update()
@@ -93,15 +93,22 @@ namespace Controllers
 
 			base.ShuffleItems(refreshItems);
 
-			_itemsSafeToTake = FindSafeItemsFromFrontLayers();
 			KhongMotTuNaoBiBoLaiPhiaSau();
 			LevelController.Instance.Shelves = ToolHelper.RemoveNulls(Shelves);
+		}
+
+		protected override void DestroyUnusedLayer()
+		{
+			//Do tủ loại level này chỉ có 1 layer, nên cố gắng gắn 1 item vào nếu layer trống để ngăn tủ bị Destroy
+			KhongMotTuNaoBiBoLaiPhiaSau();
+			base.DestroyUnusedLayer();
+			_fallingLevelController.StartFall();
 		}
 
 		private void KhongMotTuNaoBiBoLaiPhiaSau()
 		{
 			_itemsSafeToTake ??= FindSafeItemsFromFrontLayers();
-			
+
 			foreach (var shelf in Shelves)
 			{
 				if (shelf.IsLocked || shelf.FrontLayer.ItemsCount > 0)
@@ -116,13 +123,6 @@ namespace Controllers
 
 				shelf.FrontLayer.PlaceItemAnywhere(item);
 			}
-
-			foreach (Shelf shelf in Shelves)
-				for (int i = shelf.Layers.Count - 1; i >= 0; i--)
-				{
-					var layer = shelf.Layers[i];
-					layer.CheckShouldDestroy(false);
-				}
 		}
 	}
 }

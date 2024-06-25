@@ -42,6 +42,8 @@ namespace Controllers
 		public int Star;
 
 		protected LevelUIController Ui => LevelUIController.Instance;
+		public bool MovingItem { get; set; }
+
 		private int _secondRemain;
 		public GameObject SortEffect;
 		public Prop StarProp;
@@ -215,7 +217,7 @@ namespace Controllers
 			StartCoroutine(CommonIEnumerator.WaiForSeconds(1, () => Ui.ShowLosePanel()));
 		}
 
-		private void GainReward()
+		protected void GainReward()
 		{
 			DataController.Instance.IncreaseOneEnergy();
 			if (LevelData.IsHardLevel())
@@ -318,6 +320,7 @@ namespace Controllers
 
 		public void GoHome()
 		{
+			StartBoosterController.Instance.Stop();
 			SceneController.Instance.LoadScene("MainScene");
 		}
 
@@ -326,7 +329,7 @@ namespace Controllers
 			return PlayerPrefs.GetInt("ReducedDifficulty", 0) > 0;
 		}
 
-		private void CollectionTaskHandle()
+		protected void CollectionTaskHandle()
 		{
 			var cTController = CollectionTaskController.Instance;
 			if (!cTController.IsStarted)

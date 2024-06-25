@@ -76,7 +76,6 @@ namespace Controllers
 		private IEnumerator Refill()
 		{
 			_falling = true;
-			// CanDrag = false;
 			for (int i = 0; i < _gridRow; i++)
 			for (int y = _gridRow - 1; y >= 0; y--)
 			for (int x = 0; x < _gridColumn; x++)
@@ -120,8 +119,9 @@ namespace Controllers
 		private IEnumerator CheckFullRoutine()
 		{
 			yield return null;
-			yield return new WaitUntil(() => !_falling);
-			
+			while (_falling)
+				yield return new WaitForEndOfFrame();
+
 			var shelvesOnScreen = GetShelvesOnScreen();
 			if (shelvesOnScreen.Count <= 1)
 				yield break;

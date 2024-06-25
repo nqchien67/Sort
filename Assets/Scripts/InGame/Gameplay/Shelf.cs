@@ -1,6 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Controllers;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 namespace InGame.Gameplay
 {
@@ -160,6 +162,16 @@ namespace InGame.Gameplay
 			foreach (var layer in Layers) items.AddRange(layer.GetAllItems());
 
 			return items;
+		}
+
+		public List<Item> test;
+
+		private void Update()
+		{
+			if(Input.GetKeyDown(KeyCode.A))
+			{
+				test = GetAllItems();
+			}
 		}
 
 		public void RefreshItemsPos()

@@ -145,14 +145,6 @@ namespace MainMenu.TopCharts
 			}
 		}
 
-		private void Update()
-		{
-			if (Input.GetKeyDown(KeyCode.A))
-			{
-				ScrollToUser();
-			}
-		}
-
 		private void ScrollToUser()
 		{
 			StartCoroutine(_scrollRect.FocusOnItemCoroutine(_userCell, 2));

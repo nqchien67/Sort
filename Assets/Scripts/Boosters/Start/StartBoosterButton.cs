@@ -1,6 +1,7 @@
 ﻿using System;
 using Controllers;
 using Data;
+using DG.Tweening;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -62,8 +63,8 @@ namespace Boosters.Start
 
 		public void Select()
 		{
-			// if (_quantity <= 0)
-			// 	return;
+			if (_quantity <= 0)
+				return;
 
 			_selected = !_selected;
 
@@ -87,6 +88,8 @@ namespace Boosters.Start
 		{
 			_quantity = DataController.Instance.GetBoosterQuantity(boosterType);
 			_amountText.text = _quantity.ToString();
+			
+			transform.DOScale(1.1f, 0.098f).SetLoops(2, LoopType.Yoyo);
 		}
 
 		private bool IsBoosterUnlocked()

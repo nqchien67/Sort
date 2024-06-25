@@ -23,7 +23,7 @@ namespace Audio
 			if (isNotScale)
 				return;
 		
-			transform.localScale *= 0.85f;
+			transform.localScale *= 0.88f;
 		}
 
 		public void OnPointerUp(PointerEventData eventData)

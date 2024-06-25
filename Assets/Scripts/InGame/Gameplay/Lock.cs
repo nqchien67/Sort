@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Audio;
 using Controllers;
 using DG.Tweening;
 using TMPro;
@@ -21,6 +22,9 @@ namespace InGame.Gameplay
 		private GameObject _currentGlass;
 
 		private int _number;
+
+		[Header("Audio")] [SerializeField] private AudioClip _chainDrop;
+		[SerializeField] private AudioClip _glassBreak;
 
 		public int Number
 		{
@@ -64,14 +68,21 @@ namespace InGame.Gameplay
 				int chainIndex = _chains.Count - 1;
 				StartCoroutine(ChainsFallAnimation(_chains[chainIndex]));
 				_chains.RemoveAt(chainIndex);
+
+				if (chainIndex > 0)
+					AudioController.Instance.PlaySfx(_chainDrop);
 			}
 
 			Number--;
 			ChangeGlass(Number);
 
 			if (Number == 0)
+			{
 				ApplyExplosionForce(_currentGlass.transform.position, _glassFragments, _explosionForce.GetRandomValue(),
 					_explosionRadius);
+
+				AudioController.Instance.PlaySfx(_glassBreak);
+			}
 		}
 
 		private void ChangeGlass(int index)
@@ -84,10 +95,12 @@ namespace InGame.Gameplay
 		private IEnumerator ChainsFallAnimation(Transform chain)
 		{
 			chain.parent = null;
-			yield return chain.DOShakePosition(0.2f, new Vector3(0.2f, 0.2f, 0), 50).SetEase(Ease.Linear)
-				.WaitForCompletion();
-			chain.DOMoveY(CameraController.BottomLeft.y - 3, 0.7f).SetEase(Ease.InSine);
 
+			DOTween.Sequence()
+				.Append(chain.DOShakePosition(0.2f, new Vector3(0.2f, 0.2f, 0), 50).SetEase(Ease.Linear))
+				.Append(chain.DOMoveY(CameraController.BottomLeft.y - 3, 0.7f).SetEase(Ease.InSine));
+
+			yield return null;
 			if (_number == 0)
 				Destroy(gameObject);
 		}

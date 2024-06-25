@@ -9673,7 +9673,7 @@ GameObject:
   - component: {fileID: 2684158328862941640}
   - component: {fileID: 2684158328881337642}
   - component: {fileID: 2684158328881298876}
-  - component: {fileID: 5510721712443103882}
+  - component: {fileID: 3486198176940253773}
   m_Layer: 0
   m_Name: YellowLaserMissile
   m_TagString: Untagged
@@ -14428,7 +14428,7 @@ ParticleSystem:
         m_PostInfinity: 2
         m_RotationOrder: 4
     vectorLabel1_3: W
---- !u!210 &5510721712443103882
+--- !u!210 &3486198176940253773
 SortingGroup:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -14438,7 +14438,7 @@ SortingGroup:
   m_Enabled: 1
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 6
+  m_SortingOrder: 0
 --- !u!1 &3460051643314323469
 GameObject:
   m_ObjectHideFlags: 0
@@ -14451,6 +14451,7 @@ GameObject:
   - component: {fileID: 7498524659121383637}
   - component: {fileID: 8786826998257682494}
   - component: {fileID: 5002763056211366726}
+  - component: {fileID: 3216636980731551451}
   m_Layer: 0
   m_Name: Spine GameObject (Double Point)
   m_TagString: Untagged
@@ -14520,7 +14521,7 @@ MeshRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 7
+  m_SortingOrder: 1
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!114 &5002763056211366726
 MonoBehaviour:
@@ -14538,6 +14539,7 @@ MonoBehaviour:
   initialSkinName: star x2
   initialFlipX: 0
   initialFlipY: 0
+  updateWhenInvisible: 3
   separatorSlotNames: []
   zSpacing: 0
   useClipping: 1
@@ -14546,6 +14548,7 @@ MonoBehaviour:
   clearStateOnDisable: 0
   tintBlack: 0
   singleSubmesh: 0
+  fixDrawOrder: 0
   addNormals: 0
   calculateTangents: 0
   maskInteraction: 0
@@ -14557,3 +14560,14 @@ MonoBehaviour:
   _animationName: animation
   loop: 0
   timeScale: 1
+--- !u!210 &3216636980731551451
+SortingGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3460051643314323469}
+  m_Enabled: 1
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 6

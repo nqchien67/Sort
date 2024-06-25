@@ -28,7 +28,7 @@ namespace Boosters
 			if (PlayerPrefs.GetInt(gameObject.name, 0) != 1)
 			{
 				yield return new WaitUntil(() => LevelController.Instance.CanDrag);
-				
+
 				_unlockBoosterPanel.OnClickClaim += OnClickClaimBooster;
 				_unlockBoosterPanel.Show();
 
@@ -40,15 +40,6 @@ namespace Boosters
 			{
 				Destroy(gameObject);
 			}
-		}
-
-		private void PointToBoosterButton()
-		{
-			Vector2 buttonPos = _booster.GetComponent<RectTransform>().position;
-			var tutTransform = _useBoosterTutorial.transform;
-			// SetAnchorPos(tutTransform.Find("Target"), buttonPos);
-			SetAnchorPos(tutTransform.Find("Arrow"), buttonPos);
-			SetAnchorPos(tutTransform.Find("Continue"), buttonPos);
 		}
 
 		private void SetAnchorPos(Transform trans, Vector2 pos)
@@ -72,20 +63,23 @@ namespace Boosters
 		private void DisplayUseBoosterTutorial()
 		{
 			_useBoosterTutorial.SetActive(true);
-			var tutBoosterButton = Instantiate(_booster, _useBoosterTutorial.transform);
-			tutBoosterButton.transform.position = _booster.transform.position;
-			tutBoosterButton.enabled = false;
-			tutBoosterButton.transform.SetSiblingIndex(1);
+			InGameBoosterButton tutBoosterButton = Instantiate(_booster, _useBoosterTutorial.transform);
+			Transform buttonTf = tutBoosterButton.transform;
 
-			tutBoosterButton.transform.DOScale(1.1f, 0.5f).SetLoops(-1, LoopType.Yoyo);
-			PointToBoosterButton();
+			buttonTf.position = _booster.transform.position;
+			tutBoosterButton.enabled = false;
+			buttonTf.SetSiblingIndex(1);
+
+			buttonTf.DOScale(1.1f, 0.5f).SetLoops(-1, LoopType.Yoyo);
+			PointToBoosterButton(buttonTf.position);
 		}
+
 
 		public void OnClickBooster()
 		{
 			LevelController.Instance.CanDrag = true;
 			LevelController.Instance.PausedTime = false;
-			
+
 			_booster.Use();
 			Destroy(gameObject);
 			PlayerPrefs.SetInt(gameObject.name, 1);
@@ -93,6 +87,13 @@ namespace Boosters
 			DataController.Instance.AddBooster(_unlockBoosterPanel.Data.Type, 1);
 			_booster.RefreshQuantity();
 			DataController.Instance.SaveData();
+		}
+
+		private void PointToBoosterButton(Vector2 position)
+		{
+			var tutTransform = _useBoosterTutorial.transform;
+			SetAnchorPos(tutTransform.Find("Arrow"), position);
+			SetAnchorPos(tutTransform.Find("Continue"), position);
 		}
 
 		private IEnumerator ClaimBoosterRoutine(int boosterQuantity)
@@ -104,8 +105,9 @@ namespace Boosters
 					Quaternion.identity, transform.parent);
 				itemProp.GetComponent<SpriteRenderer>().sprite = _booster.Data.Sprite;
 
-				StartCoroutine(CommonIEnumerator.IMove(itemProp, _booster.transform.position, 1));
-				//TODO: Them anim scale cho nut booster
+				StartCoroutine(CommonIEnumerator.IMove(itemProp, _booster.transform.position, 1,
+					() => _booster.transform.DOScale(1.1f, 0.1f).SetLoops(2, LoopType.Yoyo)));
+
 				yield return new WaitForSeconds(0.2f);
 			}
 		}

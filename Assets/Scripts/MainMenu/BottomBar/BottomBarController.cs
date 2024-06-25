@@ -1,5 +1,4 @@
-﻿using UI.MainMenu.BottomBar;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace MainMenu.BottomBar
 {

@@ -89,9 +89,9 @@ namespace InGame.Gameplay
 		{
 			for (int i = 0; i < Items.Length; i++)
 			{
-				if (Items[i] != null) 
+				if (Items[i] != null)
 					continue;
-				
+
 				PlaceItemAtIndex(item, i);
 				return;
 			}
@@ -104,21 +104,33 @@ namespace InGame.Gameplay
 				var item1 = Items[i];
 				var item2 = Items[i + 1];
 				if (item1 == null || item2 == null || item1.Type != item2.Type)
+				{
+					LevelController.Instance.MovingItem = false;
 					yield break;
+				}
 			}
 
 			LevelController.Instance.RemainItemTypes.Remove(Items[0].Sprite);
 
-			for (int i = 1; i < Items.Length; i++) StartCoroutine(Items[i].Disappear());
-
 			SpawnCoinProp();
-			AudioController.Instance.PlaySfx(LevelController.Instance.RemoveASetSfx);
-			yield return StartCoroutine(Items[0].Disappear());
+			SoundAndVibrate();
+
+			for (int i = 1; i < Items.Length; i++)
+			{
+				StartCoroutine(Items[i].Disappear());
+				Items[i] = null;
+			}
+
+			var item = Items[0];
+			Items[0] = null;
+			yield return StartCoroutine(item.Disappear());
 
 			yield return null;
 			CheckShouldDestroy();
 			LevelController.Instance.EatASet();
+			LevelController.Instance.MovingItem = false;
 		}
+
 
 		private void SpawnCoinProp()
 		{
@@ -223,6 +235,12 @@ namespace InGame.Gameplay
 
 				item.LocalMove(new Vector2(GetItemLocalPosX(i), 0), _placeItemAnimDuration);
 			}
+		}
+
+		private void SoundAndVibrate()
+		{
+			AudioController.Instance.PlaySfx(LevelController.Instance.RemoveASetSfx);
+			AudioController.Instance.Vibrate();
 		}
 	}
 }

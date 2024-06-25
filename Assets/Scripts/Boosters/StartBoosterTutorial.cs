@@ -1,5 +1,6 @@
 ﻿using System.Diagnostics;
 using Boosters.Start;
+using Controllers;
 using Data;
 using DG.Tweening;
 using MainMenu;
@@ -19,15 +20,11 @@ namespace Boosters
 		[SerializeField] private Button _selectButton;
 		[SerializeField] private GameObject _arrow;
 		[SerializeField] private TextMeshProUGUI _description;
+		private StartBoosterButton _tutBoosterButton;
 
 		private void Awake()
 		{
 			_unlockBoosterPanel.Data = _booster.Data;
-			if (DataController.Instance.GetBoosterQuantity(_unlockBoosterPanel.Data.Type) < 3)
-			{
-				DataController.Instance.AddBooster(_unlockBoosterPanel.Data.Type, 3);
-				DataController.Instance.SaveData();
-			}
 		}
 
 		private void Start()
@@ -47,20 +44,46 @@ namespace Boosters
 
 		private void OnClickClaimBooster()
 		{
-			DOVirtual.DelayedCall(0.5f, () =>
-			{
-				_useBoosterTutorial.SetActive(true);
-				_booster.gameObject.SetActive(true);
-			});
+			if (DataController.Instance.GetBoosterQuantity(_unlockBoosterPanel.Data.Type) < 3)
+				Give3();
+			DOVirtual.DelayedCall(0.5f, DisplayUseBoosterTutorial);
+		}
+
+		private void DisplayUseBoosterTutorial()
+		{
+			_useBoosterTutorial.SetActive(true);
+			_tutBoosterButton = Instantiate(_booster, _useBoosterTutorial.transform);
+			// _tutBoosterButton.enabled = false;
+
+			Transform buttonTf = _tutBoosterButton.transform;
+
+			buttonTf.position = _booster.transform.position;
+			buttonTf.SetSiblingIndex(1);
+
+			PointToBoosterButton(buttonTf.position);
+		}
+
+		private void Give3()
+		{
+			DataController.Instance.AddBooster(_unlockBoosterPanel.Data.Type, 3);
+			DataController.Instance.SaveData();
+			_booster.RefreshQuantityText();
+
+			// if (RewardHelper.TryConvertBoosterToReward(_unlockBoosterPanel.Data.Type, out var rewardType))
+			// {
+			// 	MainMenuController.Instance.PlayClaimRewardEffect(rewardType, _unlockBoosterPanel.transform.position,
+			// 		_booster.transform.position, () => _booster.RefreshQuantityText());
+			// }
 		}
 
 		public void OnClickBooster()
 		{
-			_booster.Select();
+			// _booster.Select();
 			_booster.Button.interactable = false;
 			_selectButton.interactable = false;
-			_arrow.SetActive(false);
 
+			_arrow.SetActive(false);
+			_tutBoosterButton.Select();
 			_continueButton.gameObject.SetActive(true);
 		}
 
@@ -68,6 +91,18 @@ namespace Boosters
 		{
 			FindObjectOfType<StartLevelPanel>().OnClickPlayButton();
 			PlayerPrefs.SetInt(gameObject.name, 1);
+		}
+
+		private void PointToBoosterButton(Vector2 position)
+		{
+			var tutTransform = _useBoosterTutorial.transform;
+			SetAnchorPos(tutTransform.Find("Arrow"), position);
+			SetAnchorPos(tutTransform.Find("Select"), position);
+		}
+
+		private void SetAnchorPos(Transform trans, Vector2 pos)
+		{
+			trans.GetComponent<RectTransform>().position = pos;
 		}
 	}
 }

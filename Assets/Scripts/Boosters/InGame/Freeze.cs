@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using Controllers;
 using Data;
+using DG.Tweening;
 using Spine.Unity;
 using UnityEngine;
 
@@ -10,7 +11,7 @@ namespace Boosters.InGame
 	{
 		[SerializeField] private float _freezeTime;
 
-		private GameObject _effectGO;
+		private Transform _effect;
 
 		public override void Use()
 		{
@@ -21,8 +22,9 @@ namespace Boosters.InGame
 
 		protected override Transform SpawnEffect()
 		{
-			_effectGO = Instantiate(_effectPrefab, LevelUIController.Instance.Canvas).gameObject;
-			return null;
+			var effect = Instantiate(_effectPrefab, LevelUIController.Instance.Canvas);
+			effect.transform.SetAsFirstSibling();
+			return effect;
 		}
 
 		protected override bool CanUse()
@@ -40,14 +42,26 @@ namespace Boosters.InGame
 		{
 			LevelController.PausedTime = true;
 
-			SpawnEffect();
-			var waitForASecond = new WaitForSeconds(1);
-			for (int i = 0; i < _freezeTime; i++)
+			_effect = SpawnEffect();
+
+			SkeletonGraphic[] anims = _effect.GetComponentsInChildren<SkeletonGraphic>(true);
+			foreach (var anim in anims)
 			{
-				yield return waitForASecond;
+				anim.AnimationState.SetAnimation(0, "appear", false);
+				anim.AnimationState.Complete += track => anim.AnimationState.SetAnimation(0, "loop", true);
 			}
 
-			Destroy(_effectGO);
+			yield return new WaitForSeconds(_freezeTime - 0.5f);
+
+			for (int i = 1; i < anims.Length; i++)
+			{
+				var anim = anims[i];
+				anim.DOFade(0, 1);
+			}
+
+			yield return anims[0].DOFade(0, 1).WaitForCompletion();
+
+			Destroy(_effect.gameObject);
 			LevelController.PausedTime = false;
 		}
 	}

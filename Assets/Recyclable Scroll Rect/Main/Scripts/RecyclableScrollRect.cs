@@ -84,15 +84,6 @@ namespace PolyAndCode.UI
 			));
 		}
 
-		private void Update()
-		{
-			if (Input.GetKeyDown(KeyCode.A))
-			{
-				_prevAnchoredPos += new Vector2(0, 100);
-				Debug.Log("AAAAAA");
-			}
-		}
-
 		/// <summary>
 		/// public API for Initializing when datasource is not set in controller's Awake. Make sure selfInitalize is set to false. 
 		/// </summary>

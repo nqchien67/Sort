@@ -62,7 +62,7 @@ namespace InGame.Gameplay
 			{
 				var shelfBellow = _fallingLevelController.Grid[_cell.x, _cell.y - 1];
 				if (shelfBellow != null)
-					shelfBellow.Renderer.sprite = SkinManager.Instance.GetShelfSkin(_sprites[0].name);
+					shelfBellow.Renderer.sprite = SkinManager.Instance.GetShelfSkin(_sprites[0]);
 			}
 
 			_fallingLevelController.Grid[_cell.x, _cell.y] = null;

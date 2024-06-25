@@ -4,7 +4,6 @@ using MainMenu.BottomBar;
 using MainMenu.Shop;
 using MainMenu.TopBar;
 using UI;
-using UI.MainMenu.BottomBar;
 using UnityEngine;
 
 namespace MainMenu

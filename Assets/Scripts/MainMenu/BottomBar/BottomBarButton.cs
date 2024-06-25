@@ -1,10 +1,9 @@
-﻿using MainMenu.BottomBar;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-namespace UI.MainMenu.BottomBar
+namespace MainMenu.BottomBar
 {
 	public class BottomBarButton : MonoBehaviour, IPointerUpHandler
 	{

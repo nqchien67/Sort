@@ -1,8 +1,8 @@
 /******************************************************************************
  * Spine Runtimes License Agreement
- * Last updated May 1, 2019. Replaces all prior versions.
+ * Last updated January 1, 2020. Replaces all prior versions.
  *
- * Copyright (c) 2013-2019, Esoteric Software LLC
+ * Copyright (c) 2013-2020, Esoteric Software LLC
  *
  * Integration of the Spine Runtimes into software or otherwise creating
  * derivative works of the Spine Runtimes is permitted under the terms and
@@ -15,16 +15,16 @@
  * Spine Editor license and redistribution of the Products in any form must
  * include this license and copyright notice.
  *
- * THIS SOFTWARE IS PROVIDED BY ESOTERIC SOFTWARE LLC "AS IS" AND ANY EXPRESS
- * OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
- * OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN
- * NO EVENT SHALL ESOTERIC SOFTWARE LLC BE LIABLE FOR ANY DIRECT, INDIRECT,
- * INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING,
- * BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES, BUSINESS
- * INTERRUPTION, OR LOSS OF USE, DATA, OR PROFITS) HOWEVER CAUSED AND ON ANY
- * THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
- * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
- * EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * THE SPINE RUNTIMES ARE PROVIDED BY ESOTERIC SOFTWARE LLC "AS IS" AND ANY
+ * EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+ * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+ * DISCLAIMED. IN NO EVENT SHALL ESOTERIC SOFTWARE LLC BE LIABLE FOR ANY
+ * DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+ * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES,
+ * BUSINESS INTERRUPTION, OR LOSS OF USE, DATA, OR PROFITS) HOWEVER CAUSED AND
+ * ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+ * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
+ * THE SPINE RUNTIMES, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *****************************************************************************/
 
 using UnityEngine;
@@ -32,7 +32,7 @@ using System.Collections.Generic;
 using System.Collections;
 
 namespace Spine.Unity.AttachmentTools {
-	
+
 	public static class AttachmentCloneExtensions {
 		/// <summary>
 		/// Clones the attachment.</summary>
@@ -80,12 +80,36 @@ namespace Spine.Unity.AttachmentTools {
 		/// <param name="o">The original attachment.</param>
 		/// <param name="sprite">The sprite whose texture to use.</param>
 		/// <param name="sourceMaterial">The source material used to copy the shader and material properties from.</param>
-		/// <param name="premultiplyAlpha">If <c>true</c>, a premultiply alpha clone of the original texture will be created.</param>
+		/// <param name="premultiplyAlpha">If <c>true</c>, a premultiply alpha clone of the original texture will be created.
+		/// See remarks below for additional info.</param>
 		/// <param name="cloneMeshAsLinked">If <c>true</c> MeshAttachments will be cloned as linked meshes and will inherit animation from the original attachment.</param>
 		/// <param name="useOriginalRegionSize">If <c>true</c> the size of the original attachment will be followed, instead of using the Sprite size.</param>
-		public static Attachment GetRemappedClone (this Attachment o, Sprite sprite, Material sourceMaterial, bool premultiplyAlpha = true, bool cloneMeshAsLinked = true, bool useOriginalRegionSize = false) {
+		/// <param name="pivotShiftsMeshUVCoords">If <c>true</c> and the original Attachment is a MeshAttachment, then
+		///	a non-central sprite pivot will shift uv coords in the opposite direction. Vertices will not be offset in
+		///	any case when the original Attachment is a MeshAttachment.</param>
+		///	<param name="useOriginalRegionScale">If <c>true</c> and the original Attachment is a RegionAttachment, then
+		///	the original region's scale value is used instead of the Sprite's pixels per unit property. Since uniform scale is used,
+		///	x scale of the original attachment (width scale) is used, scale in y direction (height scale) is ignored.</param>
+		///	<remarks>When parameter <c>premultiplyAlpha</c> is set to <c>true</c>, a premultiply alpha clone of the
+		///	original texture will be created. Additionally, this PMA Texture clone is cached for later re-use,
+		///	which might steadily increase the Texture memory footprint when used excessively.
+		///	See <see cref="AtlasUtilities.ClearCache()"/> on how to clear these cached textures.</remarks>
+		public static Attachment GetRemappedClone (this Attachment o, Sprite sprite, Material sourceMaterial,
+			bool premultiplyAlpha = true, bool cloneMeshAsLinked = true, bool useOriginalRegionSize = false,
+			bool pivotShiftsMeshUVCoords = true, bool useOriginalRegionScale = false) {
 			var atlasRegion = premultiplyAlpha ? sprite.ToAtlasRegionPMAClone(sourceMaterial) : sprite.ToAtlasRegion(new Material(sourceMaterial) { mainTexture = sprite.texture } );
-			return o.GetRemappedClone(atlasRegion, cloneMeshAsLinked, useOriginalRegionSize, 1f/sprite.pixelsPerUnit);
+			if (!pivotShiftsMeshUVCoords && o is MeshAttachment) {
+				// prevent non-central sprite pivot setting offsetX/Y and shifting uv coords out of mesh bounds
+				atlasRegion.offsetX = 0;
+				atlasRegion.offsetY = 0;
+			}
+			float scale = 1f / sprite.pixelsPerUnit;
+			if (useOriginalRegionScale) {
+				var regionAttachment = o as RegionAttachment;
+				if (regionAttachment != null)
+					scale = regionAttachment.width / regionAttachment.regionOriginalWidth;
+			}
+			return o.GetRemappedClone(atlasRegion, cloneMeshAsLinked, useOriginalRegionSize, scale);
 		}
 
 		/// <summary>

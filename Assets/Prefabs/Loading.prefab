@@ -129,10 +129,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _logo: {fileID: 5174267492094317434}
   _background: {fileID: 5174267492917102108}
-  _fadeDuration: 0.5
+  _fadeDuration: 0.2
   _logoInDuration: 0.7
   _logoOutDuration: 0.2
-  _amplitude: 0.2
+  _amplitude: 0.01
   _hardLevelBackground: {fileID: 21300000, guid: 4e5715fdfaefd53428abdb49b3e331f2, type: 3}
 --- !u!1 &5174267492094317413
 GameObject:

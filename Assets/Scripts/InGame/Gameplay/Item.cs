@@ -25,6 +25,8 @@ namespace InGame.Gameplay
 		private int _originIndex;
 		protected ItemLayer _originLayer;
 
+		private Tween _moveTween;
+
 		public Vector3 Position
 		{
 			get => transform.position;
@@ -83,11 +85,13 @@ namespace InGame.Gameplay
 
 			Renderer.sortingOrder = 1;
 			AudioController.Instance.PlaySfx(LevelController.Instance.PickupItemSfx);
+			LevelController.MovingItem = true;
+			_moveTween.Kill();
 		}
 
 		public virtual bool CanDrag()
 		{
-			return !_layer.Shelf.IsLocked && LevelController.CanDrag;
+			return !_layer.Shelf.IsLocked && LevelController.CanDrag && !IsMoving;
 		}
 
 		public virtual void OnEndDrag()
@@ -139,15 +143,19 @@ namespace InGame.Gameplay
 			YieldInstruction yieldInstruction = _originLayer.MoveItemToIndex(this, _originIndex);
 
 			StartCoroutine(CommonIEnumerator.Wait(yieldInstruction,
-				() => AudioController.Instance.PlaySfx(LevelController.Instance.PutDownItemSfx)
-			));
+				() => { AudioController.Instance.PlaySfx(LevelController.Instance.PutDownItemSfx); }));
 		}
 
 		public YieldInstruction LocalMove(Vector3 position, float duration)
 		{
-			return transform.DOLocalMove(position, duration)
-				.OnComplete(() => Renderer.sortingOrder = 0)
-				.WaitForCompletion();
+			_moveTween.Kill();
+			_moveTween = transform.DOLocalMove(position, duration)
+				.OnComplete(() =>
+				{
+					Renderer.sortingOrder = 0;
+				});
+
+			return _moveTween.WaitForCompletion();
 		}
 
 		protected Shelf GetClosetShelf()

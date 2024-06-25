@@ -40,11 +40,7 @@ namespace MainMenu
 			if (RewardHelper.TryConvertBoosterToReward(boosterType, out var rewardType))
 			{
 				MainMenuController.Instance.PlayClaimRewardEffect(rewardType, _freeGifButton.transform.position,
-					randomBoosterButton.transform.position, () =>
-					{
-						randomBoosterButton.RefreshQuantityText();
-						randomBoosterButton.transform.DOScale(1.1f, 0.098f).SetLoops(2, LoopType.Yoyo);
-					});
+					randomBoosterButton.transform.position, () => randomBoosterButton.RefreshQuantityText());
 			}
 
 			// foreach (StartBoosterButton boosterButton in _startBoosterButtons)

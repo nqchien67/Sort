@@ -1233,28 +1233,76 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2be4171f2534ea6ba50cf9f5fa87c1b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gameData:
+    pbTimeDuration: 0
+    SaveTime: 0
+    DailyRewardTimeStamp: 0
+    PiggyBankTimeStamp: 0
+    PiggyBankCoin: 0
+    PiggyBankLevel: 1
+    Coin: 0
+    Star: 0
+    BoostersState:
+    - Type: 0
+      Quantity: 0
+    - Type: 1
+      Quantity: 0
+    - Type: 2
+      Quantity: 0
+    - Type: 3
+      Quantity: 0
+    - Type: 4
+      Quantity: 0
+    - Type: 5
+      Quantity: 0
+    - Type: 6
+      Quantity: 0
+    SkinData:
+      PurchasableItemSkins: []
+      UnlockableItemSkins: []
+      BackgroundSkins: []
+      Effects: []
+      BackgroundSkinInUse:
+        Id: 0
+        Unlocked: 0
+        InUse: 0
+      EffectInUse:
+        Id: 0
+        Unlocked: 0
+        InUse: 0
+      PriorityItems: []
+    UnlockedAvatarIds: 
+    Profile:
+      AvatarName: 49
+      Name: 
+    Energy: 0
+    EnergyTimeStamp: 0
+    UnlimitedEnergyTime: 0
+    UnlimitedEnergyTimeStamp: 0
+  onDataChange:
+    m_PersistentCalls:
+      m_Calls: []
   LevelsData:
   - id: 1
     TotalShelves: 3
-    TotalItemTypes: 2
-    TotalLayerPerShelf: 1
+    ItemTypes: 0
+    LayerPerShelf: 0
     LockShelves: 0
-    LockNumber: 0
-    UnknownItem: 0
+    HaveUnknownItems: 0
   - id: 2
     TotalShelves: 6
-    TotalItemTypes: 9
-    TotalLayerPerShelf: 2
+    ItemTypes: 0
+    LayerPerShelf: 0
     LockShelves: 1
-    LockNumber: 3
-    UnknownItem: 0
+    HaveUnknownItems: 0
   - id: 3
     TotalShelves: 9
-    TotalItemTypes: 12
-    TotalLayerPerShelf: 2
+    ItemTypes: 0
+    LayerPerShelf: 0
     LockShelves: 2
-    LockNumber: 3
-    UnknownItem: 1
+    HaveUnknownItems: 0
+  CombosData: []
+  isFirstOpenPB: 1
 --- !u!4 &1296845755
 Transform:
   m_ObjectHideFlags: 0
@@ -1472,9 +1520,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 42344be9eefe4392a608ea7d87536f39, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timerText: {fileID: 187054961}
+  _timerText: {fileID: 0}
+  _levelText: {fileID: 0}
+  _coinText: {fileID: 0}
+  _starText: {fileID: 0}
+  _comboText: {fileID: 0}
+  _comboTimeBar: {fileID: 0}
   _losePanel: {fileID: 1095954168}
   _winPanel: {fileID: 0}
+  _avatarImage: {fileID: 0}
+  ClockIcon: {fileID: 0}
+  StarIcon: {fileID: 0}
+  CoinIcon: {fileID: 0}
+  StarX2Icon: {fileID: 0}
+  Canvas: {fileID: 0}
+  PopupCanvas: {fileID: 0}
+  TopBar: {fileID: 0}
+  BottomBar: {fileID: 0}
+  _hardLevelTopBar: {fileID: 0}
+  _buyBoosterPanelPrefab: {fileID: 0}
+  NotEnoughCoin: {fileID: 0}
 --- !u!1001 &1621589690
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1609,24 +1674,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1be1a7570e834f14a08885cfba8e11f0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!1 &1804272054 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4378140318385922899, guid: 7053a99f1885e024a800281e851ef696, type: 3}
-  m_PrefabInstance: {fileID: 4378140316939989837}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1804272058
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1804272054}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 274f7baab4044fcdb4c808f5617a6a6e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  shelfIndexPairs: []
 --- !u!4 &1964241340 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4454619300260392223, guid: 8e64247cb21f14f46a3ffb2706b47eca, type: 3}

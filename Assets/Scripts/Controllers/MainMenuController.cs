@@ -41,8 +41,8 @@ namespace Controllers
 		public Transform CameraCanvas;
 
 		public int HighestPassedLevel;
-		[HideInInspector] public int NextLevel;
-		[HideInInspector] public bool HardLevelComing;
+		public int NextLevel;
+		public bool HardLevelComing;
 
 		public UnityAction<int> OnStartLevelAction;
 
@@ -56,7 +56,7 @@ namespace Controllers
 			base.Awake();
 			HighestPassedLevel = DataController.Instance.HighestPassedLevel;
 			NextLevel = HighestPassedLevel + 1;
-			HardLevelComing = NextLevel % 5 == 0 && HighestPassedLevel >= 10;
+			HardLevelComing = NextLevel % 5 == 0 && NextLevel >= 10;
 
 			DataController.Instance.SaveData();
 
@@ -119,8 +119,6 @@ namespace Controllers
 
 				SceneController.Instance.LoadScene("Level" + level);
 				OnStartLevelAction?.Invoke(level);
-
-				AudioController.Instance.StopMusic();
 			}
 			else
 				EnergyController.Instance.OpenBuyEnergyPanel();

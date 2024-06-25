@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Audio;
 using Controllers;
 using Data;
 using DG.Tweening;
@@ -19,6 +20,7 @@ namespace InGame.Gameplay.Tutorial.Level1
 			LevelTime = CalculateTime();
 			Ui.DisplayCoin(0);
 			Ui.DisplayStar(0);
+			AudioController.Instance.PlayMusic(GameplayMusic, true);
 			yield return StartCoroutine(Tutorial());
 		}
 
@@ -29,8 +31,6 @@ namespace InGame.Gameplay.Tutorial.Level1
 			Vector2[] startPos = new Vector2[items.Length];
 			for (int i = 0; i < items.Length; i++)
 				startPos[i] = items[i].Position;
-
-			foreach (var pos in startPos) Debug.Log("start pos: " + pos);
 
 			for (int i = 0; i < items.Length; i++)
 			{
@@ -58,10 +58,7 @@ namespace InGame.Gameplay.Tutorial.Level1
 			ItemLayer correctLayer = FindCorrectLayer(item);
 
 			if (correctLayer == null)
-			{
-				Debug.LogError("khong tim thay layer");
 				return Vector2.zero;
-			}
 
 			for (int i = 0; i < correctLayer.Items.Length; i++)
 			{
@@ -71,7 +68,6 @@ namespace InGame.Gameplay.Tutorial.Level1
 				return correctLayer.transform.TransformPoint(localPos);
 			}
 
-			Debug.LogError("khong tim thay vi tri trong");
 			return Vector2.zero;
 		}
 
@@ -84,7 +80,7 @@ namespace InGame.Gameplay.Tutorial.Level1
 
 				var layer = Shelves[i].FrontLayer;
 				var allItems = layer.GetAllItems();
-				if (allItems[0].Type == item.Type)
+				if (allItems.Count > 0 && allItems[0].Type == item.Type)
 					return layer;
 			}
 
@@ -102,6 +98,7 @@ namespace InGame.Gameplay.Tutorial.Level1
 			if (_isGameEnd)
 				return;
 			_isGameEnd = true;
+			CanDrag = false;
 
 			int currentLevel = LevelIndex;
 			currentLevel++;
@@ -109,6 +106,18 @@ namespace InGame.Gameplay.Tutorial.Level1
 				currentLevel = 0;
 			PlayerPrefs.SetInt("level", currentLevel);
 			StartCoroutine(CommonIEnumerator.WaiForSeconds(0.5f, () => Ui.ShowWinPanel()));
+			GainReward();
+
+			UpdateTopCharts(Star);
+
+			int currentFreeItemProgress = PlayerPrefs.GetInt("FreeItemProgress", 0);
+			currentFreeItemProgress = Mathf.Min(currentFreeItemProgress + 1, 5);
+			PlayerPrefs.SetInt("FreeItemProgress", currentFreeItemProgress);
+
+			if (LevelData.IsHardLevel() && IsReducedDifficulty())
+				PlayerPrefs.SetInt("ReducedDifficulty", 0);
+
+			CollectionTaskHandle();
 		}
 	}
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using Audio;
 using Data;
 using DG.Tweening;
 using UnityEngine;
@@ -29,6 +30,9 @@ namespace Controllers
 			_background.color = color;
 
 			_logoOutY = -_logo.localPosition.y - 200;
+			
+			AudioController.Instance.StopMusic();
+			AudioController.Instance.StopSfx();
 		}
 
 		public YieldInstruction FadeIn()
@@ -37,6 +41,7 @@ namespace Controllers
 				.Append(_background.DOFade(1, _fadeDuration))
 				.Append(_logo.DOLocalMoveY(0, _logoInDuration).SetEase(Ease.OutElastic, _amplitude, 0))
 				.Append(_logo.DOScale(1.2f, 0.2f).SetDelay(0.3f).SetEase(Ease.InBack))
+				.SetUpdate(true)
 				.WaitForCompletion();
 		}
 

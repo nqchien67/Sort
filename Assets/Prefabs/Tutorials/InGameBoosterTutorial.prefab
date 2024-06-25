@@ -77,9 +77,9 @@ MonoBehaviour:
   m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
-  m_ReferenceResolution: {x: 1080, y: 2475}
+  m_ReferenceResolution: {x: 1080, y: 2400}
   m_ScreenMatchMode: 0
-  m_MatchWidthOrHeight: 0
+  m_MatchWidthOrHeight: 1
   m_PhysicalUnit: 3
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
@@ -129,10 +129,6 @@ PrefabInstance:
     - target: {fileID: 749541922830595220, guid: 09c9412e9f15b194cbb2b12e907872e0, type: 3}
       propertyPath: m_Color.a
       value: 0.8
-      objectReference: {fileID: 0}
-    - target: {fileID: 5779487335945913844, guid: 09c9412e9f15b194cbb2b12e907872e0, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 6825946706206340687, guid: 09c9412e9f15b194cbb2b12e907872e0, type: 3}
       propertyPath: m_Pivot.x

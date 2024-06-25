@@ -1,8 +1,8 @@
 /******************************************************************************
  * Spine Runtimes License Agreement
- * Last updated May 1, 2019. Replaces all prior versions.
+ * Last updated January 1, 2020. Replaces all prior versions.
  *
- * Copyright (c) 2013-2019, Esoteric Software LLC
+ * Copyright (c) 2013-2020, Esoteric Software LLC
  *
  * Integration of the Spine Runtimes into software or otherwise creating
  * derivative works of the Spine Runtimes is permitted under the terms and
@@ -15,16 +15,16 @@
  * Spine Editor license and redistribution of the Products in any form must
  * include this license and copyright notice.
  *
- * THIS SOFTWARE IS PROVIDED BY ESOTERIC SOFTWARE LLC "AS IS" AND ANY EXPRESS
- * OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
- * OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN
- * NO EVENT SHALL ESOTERIC SOFTWARE LLC BE LIABLE FOR ANY DIRECT, INDIRECT,
- * INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING,
- * BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES, BUSINESS
- * INTERRUPTION, OR LOSS OF USE, DATA, OR PROFITS) HOWEVER CAUSED AND ON ANY
- * THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
- * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
- * EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * THE SPINE RUNTIMES ARE PROVIDED BY ESOTERIC SOFTWARE LLC "AS IS" AND ANY
+ * EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+ * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+ * DISCLAIMED. IN NO EVENT SHALL ESOTERIC SOFTWARE LLC BE LIABLE FOR ANY
+ * DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+ * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES,
+ * BUSINESS INTERRUPTION, OR LOSS OF USE, DATA, OR PROFITS) HOWEVER CAUSED AND
+ * ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+ * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
+ * THE SPINE RUNTIMES, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *****************************************************************************/
 
 using System.Collections;
@@ -33,6 +33,7 @@ using UnityEngine;
 using UnityEditor;
 
 using System.Reflection;
+using System;
 
 namespace Spine.Unity.Editor {
 	using Editor = UnityEditor.Editor;
@@ -58,7 +59,11 @@ namespace Spine.Unity.Editor {
 		SkeletonData lastSkeletonData;
 
 		void OnEnable () { HandleOnEnablePreview(); }
-		void OnDestroy () { HandleOnDestroyPreview(); }
+		void OnDestroy () {
+			HandleOnDestroyPreview();
+			AppDomain.CurrentDomain.DomainUnload -= OnDomainUnload;
+			EditorApplication.update -= preview.HandleEditorUpdate;
+		}
 
 		public override void OnInspectorGUI () {
 			animationNameProperty = animationNameProperty ?? serializedObject.FindProperty("animationName");
@@ -70,12 +75,12 @@ namespace Spine.Unity.Editor {
 				if (skeletonData != null) {
 					animation = skeletonData.FindAnimation(animationName);
 				}
-			} 
+			}
 			bool animationNotFound = (animation == null);
 
 			if (changeNextFrame) {
 				changeNextFrame = false;
-				
+
 				if (ThisSkeletonDataAsset != lastSkeletonDataAsset || ThisSkeletonDataAsset.GetSkeletonData(true) != lastSkeletonData) {
 					preview.Clear();
 					preview.Initialize(Repaint, ThisSkeletonDataAsset, LastSkinName);
@@ -133,6 +138,11 @@ namespace Spine.Unity.Editor {
 		void HandleOnEnablePreview () {
 			if (ThisSkeletonDataAsset != null && ThisSkeletonDataAsset.skeletonJSON == null)
 				return;
+			SpineEditorUtilities.ConfirmInitialization();
+
+			// This handles the case where the managed editor assembly is unloaded before recompilation when code changes.
+			AppDomain.CurrentDomain.DomainUnload -= OnDomainUnload;
+			AppDomain.CurrentDomain.DomainUnload += OnDomainUnload;
 
 			preview.Initialize(this.Repaint, ThisSkeletonDataAsset, LastSkinName);
 			preview.PlayPauseAnimation(ThisAnimationName, true);
@@ -140,6 +150,10 @@ namespace Spine.Unity.Editor {
 			preview.OnSkinChanged += HandleOnSkinChanged;
 			EditorApplication.update -= preview.HandleEditorUpdate;
 			EditorApplication.update += preview.HandleEditorUpdate;
+		}
+
+		private void OnDomainUnload (object sender, EventArgs e) {
+			OnDestroy();
 		}
 
 		private void HandleOnSkinChanged (string skinName) {

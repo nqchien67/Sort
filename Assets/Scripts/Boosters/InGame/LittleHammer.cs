@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Controllers;
 using DG.Tweening;
 using InGame.Gameplay;
 using Spine;
@@ -36,23 +37,23 @@ namespace Boosters.InGame
 
 		protected override bool CanUse()
 		{
-			return LevelController.CanDrag;
+			return LevelController.CanDrag && !LevelController.MovingItem;
 		}
 
-		private Coroutine CollectItems(bool playEffect = true)
+		private Coroutine CollectItems()
 		{
 			List<Item> items = GetAllFrontItems();
 			if (items.Count == 0)
 				return null;
 			Item randomItem = items[Random.Range(0, items.Count)];
 			var foundItems = FindSameItems(randomItem);
-			return StartCoroutine(DestroyItems(foundItems, playEffect));
+			return StartCoroutine(DestroyItems(foundItems));
 		}
 
-		private IEnumerator DestroyItems(List<Item> items, bool playEffect)
+		private IEnumerator DestroyItems(List<Item> items)
 		{
 			LevelController.CanDrag = false;
-			const float duration = 0.4f;
+			const float duration = 0.7f;
 
 			foreach (var item in items)
 			{
@@ -63,16 +64,18 @@ namespace Boosters.InGame
 				layer.RemoveItem(item);
 				layer.CheckShouldDestroy();
 
-				item.transform.DOMove(Vector3.zero, duration)
-					.SetEase(Ease.InBack)
+				DOTween.Sequence()
+					.Append(item.transform.DOScale(1.1f, 0.2f))
+					.Join(item.transform.DOShakePosition(0.3f, new Vector3(0.15f, 0.15f), 20))
+					.Append(item.transform.DOMove(Vector3.zero, duration - 0.2f)
+						.SetEase(Ease.InBack))
 					.OnComplete(() => Destroy(item.gameObject));
 			}
 
-			yield return new WaitForSeconds(0.05f);
-			if (playEffect)
-				SpawnEffect();
-			yield return new WaitForSeconds(duration - 0.15f);
-
+			yield return new WaitForSeconds(duration - 0.3f);
+			SpawnEffect();
+			yield return new WaitForSeconds(duration - 0.2f);
+			CameraController.Instance.StartShake(0.1f, 0.1f);
 			LevelController.EatASet();
 
 			yield return null;

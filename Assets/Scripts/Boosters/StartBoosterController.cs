@@ -36,6 +36,8 @@ namespace Boosters
 		[SerializeField] private Transform _doublePointExplosionEffect;
 		[SerializeField] private Transform _timeExplosionEffect;
 
+		private Tween _tween;
+
 		private void Awake()
 		{
 			Instance = this;
@@ -52,27 +54,43 @@ namespace Boosters
 			if (SelectedBoosters.Count == 0)
 				yield break;
 
-			foreach (StartBooster booster in SelectedBoosters)
+			List<StartBooster> selectedBoostersClone = new List<StartBooster>(SelectedBoosters);
+			SelectedBoosters.Clear();
+
+			foreach (var booster in selectedBoostersClone)
+			{
+				switch (booster)
+				{
+					case StartBooster.HugeHammer:
+						DataController.Instance.AddBooster(BoosterType.HugeHammer, -1);
+						break;
+					case StartBooster.Time:
+						DataController.Instance.AddBooster(BoosterType.Time, -1);
+						break;
+					case StartBooster.DoublePoint:
+						DataController.Instance.AddBooster(BoosterType.DoublePoint, -1);
+						break;
+				}
+			}
+
+			DataController.Instance.SaveData();
+
+			foreach (StartBooster booster in selectedBoostersClone)
 			{
 				AudioController.Instance.PlaySfx(LevelController.Instance.UseBoosterSfx);
 				switch (booster)
 				{
 					case StartBooster.HugeHammer:
-						DataController.Instance.AddBooster(BoosterType.HugeHammer, -1);
 						yield return StartCoroutine(HugeHammer());
 						break;
 					case StartBooster.Time:
-						DataController.Instance.AddBooster(BoosterType.Time, -1);
 						yield return StartCoroutine(Time());
 						break;
 					case StartBooster.DoublePoint:
-						DataController.Instance.AddBooster(BoosterType.DoublePoint, -1);
 						yield return StartCoroutine(DoublePoint());
 						break;
 				}
 			}
-
-			SelectedBoosters.Clear();
 		}
 
 		public void DeselectBooster(StartBooster booster)
@@ -99,8 +117,8 @@ namespace Boosters
 			var doublePointEffect = SpawnEffect(_doublePointEffect, Vector3.zero);
 
 			yield return new WaitForSeconds(0.5f);
-			yield return doublePointEffect.transform.DOMove(LevelUIController.Instance.StarIcon.position, 1f)
-				.WaitForCompletion();
+			_tween = doublePointEffect.transform.DOMove(LevelUIController.Instance.StarIcon.position, 1f);
+			yield return _tween.WaitForCompletion();
 
 			LevelUIController.Instance.StarIcon.gameObject.SetActive(false);
 			LevelUIController.Instance.StarX2Icon.gameObject.SetActive(true);
@@ -114,6 +132,8 @@ namespace Boosters
 		{
 			Vector2 spawnPos = new Vector2(CameraController.TopRight.x - 3, 0);
 			var effect = SpawnEffect(_hugeHammerEffect, spawnPos);
+			DOVirtual.DelayedCall(0.1f, () => CameraController.Instance.StartShake(1.5f, 0.05f));
+
 			bool animCompleted = false;
 			effect.AnimationState.Complete += entry => animCompleted = true;
 
@@ -134,8 +154,13 @@ namespace Boosters
 
 			yield return StartCoroutine(DestroyItems(items));
 
+			yield return new WaitForSeconds(0.2f);
+			CameraController.Instance.StartShake(0.1f, 0.1f);
+
 			yield return new WaitUntil(() => animCompleted);
-			yield return effect.transform.DOMoveX(CameraController.BottomLeft.x - 4, 0.4f).WaitForCompletion();
+			_tween = effect.transform.DOMoveX(CameraController.BottomLeft.x - 4, 0.4f);
+			yield return _tween.WaitForCompletion();
+
 			Destroy(effect.gameObject);
 		}
 
@@ -152,7 +177,7 @@ namespace Boosters
 				layer.RemoveItem(item);
 				layer.CheckShouldDestroy();
 
-				item.transform.DOMove(Vector3.zero, duration)
+				_tween = item.transform.DOMove(Vector3.zero, duration)
 					.SetEase(Ease.InBack)
 					.OnComplete(() => Destroy(item.gameObject));
 				yield return new WaitForSeconds(0.1f);
@@ -176,7 +201,8 @@ namespace Boosters
 
 			Destroy(effect.gameObject);
 			Transform timeIcon = Instantiate(_timeIconPrefab, Vector3.zero, Quaternion.identity);
-			yield return timeIcon.DOMove(LevelUIController.Instance.ClockIcon.position, 1f).WaitForCompletion();
+			_tween = timeIcon.DOMove(LevelUIController.Instance.ClockIcon.position, 1f);
+			yield return _tween.WaitForCompletion();
 
 			Instantiate(_timeExplosionEffect, timeIcon.position, Quaternion.identity);
 			Destroy(timeIcon.gameObject);
@@ -188,6 +214,12 @@ namespace Boosters
 				.GetComponent<SkeletonAnimation>();
 			// _spawnedEffect.AnimationState.Complete += OnAnimationComplete;
 			// return _spawnedEffect;
+		}
+
+		public void Stop()
+		{
+			StopAllCoroutines();
+			_tween.Kill();
 		}
 	}
 }

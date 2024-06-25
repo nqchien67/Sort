@@ -40,14 +40,14 @@ namespace Boosters.InGame
 
 		private void Start()
 		{
-			if (!IsBoosterUnlocked())
-			{
-				_lock.SetActive(true);
-				_quantityText.gameObject.SetActive(false);
-				_buyIcon.gameObject.SetActive(false);
-				Button.interactable = false;
-				return;
-			}
+			// if (!IsBoosterUnlocked())
+			// {
+			// 	_lock.SetActive(true);
+			// 	_quantityText.gameObject.SetActive(false);
+			// 	_buyIcon.gameObject.SetActive(false);
+			// 	Button.interactable = false;
+			// 	return;
+			// }
 
 			RefreshQuantity();
 		}

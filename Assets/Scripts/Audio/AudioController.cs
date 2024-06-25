@@ -56,7 +56,7 @@ namespace Audio
 
 		public void PlaySfx(AudioClip clip)
 		{
-			if (!isSfxMute || clip != null)
+			if (!isSfxMute && clip != null)
 				sfxSource.PlayOneShot(clip);
 		}
 
@@ -70,10 +70,15 @@ namespace Audio
 			}
 		}
 
+		public void StopSfx()
+		{
+			sfxSource.Stop();
+		}
+		
 		public void StopLoopSfx()
 		{
 			sfxSource.loop = false;
-			sfxSource.Stop();
+			StopSfx();
 		}
 
 		public void PlayMusic(AudioClip clip, bool isLoop)

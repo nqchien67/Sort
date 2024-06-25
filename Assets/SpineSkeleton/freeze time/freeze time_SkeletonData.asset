@@ -13,9 +13,16 @@ MonoBehaviour:
   m_Name: freeze time_SkeletonData
   m_EditorClassIdentifier: 
   atlasAssets:
-  - {fileID: 11400000, guid: 56ebc3121e565bd4e8d8cacb4cf92061, type: 2}
+  - {fileID: 11400000, guid: ccb675559dc440844895ed4d553b2ca0, type: 2}
   scale: 0.01
-  skeletonJSON: {fileID: 4900000, guid: f1852b879c8b42245a8051118e7b26d2, type: 3}
+  skeletonJSON: {fileID: 4900000, guid: 264c80b60a954d04893d210cc2ad8b1e, type: 3}
+  isUpgradingBlendModeMaterials: 0
+  blendModeMaterials:
+    requiresBlendModeMaterials: 0
+    applyAdditiveMaterial: 1
+    additiveMaterials: []
+    multiplyMaterials: []
+    screenMaterials: []
   skeletonDataModifiers: []
   fromAnimation: []
   toAnimation: []

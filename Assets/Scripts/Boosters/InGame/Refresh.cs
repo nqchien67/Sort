@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Controllers;
 using DG.Tweening;
 using InGame.Gameplay;
 using Spine;
@@ -18,6 +19,7 @@ namespace Boosters.InGame
 			base.Use();
 			LevelController.CanDrag = false;
 			_items = GetAllItems();
+			Debug.Log("_items.Count: " + _items.Count);
 			foreach (var i in _items)
 			{
 				i.Layer.RemoveItem(i);
@@ -33,6 +35,7 @@ namespace Boosters.InGame
 			const float duration = 0.3f;
 
 			SpawnEffect();
+			CameraController.Instance.StartShake(1.5f, 0.05f);
 
 			foreach (var item in items)
 			{
@@ -41,7 +44,9 @@ namespace Boosters.InGame
 			}
 
 			yield return new WaitForSeconds(0.4f);
-			LevelController.ShuffleItems(_items);
+			LevelController.ShuffleItems(items);
+			CameraController.Instance.StartShake(0.11f, 0.15f);
+
 			yield return new WaitForSeconds(0.11f);
 			LevelController.CanDrag = true;
 		}
@@ -62,7 +67,7 @@ namespace Boosters.InGame
 
 		protected override bool CanUse()
 		{
-			return LevelController.CanDrag;
+			return LevelController.CanDrag && !LevelController.MovingItem;
 		}
 
 		private List<Item> GetAllItems()
@@ -70,7 +75,9 @@ namespace Boosters.InGame
 			List<Item> items = new List<Item>();
 			foreach (var s in LevelController.Shelves)
 			{
-				items.AddRange(s.GetAllItems());
+				var allItems = s.GetAllItems();
+				Debug.Log(s.gameObject.name + " :all items: " + allItems.Count);
+				items.AddRange(allItems);
 			}
 
 			return items;

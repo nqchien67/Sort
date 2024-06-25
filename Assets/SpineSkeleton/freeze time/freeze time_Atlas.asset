@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a6b194f808b1af6499c93410e504af42, type: 3}
   m_Name: freeze time_Atlas
   m_EditorClassIdentifier: 
-  atlasFile: {fileID: 4900000, guid: 98996369a3be455458f6ae13009ea504, type: 3}
+  atlasFile: {fileID: 4900000, guid: 493e65f38268d574389a6aff96d3a2ae, type: 3}
   materials:
-  - {fileID: 2100000, guid: 18f7f9cc96f4cb5419351003d57f3ae1, type: 2}
+  - {fileID: 2100000, guid: 4569e92cda15d8445be3b1ec1dac696d, type: 2}

@@ -12,19 +12,18 @@
 #define LIGHT_LOOP_LIMIT unity_VertexLightParams.x
 #endif
 
-#pragma multi_compile __ POINT SPOT
 
 ////////////////////////////////////////
 // Alpha Clipping
 //
 
-#if defined(_ALPHA_CLIP) 
+#if defined(_ALPHA_CLIP)
 	uniform fixed _Cutoff;
 	#define ALPHA_CLIP(pixel, color) clip((pixel.a * color.a) - _Cutoff);
 #else
 	#define ALPHA_CLIP(pixel, color)
-#endif	
-			
+#endif
+
 half3 computeLighting (int idx, half3 dirToLight, half3 eyeNormal, half4 diffuseColor, half atten) {
 	half NdotL = max(dot(eyeNormal, dirToLight), 0.0);
 	// diffuse
@@ -84,7 +83,13 @@ VertexOutput vert (appdata v) {
 	float3 eyePos = UnityObjectToViewPos(float4(v.pos, 1)).xyz; //mul(UNITY_MATRIX_MV, float4(v.pos,1)).xyz;
 	half3 fixedNormal = half3(0,0,-1);
 	half3 eyeNormal = normalize(mul((float3x3)UNITY_MATRIX_IT_MV, fixedNormal));
-	//half3 eyeNormal = half3(0,0,1);
+
+#ifdef _DOUBLE_SIDED_LIGHTING
+	// unfortunately we have to compute the sign here in the vertex shader
+	// instead of using VFACE in fragment shader stage.
+	half faceSign = sign(eyeNormal.z);
+	eyeNormal *= faceSign;
+#endif
 
 	// Lights
 	half3 lcolor = half4(0,0,0,1).rgb + color.rgb * glstate_lightmodel_ambient.rgb;
@@ -104,16 +109,11 @@ sampler2D _MainTex;
 fixed4 frag (VertexOutput i) : SV_Target {
 	fixed4 tex = tex2D(_MainTex, i.uv0);
 	ALPHA_CLIP(tex, i.color);
-
-	fixed4 col;
-	#if defined(_STRAIGHT_ALPHA_INPUT)
-	col.rgb = tex * i.color * tex.a;
-	#else
-	col.rgb = tex * i.color;
-	#endif
-				
-	col *= 2;
-	col.a = tex.a * i.color.a;
+#if defined(_STRAIGHT_ALPHA_INPUT)
+	tex.rgb *= tex.a;
+#endif
+	fixed4 col = tex * i.color;
+	col.rgb *= 2;
 	return col;
 }
 

@@ -1,15 +1,14 @@
-﻿using System;
+﻿using Audio;
 using Boosters.Start;
 using Controllers;
 using Data;
 using MainMenu;
 using TMPro;
-using UI.MainMenu;
+using UI;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using Utilities;
 
-namespace UI
+namespace InGame.UI
 {
 	public class LosePanel : Popup
 	{
@@ -17,9 +16,14 @@ namespace UI
 		[SerializeField] private TextMeshProUGUI _levelText;
 		[SerializeField] private BuyEnergyPanel _buyEnergyPanelPrefab;
 
-		private void OnEnable()
+		[Header("Audio")] [SerializeField] private AudioClip _openSfx;
+
+		public override void Show()
 		{
+			base.Show();
 			_levelText.text = "Level" + (LevelController.Instance.LevelIndex + 1);
+			AudioController.Instance.StopMusic();
+			AudioController.Instance.PlaySfx(_openSfx);
 		}
 
 		public void OnClickCLose()

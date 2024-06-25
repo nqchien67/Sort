@@ -75,6 +75,7 @@ MonoBehaviour:
   - {fileID: 7637720918512235185}
   _levelText: {fileID: 4725580671003039403}
   _buyEnergyPanelPrefab: {fileID: 0}
+  _openSfx: {fileID: 8300000, guid: e902c42a947eb4a459ba85fc66d50af6, type: 3}
 --- !u!1 &1575333672373442351
 GameObject:
   m_ObjectHideFlags: 0

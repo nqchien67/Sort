@@ -1,0 +1,125 @@
+
+hopquahoanchinh.png
+size: 1952,844
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+dom
+  rotate: true
+  xy: 1038, 261
+  size: 49, 262
+  orig: 64, 262
+  offset: 8, 0
+  index: -1
+fx
+  rotate: false
+  xy: 1188, 22
+  size: 236, 237
+  orig: 256, 257
+  offset: 10, 11
+  index: -1
+homdo
+  rotate: false
+  xy: 477, 8
+  size: 235, 182
+  orig: 237, 184
+  offset: 1, 1
+  index: -1
+homgo
+  rotate: false
+  xy: 240, 5
+  size: 235, 185
+  orig: 236, 189
+  offset: 0, 2
+  index: -1
+homhoanchinh
+  rotate: false
+  xy: 1426, 72
+  size: 235, 238
+  orig: 235, 243
+  offset: 0, 1
+  index: -1
+homxanh
+  rotate: false
+  xy: 714, 14
+  size: 236, 176
+  orig: 236, 181
+  offset: 0, 2
+  index: -1
+hopquahoanchinh
+  rotate: false
+  xy: 1528, 618
+  size: 235, 224
+  orig: 235, 234
+  offset: 0, 5
+  index: -1
+hopquahoanchinhxanh
+  rotate: true
+  xy: 1528, 380
+  size: 236, 217
+  orig: 236, 240
+  offset: 0, 12
+  index: -1
+luongsang
+  rotate: true
+  xy: 1038, 312
+  size: 530, 488
+  orig: 564, 527
+  offset: 16, 12
+  index: -1
+napdo
+  rotate: false
+  xy: 1663, 27
+  size: 234, 144
+  orig: 234, 188
+  offset: 0, 22
+  index: -1
+napgo
+  rotate: false
+  xy: 952, 25
+  size: 234, 165
+  orig: 236, 181
+  offset: 0, 6
+  index: -1
+napmodo
+  rotate: false
+  xy: 1747, 413
+  size: 203, 203
+  orig: 203, 203
+  offset: 0, 0
+  index: -1
+napmogo
+  rotate: true
+  xy: 1765, 646
+  size: 196, 185
+  orig: 198, 204
+  offset: 1, 19
+  index: -1
+napmoxanh
+  rotate: true
+  xy: 1663, 173
+  size: 205, 215
+  orig: 205, 215
+  offset: 0, 0
+  index: -1
+napxanh
+  rotate: false
+  xy: 2, 2
+  size: 236, 188
+  orig: 238, 189
+  offset: 1, 1
+  index: -1
+nguonsang
+  rotate: true
+  xy: 521, 192
+  size: 650, 515
+  orig: 756, 558
+  offset: 53, 42
+  index: -1
+nguonsangxanh
+  rotate: true
+  xy: 2, 192
+  size: 650, 517
+  orig: 756, 565
+  offset: 53, 42
+  index: -1

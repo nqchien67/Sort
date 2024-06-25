@@ -579,6 +579,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1097280982737901731, guid: d44ac003218b7cf458c4e158f36cc985, type: 3}
+      propertyPath: m_Camera
+      value: 
+      objectReference: {fileID: 197607229}
     - target: {fileID: 1805600880089330095, guid: d44ac003218b7cf458c4e158f36cc985, type: 3}
       propertyPath: m_AnchoredPosition.x
       value: -150.59985
@@ -1583,25 +1587,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4454619300260392223, guid: 8e64247cb21f14f46a3ffb2706b47eca, type: 3}
   m_PrefabInstance: {fileID: 1760426189}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1804272054 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4378140318385922899, guid: 7053a99f1885e024a800281e851ef696, type: 3}
-  m_PrefabInstance: {fileID: 4378140316939989837}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1804272058
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1804272054}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 274f7baab4044fcdb4c808f5617a6a6e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  shelfIndexPairs: []
-  fixedItems: []
 --- !u!1001 &1875536831
 PrefabInstance:
   m_ObjectHideFlags: 0

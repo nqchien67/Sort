@@ -1,4 +1,5 @@
-﻿using Data;
+﻿using System;
+using Data;
 using DG.Tweening;
 using InGame.UI;
 using TMPro;
@@ -27,12 +28,19 @@ namespace Controllers
 		public Transform CoinIcon;
 		public GameObject StarX2Icon;
 		public Transform Canvas;
+		public Transform PopupCanvas;
 		public RectTransform TopBar;
 		public RectTransform BottomBar;
 
 		[SerializeField] private Sprite _hardLevelTopBar;
 		[SerializeField] private BuyBoosterPanel _buyBoosterPanelPrefab;
 		public GameObject NotEnoughCoin;
+
+		private void OnValidate()
+		{
+			Canvas.GetComponent<Canvas>().worldCamera = Camera.main;
+			PopupCanvas.GetComponent<Canvas>().worldCamera = Camera.main;
+		}
 
 		private void Start()
 		{
@@ -134,7 +142,7 @@ namespace Controllers
 
 		public BuyBoosterPanel SpawnBuyBoosterPanel()
 		{
-			return Instantiate(_buyBoosterPanelPrefab, Canvas);
+			return Instantiate(_buyBoosterPanelPrefab, PopupCanvas);
 		}
 
 		public void ShowNotEnoughCoin()

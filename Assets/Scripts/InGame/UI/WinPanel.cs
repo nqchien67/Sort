@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Globalization;
+using Audio;
 using Controllers;
 using Data;
 using DG.Tweening;
@@ -8,7 +9,6 @@ using MainMenu;
 using MainMenu.TopCharts;
 using Spine.Unity;
 using TMPro;
-using UI;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -32,10 +32,13 @@ namespace InGame.UI
 		[SerializeField] private TextMeshProUGUI _totalStarAdsText;
 
 		[SerializeField] private AdsMultiplierCatcher _adsMultiplierCatcher;
-
+		[SerializeField] private DOTweenAnimation _pointerTween;
+		
 		private Animator _animator;
 		private float _maxFillBarLength;
 		private int _levelGainedStar;
+
+		[Header("Audio")] [SerializeField] private AudioClip _openSfx;
 
 		private void Awake()
 		{
@@ -64,6 +67,8 @@ namespace InGame.UI
 			}
 
 			_levelGainedStar = LevelController.Instance.Star;
+			AudioController.Instance.StopMusic();
+			AudioController.Instance.PlaySfx(_openSfx);
 		}
 
 		private IEnumerator ShowCoroutine()
@@ -78,8 +83,10 @@ namespace InGame.UI
 				_piggyBank.SetActive(true);
 				_piggyBankAnim.AnimationState.SetAnimation(1, "jumpin_x", false);
 
-				int bonusCoinPiggy =
-					DataController.Instance.CurrentPbStorage / (DataController.Instance.PiggyBankLevel * 2 + 3);
+				// int bonusCoinPiggy =
+				// 	DataController.Instance.CurrentPbStorage / (DataController.Instance.PiggyBankLevel * 2 + 3);
+				int bonusCoinPiggy = LevelController.Instance.Coin; 
+				
 				bonusCoinPiggy += Random.Range(-1, bonusCoinPiggy / 10 + 1);
 				int averageGold = DataController.Instance.CurrentPbStorage /
 				                  ((DataController.Instance.PiggyBankLevel * 2 + 3) * 12);
@@ -130,7 +137,8 @@ namespace InGame.UI
 		public void OnLickClaimAds()
 		{
 			Debug.Log("Show video ads reward");
-
+			
+			_pointerTween.DOPause();
 			int extraStar = _levelGainedStar * _adsMultiplierCatcher.MultiTime - _levelGainedStar;
 
 			LevelController.Instance.UpdateTopCharts(extraStar);
@@ -180,7 +188,8 @@ namespace InGame.UI
 
 		private void OnClickClaimFreeItem()
 		{
-			_unlockNewItemPanel = Instantiate(_unlockNewItemPanelPrefab, LevelUIController.Instance.Canvas);
+			_unlockNewItemPanel = Instantiate(_unlockNewItemPanelPrefab, LevelUIController.Instance.PopupCanvas);
+			_unlockNewItemPanel.Show();
 			PlayerPrefs.SetInt("FreeItemProgress", 0);
 			_claimItemButton.enabled = false;
 			_highlight.SetActive(false);

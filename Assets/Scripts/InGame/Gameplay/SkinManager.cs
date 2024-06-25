@@ -52,18 +52,26 @@ namespace InGame.Gameplay
 
 		public void SetShelfAndBackgroundSkin(Shelf[] shelves)
 		{
+			if (_backgroundSkin.Id <= 1)
+				return;
+
 			Sprite bgSprite = Resources.Load<Sprite>(SkinFolder + (_backgroundSkin.Id + 1));
 			GameObject.Find("BackgroundWall").GetComponent<Image>().sprite = bgSprite;
 
 			foreach (var shelf in shelves)
 			{
-				Sprite sprite = GetShelfSkin(shelf.Renderer.sprite.name);
+				Sprite sprite = GetShelfSkin(shelf.Renderer.sprite);
 				shelf.Renderer.sprite = sprite;
 			}
 		}
 
-		public Sprite GetShelfSkin(string name) =>
-			Resources.Load<Sprite>($"{SkinFolder}{_backgroundSkin.Id + 1}/{name}");
+		public Sprite GetShelfSkin(Sprite defaultSkin)
+		{
+			if (_backgroundSkin.Id <= 1)
+				return defaultSkin;
+			
+			return Resources.Load<Sprite>($"{SkinFolder}{_backgroundSkin.Id + 1}/{defaultSkin.name}");
+		}
 
 		public GameObject GetSortEffect()
 		{
@@ -90,7 +98,6 @@ namespace InGame.Gameplay
 
 				priorityItems.RemoveAt(0);
 
-				Debug.Log(_unplacedItems.Count + ", " + _totalItemTypes);
 				if (_unplacedItems.Count >= _totalItemTypes)
 					break;
 			}

@@ -25,7 +25,6 @@ namespace Controllers
 		private const int ItemNumbEachLayer = 3;
 		public List<ShelfIndexPair> shelfIndexPairs;
 
-
 		public virtual void SetUpLevel()
 		{
 			if (LevelData.IsHardLevel() && LevelController.IsReducedDifficulty())
@@ -148,7 +147,7 @@ namespace Controllers
 
 				if (unknownItems <= 0 || Random.value >= probabilityIsUnknown || item == null)
 				{
-					probabilityIsUnknown *= 1.5f;
+					probabilityIsUnknown *= 1.2f;
 					continue;
 				}
 
@@ -194,6 +193,7 @@ namespace Controllers
 			if (LockedShelves != null && LockedShelves.Count > 0)
 				FillLockedShelves();
 
+			DestroyUnusedLayer();
 
 			foreach (var shelf in Shelves) shelf.RenderLayers();
 		}
@@ -207,6 +207,12 @@ namespace Controllers
 			{
 				for (int i = 0; i < 3; i++)
 				{
+					if (refreshItems.Count == 0)
+					{
+						Debug.LogError("refreshItems bi thieu 1 item");
+						return;
+					}
+
 					Item item = refreshItems[0];
 					refreshItems.RemoveAt(0);
 
@@ -260,10 +266,10 @@ namespace Controllers
 					continue;
 
 				result = pair;
-				shelfIndexPairs.RemoveAt(i);
 				break;
 			}
 
+			shelfIndexPairs.Remove(result);
 			return result;
 		}
 
@@ -384,9 +390,19 @@ namespace Controllers
 					prevLayer.RemoveItem(item);
 					prevLayer.CheckShouldDestroy(false);
 
-					lockedShelfFrontLayer.PlaceItemAtIndex(item, i);
+					lockedShelfFrontLayer.MoveItemToIndex(item, i);
 				}
 			}
+		}
+
+		protected virtual void DestroyUnusedLayer()
+		{
+			foreach (Shelf shelf in Shelves)
+				for (int i = shelf.Layers.Count - 1; i >= 0; i--)
+				{
+					var layer = shelf.Layers[i];
+					layer.CheckShouldDestroy(false);
+				}
 		}
 
 		private static void ChangeToUnknownItem(Item item)
