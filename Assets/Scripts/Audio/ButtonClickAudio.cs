@@ -9,12 +9,17 @@ namespace Audio
 	{
 		[SerializeField] private AudioClip btnClickAudio;
 		public bool isNotScale;
+		public bool _isMute;
 		private Vector3 originScale;
 
 		private void Start()
 		{
-			if (btnClickAudio == null && MainMenuController.Instance != null)
+			if (btnClickAudio != null) return;
+
+			if (MainMenuController.Instance != null)
 				btnClickAudio = MainMenuController.Instance.ButtonClickSfx;
+			else if (LevelUIController.Instance != null)
+				btnClickAudio = LevelUIController.Instance.ButtonClickSfx;
 		}
 
 		public void OnPointerDown(PointerEventData eventData)
@@ -22,7 +27,7 @@ namespace Audio
 			originScale = transform.localScale;
 			if (isNotScale)
 				return;
-		
+
 			transform.localScale *= 0.88f;
 		}
 
@@ -35,7 +40,7 @@ namespace Audio
 
 		public void OnPointerClick(PointerEventData eventData)
 		{
-			if (btnClickAudio != null)
+			if (btnClickAudio != null && !_isMute)
 				AudioController.Instance.PlaySfx(btnClickAudio);
 		}
 

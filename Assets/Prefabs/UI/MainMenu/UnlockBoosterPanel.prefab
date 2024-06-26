@@ -10553,7 +10553,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 094c4108b5fec694b9327f59da7ee5b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  btnClickAudio: {fileID: 0}
+  btnClickAudio: {fileID: 8300000, guid: ffb3a59befd186847b6f6b8d74f48168, type: 3}
   isNotScale: 0
 --- !u!1 &6713919662390311705
 GameObject:
@@ -10620,7 +10620,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Bla bla bla
+  m_text: Description
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 784f01a5a82e75c49b54f598231e0541, type: 2}
   m_sharedMaterial: {fileID: 2100000, guid: 3fd219c8d7c26ea43a9e7c6c50b8358f, type: 2}
@@ -15734,6 +15734,7 @@ MonoBehaviour:
   _boosterIcon: {fileID: 3790663987230654113}
   _descriptionText: {fileID: 2725640075854722105}
   _claimButton: {fileID: 5779487335945913844}
+  _openSfx: {fileID: 8300000, guid: 2046ba1324d9e4e4bb6842cce6745a51, type: 3}
 --- !u!1 &8899244908024376188
 GameObject:
   m_ObjectHideFlags: 0

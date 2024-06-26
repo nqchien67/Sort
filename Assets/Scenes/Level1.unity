@@ -223,7 +223,6 @@ MonoBehaviour:
   Sprite: {fileID: 0}
   Renderer: {fileID: 0}
   _targetShelf: {fileID: 0}
-  _text: {fileID: 0}
 --- !u!1 &104808343
 GameObject:
   m_ObjectHideFlags: 0
@@ -442,7 +441,6 @@ MonoBehaviour:
   Sprite: {fileID: 0}
   Renderer: {fileID: 0}
   _targetShelf: {fileID: 0}
-  _text: {fileID: 0}
 --- !u!1001 &298968684
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -539,7 +537,6 @@ MonoBehaviour:
   Sprite: {fileID: 0}
   Renderer: {fileID: 0}
   _targetShelf: {fileID: 0}
-  _text: {fileID: 0}
 --- !u!20 &519420031 stripped
 Camera:
   m_CorrespondingSourceObject: {fileID: 1782046269589326260, guid: 084a2098e46630c4c80a9d9dd2b65e9c, type: 3}
@@ -882,7 +879,6 @@ MonoBehaviour:
   Sprite: {fileID: 0}
   Renderer: {fileID: 0}
   _targetShelf: {fileID: 1312743454}
-  _text: {fileID: 0}
 --- !u!1 &881846241
 GameObject:
   m_ObjectHideFlags: 0
@@ -1109,7 +1105,6 @@ MonoBehaviour:
   Sprite: {fileID: 0}
   Renderer: {fileID: 0}
   _targetShelf: {fileID: 0}
-  _text: {fileID: 0}
 --- !u!4 &1312743452 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4454619300260392223, guid: 8e64247cb21f14f46a3ffb2706b47eca, type: 3}
@@ -1309,7 +1304,6 @@ MonoBehaviour:
   Sprite: {fileID: 0}
   Renderer: {fileID: 0}
   _targetShelf: {fileID: 1794316527}
-  _text: {fileID: 0}
 --- !u!1001 &1621589690
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1935,6 +1929,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.x
       value: -101.000015
       objectReference: {fileID: 0}
+    - target: {fileID: 1097280982737901731, guid: d44ac003218b7cf458c4e158f36cc985, type: 3}
+      propertyPath: m_Camera
+      value: 
+      objectReference: {fileID: 519420031}
     - target: {fileID: 1325951352057593381, guid: d44ac003218b7cf458c4e158f36cc985, type: 3}
       propertyPath: m_AnchoredPosition.x
       value: -172.29999
@@ -1943,6 +1941,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.x
       value: -150.59985
       objectReference: {fileID: 0}
+    - target: {fileID: 1947685658097066592, guid: d44ac003218b7cf458c4e158f36cc985, type: 3}
+      propertyPath: m_Camera
+      value: 
+      objectReference: {fileID: 519420031}
     - target: {fileID: 2586488970395315114, guid: d44ac003218b7cf458c4e158f36cc985, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 270.30005

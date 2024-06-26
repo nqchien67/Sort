@@ -32,7 +32,6 @@ namespace Controllers
 			_logoOutY = -_logo.localPosition.y - 200;
 			
 			AudioController.Instance.StopMusic();
-			AudioController.Instance.StopSfx();
 		}
 
 		public YieldInstruction FadeIn()

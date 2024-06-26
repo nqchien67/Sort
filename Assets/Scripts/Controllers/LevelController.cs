@@ -321,6 +321,7 @@ namespace Controllers
 		public void GoHome()
 		{
 			StartBoosterController.Instance.Stop();
+			AudioController.Instance.StopSfx();
 			SceneController.Instance.LoadScene("MainScene");
 		}
 

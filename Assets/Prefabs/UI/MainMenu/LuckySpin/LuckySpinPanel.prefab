@@ -1554,7 +1554,7 @@ MonoBehaviour:
   - {fileID: 4083980600070350119}
   - {fileID: 7647714935223017784}
   _fakeAdsCountText: {fileID: 5982267393631193633}
-  spinClip: {fileID: 8300000, guid: 41735a579c760c842afd623b743deba7, type: 3}
+  spinClip: {fileID: 8300000, guid: 59102892902e2eb4b9245ca783960b02, type: 3}
   _wheelImage: {fileID: 4135673378973295666}
   _adsWheelSprite: {fileID: 21300000, guid: 524d7e5b130d2f444b5887c0a95fdfcd, type: 3}
   _tutorial: {fileID: 1895927234752033487}
@@ -9031,7 +9031,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 034db9a969a2cfd429f641fcdc2ec56d, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 76590a0c64e2b9740a5f2567fd4b5834, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -9331,7 +9331,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 76590a0c64e2b9740a5f2567fd4b5834, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 034db9a969a2cfd429f641fcdc2ec56d, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -9503,17 +9503,17 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 40
+  m_fontSize: 50
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
   m_fontSizeMin: 20
-  m_fontSizeMax: 40
-  m_fontStyle: 0
+  m_fontSizeMax: 56.59
+  m_fontStyle: 1
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
   m_textAlignment: 65535
-  m_characterSpacing: 0
+  m_characterSpacing: -7.6
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0

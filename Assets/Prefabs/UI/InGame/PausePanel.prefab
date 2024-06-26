@@ -361,6 +361,7 @@ GameObject:
   - component: {fileID: 6634884503812603706}
   - component: {fileID: 3049903739622020775}
   - component: {fileID: 7409629611170698773}
+  - component: {fileID: 6744304875832667363}
   m_Layer: 5
   m_Name: QuitButton
   m_TagString: Untagged
@@ -482,6 +483,20 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &6744304875832667363
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 785522508218539174}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 094c4108b5fec694b9327f59da7ee5b0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  btnClickAudio: {fileID: 8300000, guid: ffb3a59befd186847b6f6b8d74f48168, type: 3}
+  isNotScale: 0
 --- !u!1 &856998510961364387
 GameObject:
   m_ObjectHideFlags: 0
@@ -1662,7 +1677,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 094c4108b5fec694b9327f59da7ee5b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  btnClickAudio: {fileID: 8300000, guid: 2e2da620dfcb6d44788bff2ce06b173b, type: 3}
+  btnClickAudio: {fileID: 8300000, guid: ffb3a59befd186847b6f6b8d74f48168, type: 3}
   isNotScale: 0
 --- !u!1 &5727232937924354544
 GameObject:
@@ -1821,7 +1836,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 094c4108b5fec694b9327f59da7ee5b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  btnClickAudio: {fileID: 8300000, guid: 2e2da620dfcb6d44788bff2ce06b173b, type: 3}
+  btnClickAudio: {fileID: 8300000, guid: ffb3a59befd186847b6f6b8d74f48168, type: 3}
   isNotScale: 0
 --- !u!1 &5727232938010312462
 GameObject:
@@ -1980,7 +1995,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 094c4108b5fec694b9327f59da7ee5b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  btnClickAudio: {fileID: 8300000, guid: 2e2da620dfcb6d44788bff2ce06b173b, type: 3}
+  btnClickAudio: {fileID: 8300000, guid: ffb3a59befd186847b6f6b8d74f48168, type: 3}
   isNotScale: 0
 --- !u!1 &5990776064186401667
 GameObject:
@@ -2571,6 +2586,7 @@ GameObject:
   - component: {fileID: 7962681898228077585}
   - component: {fileID: 453660129068271309}
   - component: {fileID: 1680163714451418531}
+  - component: {fileID: 2775799190640956580}
   m_Layer: 5
   m_Name: ContinueButton
   m_TagString: Untagged
@@ -2692,6 +2708,20 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &2775799190640956580
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7125199311978064435}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 094c4108b5fec694b9327f59da7ee5b0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  btnClickAudio: {fileID: 8300000, guid: ffb3a59befd186847b6f6b8d74f48168, type: 3}
+  isNotScale: 0
 --- !u!1 &7615622814600162279
 GameObject:
   m_ObjectHideFlags: 0

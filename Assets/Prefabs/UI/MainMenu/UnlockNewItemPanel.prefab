@@ -569,6 +569,7 @@ GameObject:
   - component: {fileID: 1763429153282072651}
   - component: {fileID: 6354734361530165052}
   - component: {fileID: 5779487335945913844}
+  - component: {fileID: 4893185245789890991}
   m_Layer: 5
   m_Name: ClaimButton
   m_TagString: Untagged
@@ -690,6 +691,20 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &4893185245789890991
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6492500011923810166}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 094c4108b5fec694b9327f59da7ee5b0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  btnClickAudio: {fileID: 0}
+  isNotScale: 0
 --- !u!1 &6713919662390311705
 GameObject:
   m_ObjectHideFlags: 0
@@ -912,6 +927,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df17af0f32614d7bbdccfb3d712f707e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _speed: 100
 --- !u!1 &8482384249674313638
 GameObject:
   m_ObjectHideFlags: 0

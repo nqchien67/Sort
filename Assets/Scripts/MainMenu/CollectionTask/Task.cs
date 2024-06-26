@@ -23,6 +23,7 @@ namespace MainMenu.CollectionTask
 		[SerializeField] private Button _button;
 		[SerializeField] private GameObject _highlight;
 		[SerializeField] private Color _completedLineColor;
+		[SerializeField] private GameObject _claimButton;
 		public GameObject Line;
 
 		private CTProgress _progress;
@@ -84,6 +85,7 @@ namespace MainMenu.CollectionTask
 				_lock.SetActive(false);
 				_button.enabled = true;
 				_highlight.SetActive(state == State.Complete);
+				_claimButton.gameObject.SetActive(state == State.Complete);
 			}
 			else
 			{
@@ -96,6 +98,7 @@ namespace MainMenu.CollectionTask
 				_lock.SetActive(state == State.Lock);
 				_button.enabled = false;
 				_highlight.SetActive(false);
+				_claimButton.gameObject.SetActive(false);
 			}
 		}
 	}

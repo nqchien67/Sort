@@ -2,6 +2,7 @@
 using System.Collections;
 using Controllers;
 using Data;
+using DG.Tweening;
 using Menu.PiggyBank;
 using UnityEngine;
 using UnityEngine.UI;
@@ -54,8 +55,11 @@ namespace MainMenu.PiggyBank
 			if (isFullPB && DataController.Instance.PbTimeDuration <= 0)
 				SetActiveIcon(false);
 			float currentFillAmount =
-				1f * DataController.Instance.PiggyBankCoin / DataController.Instance.CurrentPbStorage;
-			progressImg.fillAmount = currentFillAmount;
+				(float)DataController.Instance.PiggyBankCoin / DataController.Instance.CurrentPbStorage;
+
+			// progressImg.fillAmount = currentFillAmount;
+			UpdateProgressBar(progressImg.rectTransform, currentFillAmount);
+
 			notify.SetActive(isPassLevel6 && currentFillAmount >= 0.6f);
 			if (currentFillAmount == 1)
 				timeText.SetActive(true);
@@ -153,6 +157,17 @@ namespace MainMenu.PiggyBank
 		public void DisableFullText()
 		{
 			timeText.SetActive(false);
+		}
+
+		private void UpdateProgressBar(RectTransform progressBar, float fillPercent)
+		{
+			var sizeDelta = progressBar.sizeDelta;
+			var maxFillBarLength = sizeDelta.x;
+
+			sizeDelta.x = maxFillBarLength * fillPercent;
+
+			progressBar.sizeDelta = new Vector2(0, sizeDelta.y);
+			progressBar.DOSizeDelta(sizeDelta, 1.1f);
 		}
 	}
 

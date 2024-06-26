@@ -76,7 +76,6 @@ namespace Boosters.InGame
 			foreach (var s in LevelController.Shelves)
 			{
 				var allItems = s.GetAllItems();
-				Debug.Log(s.gameObject.name + " :all items: " + allItems.Count);
 				items.AddRange(allItems);
 			}
 

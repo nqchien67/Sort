@@ -36,11 +36,7 @@ namespace Controllers
 		[SerializeField] private BuyBoosterPanel _buyBoosterPanelPrefab;
 		public GameObject NotEnoughCoin;
 
-		private void OnValidate()
-		{
-			Canvas.GetComponent<Canvas>().worldCamera = Camera.main;
-			PopupCanvas.GetComponent<Canvas>().worldCamera = Camera.main;
-		}
+		[Header("Audio")] public AudioClip ButtonClickSfx;
 
 		private void Start()
 		{

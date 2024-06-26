@@ -88,6 +88,7 @@ namespace InGame.UI
 				int bonusCoinPiggy = LevelController.Instance.Coin; 
 				
 				bonusCoinPiggy += Random.Range(-1, bonusCoinPiggy / 10 + 1);
+				bonusCoinPiggy = Mathf.Max(bonusCoinPiggy, 0);
 				int averageGold = DataController.Instance.CurrentPbStorage /
 				                  ((DataController.Instance.PiggyBankLevel * 2 + 3) * 12);
 				int tmp = 0;

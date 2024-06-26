@@ -1834,6 +1834,7 @@ GameObject:
   - component: {fileID: 544759946}
   - component: {fileID: 544759945}
   - component: {fileID: 544759944}
+  - component: {fileID: 544759949}
   m_Layer: 5
   m_Name: Skin
   m_TagString: Untagged
@@ -2004,6 +2005,20 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &544759949
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 544759942}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 094c4108b5fec694b9327f59da7ee5b0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  btnClickAudio: {fileID: 0}
+  isNotScale: 1
 --- !u!224 &553870715 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 6095783748288697242, guid: 3e2ee0563b633e44fb61e89bd612c48c, type: 3}
@@ -4525,6 +4540,7 @@ GameObject:
   - component: {fileID: 1301315924}
   - component: {fileID: 1301315923}
   - component: {fileID: 1301315922}
+  - component: {fileID: 1301315927}
   m_Layer: 5
   m_Name: Home
   m_TagString: Untagged
@@ -4671,6 +4687,20 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &1301315927
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1301315920}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 094c4108b5fec694b9327f59da7ee5b0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  btnClickAudio: {fileID: 8300000, guid: ffb3a59befd186847b6f6b8d74f48168, type: 3}
+  isNotScale: 1
 --- !u!224 &1332360999 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 7529896413405749802, guid: 4d65208266be9e540947305cabd32602, type: 3}
@@ -5594,7 +5624,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 094c4108b5fec694b9327f59da7ee5b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  btnClickAudio: {fileID: 8300000, guid: c8dcabe6a397d72469e96a25bd0a7ee5, type: 3}
+  btnClickAudio: {fileID: 8300000, guid: ffb3a59befd186847b6f6b8d74f48168, type: 3}
   isNotScale: 0
 --- !u!1 &1640085540
 GameObject:
@@ -6164,6 +6194,7 @@ GameObject:
   - component: {fileID: 1756347892}
   - component: {fileID: 1756347895}
   - component: {fileID: 1756347896}
+  - component: {fileID: 1756347897}
   m_Layer: 5
   m_Name: Shop
   m_TagString: Untagged
@@ -6334,6 +6365,20 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &1756347897
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1756347890}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 094c4108b5fec694b9327f59da7ee5b0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  btnClickAudio: {fileID: 0}
+  isNotScale: 1
 --- !u!114 &1760695337 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5118272857848992704, guid: 286101f8bc9895041808ffcf10f536fb, type: 3}
@@ -6726,6 +6771,7 @@ GameObject:
   - component: {fileID: 1877023744}
   - component: {fileID: 1877023743}
   - component: {fileID: 1877023742}
+  - component: {fileID: 1877023747}
   m_Layer: 5
   m_Name: TopCharts
   m_TagString: Untagged
@@ -6896,6 +6942,20 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &1877023747
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1877023740}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 094c4108b5fec694b9327f59da7ee5b0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  btnClickAudio: {fileID: 0}
+  isNotScale: 1
 --- !u!1 &1890849008
 GameObject:
   m_ObjectHideFlags: 0
@@ -7079,7 +7139,7 @@ MonoBehaviour:
   _backgroundMusic: {fileID: 8300000, guid: 5eb9c7ed6a010f94e83a4d2a7af47307, type: 3}
   CollectCoinSfx: {fileID: 8300000, guid: abfa79cc156d7154c85fe039166a9808, type: 3}
   OpenRewardSfx: {fileID: 0}
-  ButtonClickSfx: {fileID: 8300000, guid: 72a349b5c78e7ef42bf6bb2cc946a49c, type: 3}
+  ButtonClickSfx: {fileID: 8300000, guid: ffb3a59befd186847b6f6b8d74f48168, type: 3}
 --- !u!4 &1892066403
 Transform:
   m_ObjectHideFlags: 0

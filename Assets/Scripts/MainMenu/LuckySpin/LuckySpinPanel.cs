@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Audio;
 using Data;
 using DG.Tweening;
 using TMPro;
@@ -99,7 +100,7 @@ namespace MainMenu.LuckySpin
 
 		public void OnSpin(Action onComplete = null)
 		{
-			// AudioController.Instance.PlaySfx(spinClip);
+			AudioController.Instance.PlaySfx(spinClip);
 			exitButton.enabled = false;
 			freeButton.enabled = false;
 			adsButton.enabled = false;

@@ -26,6 +26,8 @@ namespace Boosters.InGame
 		private List<Item> _effectedItems;
 		private SkeletonAnimation _effectSkeletonAnimation;
 
+		private HashSet<string> _typesInLock;
+
 		public override void Use()
 		{
 			_x = 0;
@@ -39,10 +41,11 @@ namespace Boosters.InGame
 					maxLayerCount = layersCount;
 			}
 
+			_typesInLock = GetAllTypeInLocks();
+
 			List<Item> uniqueItems = new List<Item>();
 			_effectedItems = new List<Item>();
 
-			//cai quai gi day :v
 			for (int i = 0; i < 3; i++)
 			{
 				if (uniqueItems.Count == 0)
@@ -78,6 +81,20 @@ namespace Boosters.InGame
 			ReduceQuantity();
 			StartCoroutine(TransformItems(_effectedItems));
 			time++;
+		}
+
+		private HashSet<string> GetAllTypeInLocks()
+		{
+			HashSet<string> result = new HashSet<string>();
+
+			foreach (var lockShelf in LevelController.Instance.LockedShelves)
+			{
+				List<Item> items = lockShelf.GetAllItems();
+				foreach (var i in items)
+					result.Add(i.Type);
+			}
+
+			return result;
 		}
 
 		protected override Transform SpawnEffect()
@@ -122,12 +139,16 @@ namespace Boosters.InGame
 
 			foreach (var shelf in LevelController.Shelves)
 			{
+				if (shelf.IsLocked)
+					continue;
+
 				var layers = shelf.Layers;
 				int layerIndex = layers.Count - 1 - _x;
 				layerIndex = Mathf.Max(0, layerIndex);
 
 				items.AddRange(layers[layerIndex].GetAllItems()
-					.Where(item => item.Type != "_CuLac" && !_effectedItems.Contains(item)));
+					.Where(item =>
+						item.Type != "_CuLac" && !_effectedItems.Contains(item)));
 			}
 
 			return items;

@@ -1,4 +1,5 @@
-﻿using TMPro;
+﻿using Audio;
+using TMPro;
 using UI;
 using UnityEngine;
 using UnityEngine.Events;
@@ -12,6 +13,7 @@ namespace Boosters
 		[SerializeField] private Image _boosterIcon;
 		[SerializeField] private TextMeshProUGUI _descriptionText;
 		[SerializeField] private Button _claimButton;
+		[SerializeField] private AudioClip _openSfx;
 
 		public UnityAction OnClickClaim;
 
@@ -22,6 +24,8 @@ namespace Boosters
 
 			OnClickClaim += Close;
 			_claimButton.onClick.AddListener(OnClickClaim);
+
+			AudioController.Instance.PlaySfx(_openSfx);
 		}
 	}
 }

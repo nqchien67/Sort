@@ -147,7 +147,7 @@ namespace MainMenu.TopCharts
 
 		private void ScrollToUser()
 		{
-			StartCoroutine(_scrollRect.FocusOnItemCoroutine(_userCell, 2));
+			StartCoroutine(_scrollRect.FocusOnItemCoroutine(_userCell, 1));
 		}
 
 		private void SetTopAnchor(RectTransform rectTransform)

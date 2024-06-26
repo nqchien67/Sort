@@ -174,7 +174,7 @@ MonoBehaviour:
   _explosionRadius: 4
   Shelf: {fileID: 0}
   _chainDrop: {fileID: 8300000, guid: c297537f5b014d4469bf836e8129e04a, type: 3}
-  _glassBreak: {fileID: 8300000, guid: dbf73d6571ffbcd4a9a301c02f0c1cae, type: 3}
+  _glassBreak: {fileID: 8300000, guid: e7c294a3c6bc8f14489e672445cf93e4, type: 3}
 --- !u!1 &840789545380606542
 GameObject:
   m_ObjectHideFlags: 0

@@ -14,7 +14,6 @@ namespace MainMenu.DailyReward
 		private void Start()
 		{
 			_isPassLevel4 = MainMenuController.Instance.HighestPassedLevel >= 4;
-			_isPassLevel4 = false;
 			_dailyRewardButton.SetActive(_isPassLevel4);
 		}
 

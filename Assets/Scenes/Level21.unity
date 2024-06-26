@@ -872,6 +872,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.x
       value: -150.59985
       objectReference: {fileID: 0}
+    - target: {fileID: 1947685658097066592, guid: d44ac003218b7cf458c4e158f36cc985, type: 3}
+      propertyPath: m_Camera
+      value: 
+      objectReference: {fileID: 1748221444}
     - target: {fileID: 2122950827296356433, guid: d44ac003218b7cf458c4e158f36cc985, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -907,6 +911,14 @@ PrefabInstance:
     - target: {fileID: 6081764025648101584, guid: d44ac003218b7cf458c4e158f36cc985, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 90.20996
+      objectReference: {fileID: 0}
+    - target: {fileID: 6362740884243047837, guid: d44ac003218b7cf458c4e158f36cc985, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 35.753204
+      objectReference: {fileID: 0}
+    - target: {fileID: 6362740884243047837, guid: d44ac003218b7cf458c4e158f36cc985, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 8.400002
       objectReference: {fileID: 0}
     - target: {fileID: 6522939479535291952, guid: d44ac003218b7cf458c4e158f36cc985, type: 3}
       propertyPath: m_AnchorMax.y
