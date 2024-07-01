@@ -7,6 +7,7 @@ using DG.Tweening;
 using MainMenu;
 using MainMenu.CollectionTask;
 using MainMenu.DailyReward;
+using MainMenu.PiggyBank;
 using TMPro;
 using UI;
 using UI.MainMenu;
@@ -22,9 +23,6 @@ namespace Controllers
 	{
 		[SerializeField] private TMP_InputField _levelInput;
 		[SerializeField] private StartLevelPanel startLevelPanel;
-		[SerializeField] private TextMeshProUGUI _buttonPlayText;
-
-		[Header("Top Bar")] [SerializeField] private Transform _coinIcon;
 
 		[Header("Props")] [SerializeField] private Transform _coinPropPrefab;
 		[SerializeField] private RewardProp _rewardPropPrefab;
@@ -37,6 +35,8 @@ namespace Controllers
 		[SerializeField] private CommonTutorial _endlessTreasureTutorial;
 
 		[Space] [SerializeField] private DailyRewardController _dailyRewardController;
+		[SerializeField] private PiggyBankController _piggyBankController;
+		public RewardPanelController RewardPanelController;
 
 		public Transform CameraCanvas;
 
@@ -49,45 +49,48 @@ namespace Controllers
 		[Header("Audio")] [SerializeField] private AudioClip _backgroundMusic;
 		public AudioClip CollectCoinSfx;
 		public AudioClip OpenRewardSfx;
-		public AudioClip ButtonClickSfx;
 
 		protected override void Awake()
 		{
 			base.Awake();
 			HighestPassedLevel = DataController.Instance.HighestPassedLevel;
 			NextLevel = HighestPassedLevel + 1;
-			HardLevelComing = NextLevel % 5 == 0 && NextLevel >= 10;
+			HardLevelComing = LevelData.IsHardLevel(NextLevel);
 
 			DataController.Instance.SaveData();
 
 			OnStartLevelAction += OnStartLevel;
 			AudioController.Instance.PlayMusic(_backgroundMusic, true);
 
-			DisplayMenuPanel();
-		}
-
-		private void Start()
-		{
+			if (_dailyRewardController.ShouldShowPanel())
+				_dailyRewardController.ShowDailyRewardPanel();
+			else
+				DisplayMenuPanel();
 		}
 
 		public void DisplayMenuPanel()
 		{
-			if (_dailyRewardController.ShouldShowPanel())
-				_dailyRewardController.ShowDailyRewardPanel();
+			if (_piggyBankController.CanShowFullPiggyPanel())
+				_piggyBankController.ShowFullPiggyPanel();
 			else
+			
+			
 				switch (HighestPassedLevel)
 				{
 					case 2:
-						OnClickPlay();
-						_hugeHammerTutorial.gameObject.SetActive(true);
+						if (_hugeHammerTutorial != null)
+						{
+							OnClickPlay();
+							_hugeHammerTutorial.gameObject.SetActive(true);
+						}
+						break;
+					case 6:
+						if (_piggyBankTutorial != null && DataController.Instance.PiggyBankCoin > 0)
+							_piggyBankTutorial.gameObject.SetActive(true);
 						break;
 					case 5:
 						if (_luckySpinTutorial != null)
 							_luckySpinTutorial.gameObject.SetActive(true);
-						break;
-					case 6:
-						if (_luckySpinTutorial != null)
-							_piggyBankTutorial.gameObject.SetActive(true);
 						break;
 					case 12:
 						if (_endlessTreasureTutorial != null)
@@ -109,35 +112,29 @@ namespace Controllers
 
 		public void Play()
 		{
-			if (DataController.Instance.TryUseEnergy())
-			{
-				string text = _levelInput.text;
-				if (int.TryParse(text, out int level) && level >= 1)
-					PlayerPrefs.SetInt("level", HighestPassedLevel);
-				else
-					level = HighestPassedLevel + 1;
-
-				SceneController.Instance.LoadScene("Level" + level);
-				OnStartLevelAction?.Invoke(level);
-			}
+			string text = _levelInput.text;
+			if (int.TryParse(text, out int level) && level >= 1)
+				PlayerPrefs.SetInt("level", HighestPassedLevel);
 			else
-				EnergyController.Instance.OpenBuyEnergyPanel();
+				level = HighestPassedLevel + 1;
+
+			SceneController.Instance.LoadScene("Level" + level);
+			OnStartLevelAction?.Invoke(level);
 		}
 
-		public void PlayClaimCoinEffect(Vector3 spawnPos)
+		public void PlayClaimCoinEffect(Vector3 spawnPos, int propCount = 5)
 		{
-			StartCoroutine(IncreaseCoin(spawnPos));
+			StartCoroutine(IncreaseCoin(spawnPos, propCount));
 		}
 
-		private IEnumerator IncreaseCoin(Vector3 spawnPos)
+		private IEnumerator IncreaseCoin(Vector3 spawnPos, int propCount)
 		{
 			// isLockUpdateData = true;
 
 			AudioController.Instance.PlaySfx(CollectCoinSfx);
-			for (int i = 0; i < 5; i++)
+			for (int i = 0; i < propCount; i++)
 			{
 				StartCoroutine(CoinPropEffect(spawnPos));
-
 				yield return new WaitForSeconds(0.06f);
 			}
 			// isLockUpdateData = false;
@@ -157,9 +154,7 @@ namespace Controllers
 				.SetEase(Ease.InQuad)
 				.WaitForCompletion();
 
-			// AudioController.Instance.PlaySfx(coinIncreaseAudio);
 			MainMenuUIController.Instance.Coin.UpdateValue();
-			// goldTimeStamp = Time.time;
 			Destroy(coin.gameObject);
 		}
 

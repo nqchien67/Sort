@@ -1,5 +1,5 @@
 {
-  "packs": [
+  "Bundles": [
     {
       "Id": "removeads",
       "Price": 1.99,
@@ -37,7 +37,7 @@
     },
     {
       "Id": "smallpack",
-      "Price": 6.99,
+      "Price": 5.99,
       "RewardTypes": [
         "Coin",
         "HugeHammer",
@@ -63,7 +63,7 @@
     },
     {
       "Id": "basicbundle",
-      "Price": 12.99,
+      "Price": 11.99,
       "RewardTypes": [
         "Coin",
         "HugeHammer",
@@ -90,7 +90,7 @@
     },
     {
       "Id": "greatbundle",
-      "Price": 24.99,
+      "Price": 22.99,
       "RewardTypes": [
         "Coin",
         "HugeHammer",
@@ -116,7 +116,7 @@
     },
     {
       "Id": "mightybundle",
-      "Price": 48.99,
+      "Price": 45.99,
       "RewardTypes": [
         "Coin",
         "HugeHammer",
@@ -142,7 +142,7 @@
     },
     {
       "Id": "superiorbundle",
-      "Price": 99.99,
+      "Price": 91.99,
       "RewardTypes": [
         "Coin",
         "HugeHammer",
@@ -165,10 +165,12 @@
         32,
         1440
       ]
-    },
+    }
+  ],
+  "CoinPacks": [
     {
       "Id": "coin1",
-      "Price": 2.99,
+      "Price": 1.99,
       "RewardTypes": [
         "Coin"
       ],
@@ -178,7 +180,7 @@
     },
     {
       "Id": "coin2",
-      "Price": 4.99,
+      "Price": 4.49,
       "RewardTypes": [
         "Coin"
       ],
@@ -188,7 +190,7 @@
     },
     {
       "Id": "coin3",
-      "Price": 8.99,
+      "Price": 9.49,
       "RewardTypes": [
         "Coin"
       ],
@@ -198,7 +200,7 @@
     },
     {
       "Id": "coin4",
-      "Price": 14.99,
+      "Price": 18.99,
       "RewardTypes": [
         "Coin"
       ],
@@ -208,7 +210,7 @@
     },
     {
       "Id": "coin5",
-      "Price": 26.99,
+      "Price": 38.49,
       "RewardTypes": [
         "Coin"
       ],
@@ -218,7 +220,7 @@
     },
     {
       "Id": "coin6",
-      "Price": 69.99,
+      "Price": 65.99,
       "RewardTypes": [
         "Coin"
       ],

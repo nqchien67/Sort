@@ -44,7 +44,7 @@ namespace MainMenu.CollectionTask
 			_rewardImage.sprite = RewardHelper.Instance.GetRewardSprite(task.RewardType);
 			_rewardAmount.text = "x" + task.RewardAmount;
 
-			if (progress.Id < CollectionTaskController.Instance.CurrentTaskId) 
+			if (progress.Id < CollectionTaskController.Instance.CurrentTaskIndex)
 				_lineImage.color = _completedLineColor;
 		}
 
@@ -61,7 +61,11 @@ namespace MainMenu.CollectionTask
 			{
 				DataController.Instance.Coin += _task.RewardAmount;
 				MainMenuController.Instance.PlayClaimCoinEffect(_rewardImage.transform.position);
-				CollectionTaskBar.Instance.CheckAndShowNotiDot();
+			}
+			else if (rewardType == RewardType.Energy)
+			{
+				DataController.Instance.AddUnlimitedEnergy(_task.RequestAmount);
+				EnergyController.Instance.PlayUnlimitedEnergyEffect();
 			}
 			else if (RewardHelper.TryConvertRewardToBooster(rewardType, out BoosterType boosterType))
 			{
@@ -69,7 +73,9 @@ namespace MainMenu.CollectionTask
 				MainMenuController.Instance.PlayClaimRewardEffect(rewardType, transform.position);
 			}
 
+			CollectionTaskBar.Instance.CheckAndShowNotiDot();
 			CollectionTaskController.Instance.SaveData();
+			DataController.Instance.SaveData();
 		}
 
 		private void DisplayByState(State state)

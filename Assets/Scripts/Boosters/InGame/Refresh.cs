@@ -19,7 +19,6 @@ namespace Boosters.InGame
 			base.Use();
 			LevelController.CanDrag = false;
 			_items = GetAllItems();
-			Debug.Log("_items.Count: " + _items.Count);
 			foreach (var i in _items)
 			{
 				i.Layer.RemoveItem(i);
@@ -67,7 +66,7 @@ namespace Boosters.InGame
 
 		protected override bool CanUse()
 		{
-			return LevelController.CanDrag && !LevelController.MovingItem;
+			return LevelController.CanDrag && !LevelController.AnyItemMoving;
 		}
 
 		private List<Item> GetAllItems()
@@ -96,8 +95,8 @@ namespace Boosters.InGame
 
 		protected override bool IsBoosterUnlocked()
 		{
-			int highestPassedLevel = PlayerPrefs.GetInt("level", 0);
-			return highestPassedLevel >= 3;
+			int currentLevel = LevelController.Instance.LevelIndex;
+			return currentLevel > 4;
 		}
 	}
 }

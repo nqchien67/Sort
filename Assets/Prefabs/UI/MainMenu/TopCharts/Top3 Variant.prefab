@@ -9,7 +9,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 703676146862948580, guid: 012ffa9b4a86219459c3fbda6063ea3f, type: 3}
       propertyPath: m_Name
-      value: Top3
+      value: Top3 Variant
       objectReference: {fileID: 0}
     - target: {fileID: 703676146862948582, guid: 012ffa9b4a86219459c3fbda6063ea3f, type: 3}
       propertyPath: m_Sprite
@@ -117,7 +117,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5122303049870664151, guid: 012ffa9b4a86219459c3fbda6063ea3f, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 234.0211
+      value: 219.33
       objectReference: {fileID: 0}
     - target: {fileID: 5122303049870664151, guid: 012ffa9b4a86219459c3fbda6063ea3f, type: 3}
       propertyPath: m_SizeDelta.y
@@ -141,7 +141,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6571874351604154383, guid: 012ffa9b4a86219459c3fbda6063ea3f, type: 3}
       propertyPath: m_fontSize
-      value: 16.65
+      value: 15.6
       objectReference: {fileID: 0}
     - target: {fileID: 6571874351604154383, guid: 012ffa9b4a86219459c3fbda6063ea3f, type: 3}
       propertyPath: m_fontSizeMax
@@ -153,7 +153,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6571874351604154383, guid: 012ffa9b4a86219459c3fbda6063ea3f, type: 3}
       propertyPath: m_fontSizeBase
-      value: 28.8
+      value: 29.6
+      objectReference: {fileID: 0}
+    - target: {fileID: 6571874351604154383, guid: 012ffa9b4a86219459c3fbda6063ea3f, type: 3}
+      propertyPath: m_overflowMode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6571874351604154383, guid: 012ffa9b4a86219459c3fbda6063ea3f, type: 3}
+      propertyPath: m_enableAutoSizing
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 012ffa9b4a86219459c3fbda6063ea3f, type: 3}

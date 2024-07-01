@@ -9,6 +9,7 @@ namespace Controllers
 	public class SceneController : SingletonCore<SceneController>
 	{
 		private const string LoadingScene = "LoadingScene";
+		private bool _loading;
 
 		private void Start()
 		{
@@ -17,9 +18,13 @@ namespace Controllers
 
 		public void LoadScene(string sceneName, bool saveData = true)
 		{
-			if (saveData)
-				DataController.Instance.SaveData(false);
+			if (_loading)
+				return;
 
+			if (saveData)
+				DataController.Instance.SaveData();
+
+			_loading = true;
 			StartCoroutine(LoadSceneRoutine(sceneName));
 		}
 
@@ -47,8 +52,9 @@ namespace Controllers
 
 			SceneManager.SetActiveScene(SceneManager.GetSceneByName(sceneName));
 			yield return null;
-			
+
 			SceneManager.UnloadSceneAsync(LoadingScene);
+			_loading = false;
 		}
 	}
 }

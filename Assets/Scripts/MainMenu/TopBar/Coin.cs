@@ -1,4 +1,5 @@
-﻿using Data;
+﻿using System;
+using Data;
 using DG.Tweening;
 using TMPro;
 using UnityEngine;
@@ -14,24 +15,24 @@ namespace MainMenu.TopBar
 		private Tween _updateTween;
 		private Vector3 _originalScale;
 
+		[SerializeField] private bool _updateConstantly;
 		[SerializeField] private float _updateDuration = 0.3f;
-
 		public Vector2 IconPosition => Icon.transform.position;
 
-		// public int Value
-		// {
-		// 	get => _value;
-		// private	set
-		// 	{
-		// 		_value = value;
-		// 		// UpdateValue(0.3f);
-		// 	}
-		// }
 
 		private void Start()
 		{
 			_originalScale = Icon.transform.localScale;
-			UpdateValue();
+			if (!_updateConstantly)
+				UpdateValue();
+		}
+
+		private void Update()
+		{
+			if (_updateConstantly)
+			{
+				Text.text = DataController.Instance.Coin.ToString();
+			}
 		}
 
 		public void UpdateValue()
@@ -39,6 +40,12 @@ namespace MainMenu.TopBar
 			int currentValue = int.Parse(Text.text);
 			int endValue = DataController.Instance.Coin;
 
+			if (currentValue != endValue)
+				PlayUpdateAnim(currentValue, endValue);
+		}
+
+		private void PlayUpdateAnim(int currentValue, int endValue)
+		{
 			if (_updateTween != null && _updateTween.IsActive())
 			{
 				_updateTween.Kill();

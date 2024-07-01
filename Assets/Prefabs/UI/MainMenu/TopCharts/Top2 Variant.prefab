@@ -9,7 +9,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 703676146862948580, guid: 012ffa9b4a86219459c3fbda6063ea3f, type: 3}
       propertyPath: m_Name
-      value: Top2
+      value: Top2 Variant
       objectReference: {fileID: 0}
     - target: {fileID: 703676146862948582, guid: 012ffa9b4a86219459c3fbda6063ea3f, type: 3}
       propertyPath: m_Sprite
@@ -117,7 +117,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5122303049870664151, guid: 012ffa9b4a86219459c3fbda6063ea3f, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 232.6263
+      value: 213.7
       objectReference: {fileID: 0}
     - target: {fileID: 5122303049870664151, guid: 012ffa9b4a86219459c3fbda6063ea3f, type: 3}
       propertyPath: m_SizeDelta.y

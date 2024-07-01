@@ -101,7 +101,6 @@ namespace InGame.Gameplay.Tutorial.Level1
 			CanDrag = false;
 
 			int currentLevel = LevelIndex;
-			currentLevel++;
 			if (currentLevel > DataController.Instance.LevelsData.Length - 1)
 				currentLevel = 0;
 			PlayerPrefs.SetInt("level", currentLevel);

@@ -85,13 +85,21 @@ namespace InGame.Gameplay
 
 			Renderer.sortingOrder = 1;
 			AudioController.Instance.PlaySfx(LevelController.Instance.PickupItemSfx);
-			LevelController.MovingItem = true;
+			LevelController.MovingItemsCount++;
 			_moveTween.Kill();
 		}
 
 		public virtual bool CanDrag()
 		{
 			return !_layer.Shelf.IsLocked && LevelController.CanDrag && !IsMoving;
+		}
+
+		public Vector2 ClampDragZone(Vector2 position)
+		{
+			var levelUIController = LevelUIController.Instance;
+			position.y = Mathf.Clamp(position.y, levelUIController.MinY, levelUIController.MaxY);
+
+			return position;
 		}
 
 		public virtual void OnEndDrag()
@@ -143,17 +151,18 @@ namespace InGame.Gameplay
 			YieldInstruction yieldInstruction = _originLayer.MoveItemToIndex(this, _originIndex);
 
 			StartCoroutine(CommonIEnumerator.Wait(yieldInstruction,
-				() => { AudioController.Instance.PlaySfx(LevelController.Instance.PutDownItemSfx); }));
+				() =>
+				{
+					AudioController.Instance.PlaySfx(LevelController.Instance.PutDownItemSfx);
+					LevelController.MovingItemsCount--;
+				}));
 		}
 
 		public YieldInstruction LocalMove(Vector3 position, float duration)
 		{
 			_moveTween.Kill();
 			_moveTween = transform.DOLocalMove(position, duration)
-				.OnComplete(() =>
-				{
-					Renderer.sortingOrder = 0;
-				});
+				.OnComplete(() => Renderer.sortingOrder = 0);
 
 			return _moveTween.WaitForCompletion();
 		}

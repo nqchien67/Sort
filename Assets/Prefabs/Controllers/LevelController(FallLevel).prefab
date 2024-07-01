@@ -84,12 +84,12 @@ MonoBehaviour:
   LevelIndex: 0
   Shelves: []
   ItemLayerPrefab: {fileID: 4581809348472007012, guid: ce4f5adfcf57641449e981434b65f6b4, type: 3}
-  ItemPrefab: {fileID: 9127276917371074957, guid: e191be95aaec05646b5df5dceacc40ae, type: 3}
+  ItemPrefab: {fileID: 2509308953454982677, guid: 2ac7beeda5cf9374cafb53038c647903, type: 3}
   LockPrefab: {fileID: 4389405379797761328, guid: e1b6c0f8c5e5a9d4a9af6be97c1ec437, type: 3}
   DisabledMaterial: {fileID: 2100000, guid: 854afd646f757394fa6e09e2f44c38be, type: 2}
   NormalMaterial: {fileID: 2100000, guid: 43e02f601d0b3a44ea8de2dea1da1104, type: 2}
   LevelData:
-    id: 0
+    Id: 0
     TotalShelves: 0
     ItemTypes: 0
     LayerPerShelf: 0
@@ -102,15 +102,22 @@ MonoBehaviour:
   DoubleStar: 0
   Coin: 0
   Star: 0
+  MovingItemsCount: 0
   SortEffect: {fileID: 6447278513215144292, guid: 4d73530b8aafcd0478b95a2a46d2e873, type: 3}
   StarProp: {fileID: 5043075920097340578, guid: fbb1678156591434f9bc30dd9baaf900, type: 3}
   CoinProp: {fileID: 5043075920097340578, guid: 9f47bc15386ba18488067ee6278a0f7d, type: 3}
-  GameplayMusic: {fileID: 8300000, guid: 6aaecbec67a7de14fb9eda5344318fe4, type: 3}
+  _coinWinBonus:
+    Min: 50
+    Max: 70
+  GameplayMusic: {fileID: 8300000, guid: e232c67a75d63cb4f9588f9a0707b1c6, type: 3}
   PickupItemSfx: {fileID: 8300000, guid: 3becd2d4f934531499466f3e68b22aee, type: 3}
   PutDownItemSfx: {fileID: 8300000, guid: 58ca63193aea60b48bb5f5c1976fe377, type: 3}
-  RemoveASetSfx: {fileID: 8300000, guid: 7ebeda1dddd99544da4c86da236eab3f, type: 3}
-  ComboSfx: {fileID: 8300000, guid: b54c4423efc792d42a594916da89967b, type: 3}
   UseBoosterSfx: {fileID: 8300000, guid: ab307831df51d824ba69321063982334, type: 3}
+  RemoveASetSfx: {fileID: 8300000, guid: 2072b3827b172234bb224aba302f3030, type: 3}
+  _combosSfx:
+  - {fileID: 8300000, guid: ff6aafa4f5eaa0a4f9e92f19356e76e2, type: 3}
+  - {fileID: 8300000, guid: 313fd8015fd143a469189823bb48e2ef, type: 3}
+  - {fileID: 8300000, guid: f08809a655283f843bc5d4347a792e9f, type: 3}
   PausedTime: 0
   _gridColumn: 0
   _gridRow: 0

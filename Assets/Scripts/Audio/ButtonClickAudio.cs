@@ -14,12 +14,12 @@ namespace Audio
 
 		private void Start()
 		{
-			if (btnClickAudio != null) return;
-
-			if (MainMenuController.Instance != null)
-				btnClickAudio = MainMenuController.Instance.ButtonClickSfx;
-			else if (LevelUIController.Instance != null)
-				btnClickAudio = LevelUIController.Instance.ButtonClickSfx;
+			if (btnClickAudio == null)
+			{
+				btnClickAudio = gameObject.name == "CloseButton"
+					? AudioController.Instance.CloseButtonClickSfx
+					: AudioController.Instance.ButtonClickSfx;
+			}
 		}
 
 		public void OnPointerDown(PointerEventData eventData)

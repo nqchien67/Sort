@@ -61,7 +61,7 @@ namespace Controllers
 				}
 
 				deltaTime = DataController.ConvertToUnixTime(DateTime.UtcNow) - saveTimeStamp;
-				if (deltaTime < -1800)
+				if (deltaTime < -ENERGY_REPLENISH_TIME)
 				{
 					DataController.Instance.EnergyTimeStamp =
 						DataController.ConvertToUnixTime(DateTime.UtcNow); //user hack time
@@ -71,6 +71,7 @@ namespace Controllers
 				if (deltaTime >= ENERGY_REPLENISH_TIME)
 				{
 					saveTimeStamp = DataController.ConvertToUnixTime(DateTime.UtcNow);
+					DataController.Instance.EnergyTimeStamp = saveTimeStamp;
 					DataController.Instance.Energy++; //add a energy
 					currentEnergy = DataController.Instance.Energy;
 					if (DataController.Instance.UnlimitedEnergyDuration <= 0)
@@ -93,7 +94,6 @@ namespace Controllers
 					if (DataController.Instance.UnlimitedEnergyDuration <= 0)
 					{
 						// _normalEnergyIcon.sprite = _imageEnergyIcons[0];
-						// timeCountDown.text = Lean.Localization.LeanLocalization.GetTranslationText("energy_full");
 						timeCountDown.text = "Full";
 					}
 				}
@@ -173,6 +173,8 @@ namespace Controllers
 
 		public void PlayUnlimitedEnergyEffect(Transform parent = null)
 		{
+			StopAllCoroutines();
+			
 			if (parent == null)
 				parent = CameraCanvas;
 			buyEnergyBtn.gameObject.SetActive(false);

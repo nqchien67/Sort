@@ -1,0 +1,88 @@
+{
+  "Rewards": [
+    {
+      "RewardTypes": [
+        "Coin",
+        "HugeHammer",
+        "Time",
+        "DoublePoint",
+        "LittleHammer",
+        "MagicWand",
+        "FreezeTime",
+        "Refresh"
+      ],
+      "Quantities": [
+        1500,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2
+      ]
+    },
+    {
+      "RewardTypes": [
+        "Coin",
+        "HugeHammer",
+        "Time",
+        "DoublePoint",
+        "LittleHammer",
+        "MagicWand",
+        "FreezeTime",
+        "Refresh"
+      ],
+      "Quantities": [
+        1000,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "RewardTypes": [
+        "Coin",
+        "LittleHammer",
+        "MagicWand",
+        "FreezeTime",
+        "Refresh"
+      ],
+      "Quantities": [
+        500,
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "RewardTypes": [
+        "Coin"
+      ],
+      "Quantities": [
+        250
+      ]
+    },
+    {
+      "RewardTypes": [
+        "Coin"
+      ],
+      "Quantities": [
+        200
+      ]
+    },
+    {
+      "RewardTypes": [
+        "Coin"
+      ],
+      "Quantities": [
+        150
+      ]
+    }
+  ]
+}

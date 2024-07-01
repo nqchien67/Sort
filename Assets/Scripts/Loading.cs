@@ -31,13 +31,13 @@ public class Loading : SingletonCore<Loading>
 
 	private void Start()
 	{
-		StartCoroutine(LoadAsyncScene());
 		verText.text = Application.version;
 		_fillRectTransform = _fill.rectTransform;
 		_fillMaxSizeX = _fillRectTransform.sizeDelta.x;
 
 		FillLoadingBar(0);
 		StartCoroutine(LoadingTexAnimation());
+		StartCoroutine(LoadAsyncScene());
 	}
 
 	private IEnumerator LoadAsyncScene()
@@ -48,21 +48,27 @@ public class Loading : SingletonCore<Loading>
 		AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(sceneToLoad, LoadSceneMode.Additive);
 
 		asyncLoad.allowSceneActivation = false;
-		yield return null;
+		while (asyncLoad.progress < 0.89f)
+		{
+			float fillAmount = Mathf.Lerp(0, 0.5f, asyncLoad.progress);
+			FillLoadingBar(fillAmount);
+			yield return null;
+		}
 
 		float elapsedTime = 0;
 		while (elapsedTime <= _loadTime)
 		{
-			yield return new WaitForSecondsRealtime(1);
-			FillLoadingBar(elapsedTime / _loadTime);
-			elapsedTime++;
+			yield return null;
+			float fillAmount = Mathf.Lerp(0.5f, 1, elapsedTime / _loadTime);
+			FillLoadingBar(fillAmount);
+			elapsedTime += Time.deltaTime;
 		}
 
 		asyncLoad.allowSceneActivation = true;
 
-		FillLoadingBar(1);
 		while (!asyncLoad.isDone)
 			yield return null;
+		FillLoadingBar(1);
 
 		SceneManager.SetActiveScene(SceneManager.GetSceneByName(sceneToLoad));
 		SceneManager.UnloadSceneAsync(_splashScene);
@@ -101,7 +107,7 @@ public class Loading : SingletonCore<Loading>
 	private void FillLoadingBar(float fillAmount)
 	{
 		var sizeDelta = _fillRectTransform.sizeDelta;
-		sizeDelta.x = Mathf.Lerp(0, _fillMaxSizeX, fillAmount);
+		sizeDelta.x = _fillMaxSizeX * fillAmount;
 		_fillRectTransform.sizeDelta = sizeDelta;
 	}
 }

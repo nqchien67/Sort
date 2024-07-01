@@ -92,8 +92,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _avatar: {fileID: 662219882155668501}
-  _name: {fileID: 6571874351604154383}
-  _star: {fileID: 7899112619586922870}
+  _nameText: {fileID: 6571874351604154383}
+  _starText: {fileID: 7899112619586922870}
+  _chestButton: {fileID: 0}
+  _notiDot: {fileID: 0}
 --- !u!1 &1982760646939642427
 GameObject:
   m_ObjectHideFlags: 0
@@ -204,7 +206,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: -20.014404}
-  m_SizeDelta: {x: 200, y: 83.0795}
+  m_SizeDelta: {x: 201.3, y: 83.0795}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7956329749398788081
 CanvasRenderer:

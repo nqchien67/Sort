@@ -5,6 +5,7 @@
 using System;
 using UnityEngine;
 using UnityEngine.UI;
+using Utilities;
 
 namespace PolyAndCode.UI
 {
@@ -56,10 +57,14 @@ namespace PolyAndCode.UI
 			if (SelfInitialize) Initialize();
 		}
 
-		/// <summary>
-		/// Initialization when selfInitalize is true. Assumes that data source is set in controller's Awake.
-		/// </summary>
-		private void Initialize()
+		protected override void OnEnable()
+		{
+			base.OnEnable();
+			// if (content.childCount == 0)
+			// 	StartCoroutine(CommonIEnumerator.WaitForFrames(1, Initialize));
+		}
+
+		public void Initialize()
 		{
 			//Contruct the recycling system.
 			if (Direction == DirectionType.Vertical)
@@ -82,15 +87,6 @@ namespace PolyAndCode.UI
 			StartCoroutine(_recyclingSystem.InitCoroutine(() =>
 				onValueChanged.AddListener(OnValueChangedListener)
 			));
-		}
-
-		/// <summary>
-		/// public API for Initializing when datasource is not set in controller's Awake. Make sure selfInitalize is set to false. 
-		/// </summary>
-		public void Initialize(IRecyclableScrollRectDataSource dataSource)
-		{
-			DataSource = dataSource;
-			Initialize();
 		}
 
 		/// <summary>
@@ -130,7 +126,16 @@ namespace PolyAndCode.UI
 				_prevAnchoredPos = content.anchoredPosition;
 			}
 		}
-		
+
+		public void ClearContent()
+		{
+			onValueChanged.RemoveListener(OnValueChangedListener);
+			foreach (Transform child in content)
+			{
+				Destroy(child.gameObject);
+			}
+		}
+
 		/*
 		#region Testing
 		private void OnDrawGizmos()

@@ -6,7 +6,7 @@ namespace Data
 	[Serializable]
 	public class LevelData: ICloneable
 	{
-		public int id;
+		public int Id;
 		public int TotalShelves;
 		public int ItemTypes;
 		public int LayerPerShelf;
@@ -17,10 +17,10 @@ namespace Data
 
 		public bool IsHardLevel()
 		{
-			if (id < 10)
+			if (Id < 10)
 				return false;
 
-			return id % 5 == 0;
+			return Id % 5 == 0;
 		}
 
 		public static bool IsHardLevel(int levelId)

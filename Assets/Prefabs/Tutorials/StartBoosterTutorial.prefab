@@ -830,7 +830,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   btnClickAudio: {fileID: 0}
   isNotScale: 0
-  _isMute: 1
+  _isMute: 0
 --- !u!1 &4267703327214504418
 GameObject:
   m_ObjectHideFlags: 0

@@ -2,6 +2,8 @@
 using Audio;
 using Controllers;
 using Data;
+using InGame.UI;
+using MainMenu.TopBar;
 using TMPro;
 using UI;
 using UI.MainMenu;
@@ -20,37 +22,37 @@ namespace MainMenu
 		[SerializeField] private TextMeshProUGUI _energyCountText;
 		[SerializeField] private TextMeshProUGUI _timeCooldownText;
 		[SerializeField] private int _coinPrice = 500;
-		public UnityAction OnBuyCompleted;
+		[SerializeField] private Coin _coinHave;
+		
+		private UnityAction OnBuyCompleted;
 
 		private void Start()
 		{
-			// transform.SetSiblingIndex(MainMenuUIController.Instance.InitialTopBarSiblingIndex + 1);
-			// bool isReadyAds = AdsController.Instance.IsRewardVideoAdsReady() &&
-			//                   AdsController.Instance.CanShowAds(adsName);
-
 			bool isReadyAds = true;
-			if (isReadyAds)
-			{
-				// APIController.Instance.LogEventShowAds(adsName);
-			}
-			else
-				refillBtn.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, -215f);
 
 			videoRewardBtn.interactable = isReadyAds;
 			videoRewardBtn.gameObject.SetActive(isReadyAds);
 			refillBtn.interactable = true;
+
+			if (EnergyController.Instance == null)
+			{
+				_timeCooldownText.gameObject.SetActive(false);
+				_coinHave.gameObject.SetActive(true);
+			}
+
 			AudioController.Instance.PlaySfx(popUpClip);
 		}
 
 		private void Update()
 		{
-			_energyCountText.text = EnergyController.Instance.energyCount.text;
-			_timeCooldownText.text = EnergyController.Instance.timeCountDown.text;
+			if (EnergyController.Instance != null)
+				_timeCooldownText.text = EnergyController.Instance.timeCountDown.text;
+
+			_energyCountText.text = DataController.Instance.Energy.ToString();
 		}
 
 		public void Init(UnityAction onBuyCallback)
 		{
-			// Firebase.Analytics.FirebaseAnalytics.LogEvent("energy", "click", 1);
 			OnBuyCompleted = onBuyCallback;
 			Show();
 		}
@@ -59,13 +61,10 @@ namespace MainMenu
 		{
 			if (DataController.Instance.Coin >= _coinPrice)
 			{
-				// Firebase.Analytics.FirebaseAnalytics.LogEvent("energy", "fill", PlayerPrefs.GetInt("MAX_ENERGY", 5));
 				DataController.Instance.Coin -= _coinPrice;
-				MainMenuUIController.Instance.Coin.UpdateValue();
 
-				// GSMController.Instance.LogResourceSpend(DataController.Instance.GetMaxPassedLevelToInt(), "ruby",
-				// 	"energy_panel", 40);
-				// APIController.Instance.LogEventSpentRuby(40, "buy_energy");
+				if (MainMenuUIController.Instance != null)
+					MainMenuUIController.Instance.Coin.UpdateValue();
 
 				DataController.Instance.IncreaseOneEnergy();
 				DataController.Instance.SaveData();
@@ -74,25 +73,22 @@ namespace MainMenu
 			}
 			else
 			{
-				if (OnBuyCompleted != null)
+				if (OnBuyCompleted != null) //OnBuyCompleted != null khi panel nay mo trong main menu :v
 				{
 					MainMenuUIController.Instance.OpenShop();
 					MainMenuUIController.Instance.ShowNotEnoughCoin();
 				}
-				else
-					Instantiate(_inGameBuyCoinPrefab, transform.parent);
+				else if (LevelUIController.Instance != null)
+				{
+					LevelUIController.Instance.ShowNotEnoughCoin();
+					LevelUIController.Instance.ShowCoinPackPanel(_coinPrice);
+				}
 			}
 		}
 
-
 		public void OnClickShowVideo()
 		{
-			// GameController gameController = FindObjectOfType<GameController>();
-			// if (gameController != null)
-			// 	gameController.IsShowAds = true;
-			// AdsController.Instance.ShowVideoReward(OnEarnReward, OnCloseAds, "energy_panel");
-			// APIController.Instance.LogEventAdsClick("Energy");
-
+			Debug.Log("Show video reward");
 			OnEarnReward();
 
 			videoRewardBtn.interactable = false;
@@ -105,13 +101,11 @@ namespace MainMenu
 
 		public void OnEarnReward()
 		{
-			// GSMController.Instance.AdsLogReward(DataController.Instance.GetMaxPassedLevelToInt(), "energy_panel");
 			DelayRewardPlayer();
 		}
 
 		private void DelayRewardPlayer()
 		{
-			// AdsController.Instance.OnWatchAdsCompleted(adsName);
 			DataController.Instance.IncreaseOneEnergy();
 			DataController.Instance.SaveData();
 

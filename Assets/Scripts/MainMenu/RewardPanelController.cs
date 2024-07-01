@@ -1,14 +1,11 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
+using Audio;
 using Controllers;
 using Data;
-using DG.Tweening;
-using UI;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
-using Utilities;
 
 namespace MainMenu
 {
@@ -16,11 +13,10 @@ namespace MainMenu
 	{
 		public string adsName = "";
 		[SerializeField] private GameObject rewardPanel;
-		[SerializeField] private Transform shopIcon, topRewardLayer, bottomRewardLayer;
+		[SerializeField] private Transform shopIcon, topRewardLayer, middleRewardLayer, bottomRewardLayer;
 		[SerializeField] private Button claimBtn, claim1Btn, videoRewardBtn;
 		[SerializeField] private RewardItemController itemReward;
 		[SerializeField] private GameObject itemEffectPrefabs;
-		[SerializeField] private AudioClip popUpClip;
 		private UnityAction onCloseCallback;
 		private bool canClaimReward;
 		private bool logEvent;
@@ -29,12 +25,10 @@ namespace MainMenu
 		private List<ItemQuantityPair> _rewardQuantityPairs;
 		private bool isWatchedAds;
 
-		public void Init(int coinAmount,
-			int unlimitEnergyTime,
+		public void Init(
 			RewardType[] rewardTypes,
-			int[] itemAmounts,
+			int[] rewardQuantities,
 			bool logEvent = true,
-			bool claimReward = false,
 			bool canDouble = false,
 			string adsName = null,
 			int multiple = 1,
@@ -43,51 +37,14 @@ namespace MainMenu
 			this.logEvent = logEvent;
 			transform.SetAsLastSibling();
 			_multiple = multiple;
-			_rewardQuantityPairs = new List<ItemQuantityPair>();
 			goList = new List<GameObject>();
 			canClaimReward = true;
-			// FindObjectOfType<MainMenuController>().setIndexTab(5);
-			// AudioController.Instance.PlaySfx(popUpClip);
 			onCloseCallback = _closeCallBack;
-			if (coinAmount > 0)
-			{
-				_rewardQuantityPairs.Add(new ItemQuantityPair(RewardType.Coin, coinAmount));
-				if (claimReward) IncreaseCoin(coinAmount, _multiple);
-			}
 
-			// if (_unlimitEnergyTime > 0)
-			// {
-			// 	tmpItemIds.Add(new ItemQuantityPair(100600, _unlimitEnergyTime));
-			// 	if (_claimReward) IncreaseEnergy(_unlimitEnergyTime, multiple);
-			// }
-
+			_rewardQuantityPairs = new List<ItemQuantityPair>();
 			if (rewardTypes.Length > 0)
 				for (int i = 0; i < rewardTypes.Length; i++)
-					if (itemAmounts[i] != 0)
-					{
-						_rewardQuantityPairs.Add(new ItemQuantityPair(rewardTypes[i], itemAmounts[i]));
-						if (claimReward)
-							// if (_itemIds[i] == 121212)
-							// {
-							// 	PlayerPrefs.SetInt("MAX_ENERGY", 8);
-							// 	DataController.Instance.Energy = 8;
-							// 	FindObjectOfType<EnergyController>().SetTextEnergyCount();
-							// 	DataController.Instance.SaveData();
-							// }
-							// else
-							// if (_itemIds[i] == 310000 || _itemIds[i] == 320000 || _itemIds[i] == 330000)
-							// {
-							// 	DataController.Instance.AddCustomerSkin(_itemIds[i]);
-							// 	PlayerPrefs.SetInt("showoff_skin", 1);
-							// }
-							// else
-							// {
-						{
-							// if (EnumConverter.TryConvertToBoosterType(rewardTypes[i], out var boosterType))
-							// 	InCreaseBooster(boosterType, itemAmounts[i], _multiple);
-						}
-						// }
-					}
+					_rewardQuantityPairs.Add(new ItemQuantityPair(rewardTypes[i], rewardQuantities[i]));
 
 			if (goList.Count > 0)
 			{
@@ -99,48 +56,46 @@ namespace MainMenu
 			if (_rewardQuantityPairs.Count > 3)
 			{
 				bottomRewardLayer.gameObject.SetActive(true);
-				int idHaflLeftList = _rewardQuantityPairs.Count / 2;
-				for (int i = 0; i < idHaflLeftList; i++)
-				{
-					RewardItemController rewardItemController = Instantiate(itemReward, topRewardLayer);
-					rewardItemController.Init(_rewardQuantityPairs[i].RewardType,
-						_rewardQuantityPairs[i].Quantity * multiple);
-					goList.Add(rewardItemController.gameObject);
-				}
+				int topRewardCount = _rewardQuantityPairs.Count / 3;
+				int middleRewardCount = _rewardQuantityPairs.Count * (2 / 3);
+				for (int i = 0; i < topRewardCount; i++) 
+					SpawnRewardItem(i, multiple, topRewardLayer);
 
-				for (int i = idHaflLeftList; i < _rewardQuantityPairs.Count; i++)
-				{
-					var go = Instantiate(itemReward, bottomRewardLayer);
-					go.Init(_rewardQuantityPairs[i].RewardType, _rewardQuantityPairs[i].Quantity * multiple);
-					goList.Add(go.gameObject);
-				}
+				for (int i = topRewardCount; i < middleRewardCount; i++)
+					SpawnRewardItem(i, multiple, middleRewardLayer);
+
+				for (int i = topRewardCount; i < _rewardQuantityPairs.Count; i++)
+					SpawnRewardItem(i, multiple, bottomRewardLayer);
 			}
 			else
 			{
 				bottomRewardLayer.gameObject.SetActive(false);
 				for (int i = 0; i < _rewardQuantityPairs.Count; i++)
 				{
-					var go = Instantiate(itemReward, topRewardLayer);
+					var go = Instantiate(itemReward, middleRewardLayer);
 					go.Init(_rewardQuantityPairs[i].RewardType, _rewardQuantityPairs[i].Quantity * multiple);
 					goList.Add(go.gameObject);
 				}
 			}
 
 			this.adsName = adsName;
-			// bool canShowVideo = _canDouble && AdsController.Instance.IsRewardVideoAdsReady();
-			bool canShowVideo = true;
+			// bool canShowVideo = canDouble && AdsController.Instance.IsRewardVideoAdsReady();
+			bool canShowVideo = canDouble;
 			claimBtn.gameObject.SetActive(!canShowVideo);
 			claim1Btn.gameObject.SetActive(canShowVideo);
 			videoRewardBtn.gameObject.SetActive(canShowVideo);
 			videoRewardBtn.interactable = canShowVideo;
 			rewardPanel.SetActive(true);
 			rewardPanel.GetComponent<Animator>().Play("Appear");
-			// if (canShowVideo)
-			// {
-			// 	APIController.Instance.LogEventShowAds(adsName);
-			// }
-			//
-			// UIController.Instance.PushUitoStack(this);
+			AudioController.Instance.PlaySfx(_showSfx);
+		}
+
+		private void SpawnRewardItem(int index, int multiple, Transform parent)
+		{
+			RewardItemController rewardItemController = Instantiate(itemReward, parent);
+			rewardItemController.Init(_rewardQuantityPairs[index].RewardType,
+				_rewardQuantityPairs[index].Quantity * multiple);
+			goList.Add(rewardItemController.gameObject);
 		}
 
 		public void OnClickWatchAds()
@@ -166,10 +121,10 @@ namespace MainMenu
 			yield return new WaitForSeconds(0.1f);
 			// multiple * 2;
 			// AdsController.Instance.OnWatchAdsCompleted(adsName);
-			OnClickClaim(_multiple);
+			OnClickClaim();
 		}
 
-		public void OnClickClaim(int multiple)
+		public void OnClickClaim()
 		{
 			if (canClaimReward)
 			{
@@ -180,35 +135,11 @@ namespace MainMenu
 					int quantity = _rewardQuantityPairs[i].Quantity;
 
 					if (rewardType == RewardType.Coin)
-					{
-						if (multiple > 0)
-							IncreaseCoin(quantity, multiple);
-						MainMenuController.Instance.PlayClaimCoinEffect(transform.position);
-					}
-
-					// else if (tmpItemIds[i].Item == 100600)
-					// {
-					// FindObjectOfType<EnergyController>().StopAllCoroutines();
-					// FindObjectOfType<EnergyController>().PlayUnlimitedEnergyEffect();
-					// if (_multiple > 0) IncreaseEnergy(tmpItemIds[i].itemQuantity, _multiple);
-					// }
-					// else if (tmpItemIds[i].Item == 121212)
-					// {
-					// PlayerPrefs.SetInt("MAX_ENERGY", 8);
-					// DataController.Instance.Energy = 8;
-					// FindObjectOfType<EnergyController>().SetTextEnergyCount();
-					// DataController.Instance.SaveData();
-					// }
-					// else if (tmpItemIds[i].Item == 310000)
-					// {
-					// DataController.Instance.AddCustomerSkin(310000);
-					// PlayerPrefs.SetInt("showoff_skin", 1);
-					// }
-					else if (multiple > 0 &&
-					         RewardHelper.TryConvertRewardToBooster(rewardType, out BoosterType boosterType))
-					{
-						ClaimBooster(multiple, quantity, boosterType, rewardType);
-					}
+						ClaimCoin(quantity);
+					else if (rewardType == RewardType.Energy)
+						ClaimEnergy(quantity);
+					else if (RewardHelper.TryConvertRewardToBooster(rewardType, out BoosterType boosterType))
+						ClaimBooster(quantity, boosterType, rewardType);
 				}
 
 				DataController.Instance.SaveData();
@@ -216,46 +147,30 @@ namespace MainMenu
 			}
 		}
 
-		private void ClaimBooster(int multiple, int quantity, BoosterType boosterType, RewardType rewardType)
+		private void ClaimBooster(int quantity, BoosterType boosterType, RewardType rewardType)
 		{
 			for (int j = 0; j < quantity; j++)
 			{
-				InCreaseBooster(boosterType, quantity, multiple);
-				MainMenuController.Instance.PlayClaimRewardEffect(rewardType, transform.position);
+				DataController.Instance.AddBooster(boosterType, quantity);
+				if (MainMenuController.Instance != null)
+					MainMenuController.Instance.PlayClaimRewardEffect(rewardType, transform.position);
 			}
 		}
 
-		public void IncreaseCoin(int coin, int _multiple)
+		private void ClaimCoin(int coin)
 		{
 			coin *= _multiple;
 			DataController.Instance.Coin += coin;
-			// if (logEvent)
-			// {
-			// APIController.Instance.LogEventEarnGold(coin, "reward");
-			//DWHLog.Log.ResourceLog(DataController.Instance.GetMaxPassedLevelToInt(), FlowType.Source, "reward_panel", "gold", "gold", _gold);
-			// }
+			if (MainMenuController.Instance != null)
+				MainMenuController.Instance.PlayClaimCoinEffect(transform.position);
 		}
 
-		public void IncreaseEnergy(int _time, int _multiple)
+		private void ClaimEnergy(int minutes)
 		{
-			// _time *= _multiple;
-			// //FindObjectOfType<EnergyController>().StopAllCoroutines();
-			// DataController.Instance.AddUnlimitedEnergy(_time);
-			// // FindObjectOfType<EnergyController>().PlayUnlimitedEnergyEffect();
-			// if (logEvent)
-			// {
-			// 	//DWHLog.Log.ResourceLog(DataController.Instance.GetMaxPassedLevelToInt(), FlowType.Source, "reward_panel", "unlimit energy", "unlimit energy", _time);
-			// }
-		}
-
-		public void InCreaseBooster(BoosterType boosterType, int quantity, int multiple)
-		{
-			quantity *= multiple;
-			DataController.Instance.AddBooster(boosterType, quantity);
-			// if (logEvent)
-			// {
-			// 	//DWHLog.Log.ResourceLog(DataController.Instance.GetMaxPassedLevelToInt(), FlowType.Source, "reward_panel", "" + _itemId.ToString(), DataController.Instance.GetItemName(_itemId), _quantity);
-			// }
+			minutes *= _multiple;
+			DataController.Instance.AddUnlimitedEnergy(minutes);
+			if (EnergyController.Instance != null)
+				EnergyController.Instance.PlayUnlimitedEnergyEffect();
 		}
 
 
@@ -271,11 +186,12 @@ namespace MainMenu
 
 		private IEnumerator DelayHide()
 		{
-			// UIController.Instance.PopUiOutStack();
 			rewardPanel.GetComponent<Animator>().Play("Disappear");
 			yield return new WaitForSeconds(0.2f);
 			rewardPanel.SetActive(false);
-			MainMenuController.Instance.DisplayMenuPanel();
+
+			if (MainMenuController.Instance != null)
+				MainMenuController.Instance.DisplayMenuPanel();
 		}
 
 		private void HidePopup()
@@ -285,9 +201,8 @@ namespace MainMenu
 
 		public void OnHide()
 		{
-			// UIController.Instance.PopUiOutStack();
 			if (canClaimReward)
-				OnClickClaim(0);
+				OnClickClaim();
 			else
 				HidePopup();
 		}

@@ -18,7 +18,7 @@ namespace MainMenu.Shop
 
 		private void Init()
 		{
-			_pack = IAPPackHelper.GetPack(GetPackId());
+			_pack = IAPPackHelper.GetBundle(GetPackId());
 			if (_packContent != null)
 				_packContent.Init(_pack);
 		}

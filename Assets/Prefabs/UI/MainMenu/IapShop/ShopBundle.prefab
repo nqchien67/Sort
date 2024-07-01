@@ -570,6 +570,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   btnClickAudio: {fileID: 0}
   isNotScale: 0
+  _isMute: 0
 --- !u!1 &5109927924581135535
 GameObject:
   m_ObjectHideFlags: 0
@@ -638,7 +639,7 @@ MonoBehaviour:
   m_text: 70000
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 784f01a5a82e75c49b54f598231e0541, type: 2}
-  m_sharedMaterial: {fileID: -4404169904772803313, guid: 784f01a5a82e75c49b54f598231e0541, type: 2}
+  m_sharedMaterial: {fileID: 2100000, guid: 112846a9f514e9b4aad3a5c07b6b3342, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []

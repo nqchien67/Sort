@@ -35,13 +35,6 @@ public class SuperChefDataController : MonoBehaviour
 		return null;
 	}
 
-	public bool GetActiveEvent()
-	{
-		return DateTime.Now >= Instance.GetDayStartEvent().ToDateTime('/') &&
-		       DateTime.Now < Instance.GetDayEndEvent().ToDateTime('/') &&
-		       collectHeartData.active && PlayerPrefs.GetInt(TopChartsController.SPC_DONE_EVENT, 0) == 0;
-	}
-
 	public int[] GetLevelOpenEvent()
 	{
 		if (collectHeartData.level != null)

@@ -3,7 +3,6 @@ using System.Collections;
 using Controllers;
 using Data;
 using DG.Tweening;
-using Menu.PiggyBank;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -11,7 +10,8 @@ namespace MainMenu.PiggyBank
 {
 	public class PiggyBankController : MonoBehaviour
 	{
-		[SerializeField] private GameObject piggyBankBtn, notify, timeText;
+		[SerializeField] private GameObject piggyBankBtn, timeText;
+		[SerializeField] private NotiDot _notiDot;
 		[SerializeField] private Image progressImg;
 		[SerializeField] private GameObject piggyBankPanelPrefab;
 		[SerializeField] private IAPData[] _iapDatas;
@@ -24,7 +24,7 @@ namespace MainMenu.PiggyBank
 		private GameObject tutorialGo;
 		private MainMenuController _mainMenu;
 
-		private void Start()
+		private void Awake()
 		{
 			// if (PlayerClassifyController.Instance.piggyBankData.piggybank.piggyactive == true)
 			SetupData();
@@ -32,35 +32,36 @@ namespace MainMenu.PiggyBank
 
 		public void SetupData()
 		{
-			_mainMenu = FindObjectOfType<MainMenuController>();
+			_mainMenu = MainMenuController.Instance;
 			DataController.Instance.PbTimeDuration -=
 				(int)(DataController.ConvertToUnixTime(DateTime.Now) - DataController.Instance.PiggyBankTimeStamp);
-			if (DataController.Instance.isFirstOpenPB && DataController.Instance.PbTimeDuration <= 0)
+			if (!DataController.Instance.initedPiggy && DataController.Instance.PbTimeDuration <= 0)
 			{
 				PlayerPrefs.SetInt("has_full_pb", 0);
 				PlayerPrefs.SetInt("open_full_piggy", 0);
 				DataController.Instance.PiggyBankCoin = 0;
 				DataController.Instance.PbTimeDuration = 86400;
 				DataController.Instance.PiggyBankTimeStamp = DataController.ConvertToUnixTime(DateTime.Now);
-				DataController.Instance.isFirstOpenPB = false;
-				Debug.Log("piggy setup data");
+				DataController.Instance.initedPiggy = true;
+
 				DataController.Instance.SaveData();
 			}
 
 			//DataController.Instance.PbTimeDuration -= (int)(DataController.ConvertToUnixTime(DateTime.Now) - DataController.Instance.PbTimeStamp);
 			DataController.Instance.PiggyBankTimeStamp = DataController.ConvertToUnixTime(DateTime.Now);
 			isPassLevel6 = PlayerPrefs.GetInt("level", 0) >= 6;
+			ActivePiggyButton(isPassLevel6 && DataController.Instance.PiggyBankCoin > 0);
+
 			bool isFullPB = DataController.Instance.IsPiggyBankFull();
-			SetActiveIcon(isPassLevel6);
 			if (isFullPB && DataController.Instance.PbTimeDuration <= 0)
-				SetActiveIcon(false);
+				ActivePiggyButton(false);
 			float currentFillAmount =
 				(float)DataController.Instance.PiggyBankCoin / DataController.Instance.CurrentPbStorage;
 
 			// progressImg.fillAmount = currentFillAmount;
 			UpdateProgressBar(progressImg.rectTransform, currentFillAmount);
 
-			notify.SetActive(isPassLevel6 && currentFillAmount >= 0.6f);
+			_notiDot.SetEnable(isPassLevel6 && currentFillAmount >= 0.6f);
 			if (currentFillAmount == 1)
 				timeText.SetActive(true);
 		}
@@ -123,7 +124,7 @@ namespace MainMenu.PiggyBank
 			return false;
 		}
 
-		public void SetActiveIcon(bool status)
+		public void ActivePiggyButton(bool status)
 		{
 			piggyBankBtn.SetActive(status);
 		}

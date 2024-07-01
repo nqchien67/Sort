@@ -37,7 +37,7 @@ namespace Boosters.InGame
 
 		protected override bool CanUse()
 		{
-			return LevelController.CanDrag && !LevelController.MovingItem;
+			return LevelController.CanDrag && !LevelController.AnyItemMoving;
 		}
 
 		private Coroutine CollectItems()
@@ -95,8 +95,8 @@ namespace Boosters.InGame
 
 		protected override bool IsBoosterUnlocked()
 		{
-			int highestPassedLevel = PlayerPrefs.GetInt("level", 0);
-			return highestPassedLevel >= 1;
+			int currentLevel = LevelController.Instance.LevelIndex;
+			return currentLevel > 2;
 		}
 	}
 }

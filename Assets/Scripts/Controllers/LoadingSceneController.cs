@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections;
-using Audio;
+﻿using Audio;
 using Data;
 using DG.Tweening;
 using UnityEngine;
@@ -17,7 +15,8 @@ namespace Controllers
 		[SerializeField] private float _logoOutDuration;
 		[SerializeField] private float _amplitude;
 		[SerializeField] private Sprite _hardLevelBackground;
-
+		[SerializeField] private AudioClip _sfx;
+		
 		private float _logoOutY;
 
 		private void Start()
@@ -30,7 +29,7 @@ namespace Controllers
 			_background.color = color;
 
 			_logoOutY = -_logo.localPosition.y - 200;
-			
+
 			AudioController.Instance.StopMusic();
 		}
 
@@ -46,6 +45,7 @@ namespace Controllers
 
 		public YieldInstruction FadeOut()
 		{
+			AudioController.Instance.PlaySfx(_sfx);
 			return DOTween.Sequence()
 				.Append(_logo.DOScale(1, 0.3f).SetEase(Ease.InBack))
 				.Append(_logo.DOLocalMoveY(_logoOutY, _logoOutDuration))

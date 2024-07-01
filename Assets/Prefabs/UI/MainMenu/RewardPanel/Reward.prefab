@@ -35,7 +35,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 2}
-  m_SizeDelta: {x: 161.1991, y: 53.8459}
+  m_SizeDelta: {x: 173.1525, y: 60.3072}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8754220504324884874
 CanvasRenderer:
@@ -92,17 +92,17 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 44.85
-  m_fontSizeBase: 36
+  m_fontSize: 56.9
+  m_fontSizeBase: 56.9
   m_fontWeight: 400
-  m_enableAutoSizing: 1
+  m_enableAutoSizing: 0
   m_fontSizeMin: 18
-  m_fontSizeMax: 52.09
+  m_fontSizeMax: 52.44
   m_fontStyle: 1
   m_HorizontalAlignment: 2
-  m_VerticalAlignment: 256
+  m_VerticalAlignment: 512
   m_textAlignment: 65535
-  m_characterSpacing: 0
+  m_characterSpacing: 2
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
@@ -169,8 +169,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -94}
-  m_SizeDelta: {x: 300, y: 132}
+  m_AnchoredPosition: {x: 0, y: -110.10826}
+  m_SizeDelta: {x: 277.7648, y: 122.2165}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1476872912208976048
 CanvasRenderer:
@@ -200,7 +200,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 7f883f140863b3b4ea914e1d5903bfbc, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 05f61f0a4f09fb6459ab38553236d936, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -245,7 +245,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 24.48}
-  m_SizeDelta: {x: 250, y: 250}
+  m_SizeDelta: {x: 245, y: 245}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5427892825171306262
 CanvasRenderer:
@@ -347,15 +347,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemImage: {fileID: 2920170905658682410}
   itemQuantityTxt: {fileID: 4735327068064230358}
-  itemSprites:
-  - {fileID: 21300000, guid: 9b5e5621736290d4ca93d92835aba262, type: 3}
-  - {fileID: 21300000, guid: aa3019c0c1f147041a90caa5fb73c755, type: 3}
-  - {fileID: 21300000, guid: 5c9b8250028d91f48b20d95446ab997e, type: 3}
-  - {fileID: 21300000, guid: 8338ec851c6a25a47a6011f34797b62b, type: 3}
-  - {fileID: 21300000, guid: 0ae4420822564e14c976eb87859b347a, type: 3}
-  - {fileID: 21300000, guid: 2e20d5560d7bbfa42a6709b7e52836d5, type: 3}
-  - {fileID: 21300000, guid: 7d7bb6cd746287843a52ff6a67b45c62, type: 3}
-  - {fileID: 21300000, guid: e346dee12cd5bf249a8206e2af6fed7c, type: 3}
 --- !u!1001 &3399070252053811305
 PrefabInstance:
   m_ObjectHideFlags: 0

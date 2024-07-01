@@ -2,10 +2,12 @@
 using Data;
 using DG.Tweening;
 using InGame.UI;
+using MainMenu.Shop;
 using TMPro;
 using UI;
 using UnityEngine;
 using UnityEngine.UI;
+using Utilities;
 
 namespace Controllers
 {
@@ -35,11 +37,17 @@ namespace Controllers
 		[SerializeField] private Sprite _hardLevelTopBar;
 		[SerializeField] private BuyBoosterPanel _buyBoosterPanelPrefab;
 		public GameObject NotEnoughCoin;
+		public CoinPackPopup CoinPackPopup;
+		[SerializeField] private ComboProp _comboProp;
 
-		[Header("Audio")] public AudioClip ButtonClickSfx;
+		public float MinY;
+		public float MaxY;
 
 		private void Start()
 		{
+			MinY = BottomBar.MaxY();
+			MaxY = TopBar.MinY();
+
 			_avatarImage.sprite = SpritesCollection.Instance.CurrentAvatarSprite;
 
 			if (_avatarImage.sprite == null)
@@ -90,6 +98,12 @@ namespace Controllers
 				_comboText.text = "Combo x" + combo;
 				_comboText.transform.DOScale(1.1f, 0.1f).SetLoops(2, LoopType.Yoyo);
 			}
+		}
+
+		public void PlayComboEffect(int combo)
+		{
+			_comboProp.transform.position = _comboText.transform.position;
+			_comboProp.Init(combo);
 		}
 
 		public void DisplayComboTimeBar(float timeRemain, float totalTime)
@@ -145,6 +159,14 @@ namespace Controllers
 		{
 			NotEnoughCoin.SetActive(true);
 			NotEnoughCoin.transform.SetAsLastSibling();
+		}
+
+		public void ShowCoinPackPanel(int coinNeed)
+		{
+			var popup = Instantiate(CoinPackPopup, PopupCanvas);
+			popup.transform.SetSiblingIndex(PopupCanvas.childCount - 2);
+			popup.Init(coinNeed);
+			popup.Show();
 		}
 	}
 }

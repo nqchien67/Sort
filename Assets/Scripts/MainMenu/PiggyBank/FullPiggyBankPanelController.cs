@@ -1,24 +1,37 @@
 ﻿using System;
 using System.Collections;
+using Audio;
 using DG.Tweening;
 using Spine.Unity;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Menu.PiggyBank
+namespace MainMenu.PiggyBank
 {
 	public class FullPiggyBankPanelController : MonoBehaviour
 	{
-		private Vector3 PiggyIcon;
+		private Vector3 _piggyBtnPosition;
 		[SerializeField] private SkeletonGraphic pigAnim;
 		[SerializeField] private Image progressImg;
 		[SerializeField] private GameObject ConfettiBlast;
-		[SerializeField] private AudioClip IncreaseGoldAudio;
+		[SerializeField] private AudioClip _piggySuckCoinSfx;
+		[SerializeField] private Image _background;
 		private Action Callback;
 
-		public void Init(Vector3 piggyIcon, Action callback)
+		private Vector2 _maxFillBarLength;
+
+		private void Awake()
 		{
-			PiggyIcon = piggyIcon;
+			var sizeDelta = progressImg.rectTransform.sizeDelta;
+			_maxFillBarLength = sizeDelta;
+
+			sizeDelta = new Vector2(0, sizeDelta.y);
+			progressImg.rectTransform.sizeDelta = sizeDelta;
+		}
+
+		public void Init(Vector3 piggyBtnPosition, Action callback)
+		{
+			_piggyBtnPosition = piggyBtnPosition;
 			StartCoroutine(PlayAnim());
 			Callback = callback;
 		}
@@ -32,13 +45,14 @@ namespace Menu.PiggyBank
 			progressImg.transform.parent.gameObject.SetActive(true);
 			float tmp = 0;
 
-			progressImg.rectTransform.DOSizeDelta(new Vector2(275, 42), 2).SetEase(Ease.OutQuint);
+			// progressImg.rectTransform.DOSizeDelta(new Vector2(275, 42), 2).SetEase(Ease.OutQuint);
+			progressImg.rectTransform.DOSizeDelta(_maxFillBarLength, 2).SetEase(Ease.OutQuint);
 
 			var delay = new WaitForSeconds(0.04f);
 			while (tmp < 1.2f)
 			{
 				tmp += 0.05f;
-				// AudioController.Instance.PlaySfx(IncreaseGoldAudio);
+				AudioController.Instance.PlaySfx(_piggySuckCoinSfx);
 				yield return delay;
 			}
 
@@ -48,17 +62,19 @@ namespace Menu.PiggyBank
 			progressImg.transform.parent.gameObject.SetActive(false);
 			yield return new WaitForSeconds(1f);
 			ConfettiBlast.SetActive(false);
+			yield return _background.DOFade(0, 0.2f).WaitForCompletion();
+
 			StartCoroutine(IMove(pigAnim.gameObject));
 		}
 
 		public IEnumerator IMove(GameObject gameObject)
 		{
-			Vector3 target = PiggyIcon - new Vector3(0, 0.25f, 0); //generate a random pos
+			Vector3 target = _piggyBtnPosition; //generate a random pos
 			Vector3 targetScale = new Vector3(0.3f, 0.3f, 1);
 
 			transform.DOMove(target, 0.75f).SetEase(Ease.OutQuint).OnComplete(() =>
 			{
-				DOVirtual.DelayedCall(0.25f, () =>
+				DOVirtual.DelayedCall(0.05f, () =>
 				{
 					Callback.Invoke();
 					Destroy(gameObject);
@@ -67,17 +83,6 @@ namespace Menu.PiggyBank
 
 			yield return null;
 			transform.DOScale(targetScale, 0.75f).SetEase(Ease.OutQuint);
-		}
-
-		public Vector3 CalculateQuadraticBezierPoint(float t1, Vector3 p0, Vector3 p1, Vector3 p2)
-		{
-			float u = 1 - t1;
-			float tt = t1 * t1;
-			float uu = u * u;
-			Vector3 p = uu * p0;
-			p += 2 * u * t1 * p1;
-			p += tt * p2;
-			return p;
 		}
 	}
 }

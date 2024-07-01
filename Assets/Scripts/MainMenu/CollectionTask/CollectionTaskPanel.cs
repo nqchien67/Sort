@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Data;
+using InGame.UI;
 using TMPro;
 using UI;
 using UnityEngine;
@@ -46,7 +47,7 @@ namespace MainMenu.CollectionTask
 			StartCoroutine(CommonIEnumerator.WaiForSeconds(0.5f, () =>
 			{
 				RectTransform currentTask =
-					_tasksUI[CollectionTaskController.CurrentTaskId].GetComponent<RectTransform>();
+					_tasksUI[CollectionTaskController.CurrentTaskIndex].GetComponent<RectTransform>();
 				StartCoroutine(_tasksScrollRect.FocusOnItemCoroutine(currentTask, 2.2f));
 			}));
 		}

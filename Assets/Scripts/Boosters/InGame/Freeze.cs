@@ -34,8 +34,8 @@ namespace Boosters.InGame
 
 		protected override bool IsBoosterUnlocked()
 		{
-			int highestPassedLevel = PlayerPrefs.GetInt("level", 0);
-			return highestPassedLevel >= 7;
+			int currentLevel = LevelController.Instance.LevelIndex;
+			return currentLevel > 8;
 		}
 
 		private IEnumerator Freezing()

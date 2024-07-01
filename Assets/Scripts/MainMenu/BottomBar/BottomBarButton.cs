@@ -5,7 +5,8 @@ using UnityEngine.UI;
 
 namespace MainMenu.BottomBar
 {
-	public class BottomBarButton : MonoBehaviour, IPointerUpHandler
+	public class BottomBarButton : MonoBehaviour, IPointerUpHandler, IPointerDownHandler,
+		IPointerClickHandler
 	{
 		private Button _button;
 		private Animator _animator;
@@ -52,8 +53,21 @@ namespace MainMenu.BottomBar
 
 		public void OnPointerUp(PointerEventData eventData)
 		{
-			// _animator.ResetTrigger(Pressed);
-			_animator.SetTrigger(Selected);
+			_animator.ResetTrigger(Pressed);
+			_animator.SetTrigger(Normal);
+		}
+
+		
+		public void OnPointerDown(PointerEventData eventData)
+		{
+			_animator.ResetTrigger(Normal);
+			_animator.SetTrigger(Pressed);
+		}
+
+
+		public void OnPointerClick(PointerEventData eventData)
+		{
+			// _animator.SetTrigger(Selected);
 		}
 	}
 }

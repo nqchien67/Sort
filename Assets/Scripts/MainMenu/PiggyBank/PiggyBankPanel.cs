@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Collections;
+using Audio;
 using Controllers;
 using Data;
-using Menu.PiggyBank;
+using InGame.UI;
 using Spine.Unity;
 using TMPro;
 using UI;
@@ -43,9 +44,9 @@ namespace MainMenu.PiggyBank
 			int pbCoin = DataController.Instance.PiggyBankCoin;
 			rubyStorageText.text = pbCoin.ToString();
 			rubyFullStorageText.text = pbCoin.ToString();
-			
+
 			UpdateCoinProgressBar(pbCoin, DataController.Instance.CurrentPbStorage);
-			
+
 			float currentFillPercent = (float)pbCoin / DataController.Instance.CurrentPbStorage;
 			buyBtn.interactable = currentFillPercent >= 0.6f;
 
@@ -119,6 +120,7 @@ namespace MainMenu.PiggyBank
 		public void OnClickAddCoinAds()
 		{
 			DataController.Instance.PiggyBankCoin += 200;
+			UpdateCoinProgressBar(DataController.Instance.PiggyBankCoin, DataController.Instance.CurrentPbStorage);
 		}
 
 		public void ClaimReward()
@@ -130,20 +132,21 @@ namespace MainMenu.PiggyBank
 		{
 			pigAnimator.AnimationState.SetAnimation(1, "jumpin", false);
 			yield return new WaitForSeconds(1.5f);
-			// AudioController.Instance.PlaySfx(break_piggybank);
+			AudioController.Instance.PlaySfx(break_piggybank);
 			yield return new WaitForSeconds(0.3f);
 			pigAnimator.AnimationState.SetAnimation(1, "break", false);
 			yield return new WaitForSeconds(4f);
-			int ruby = DataController.Instance.PiggyBankCoin;
-			// FindObjectOfType<MainMenuController>().IncreaseCoin(transform.position, ruby);
-			DataController.Instance.Coin += ruby;
+			int coin = DataController.Instance.PiggyBankCoin;
+
+			MainMenuController.Instance.PlayClaimCoinEffect(transform.position, Mathf.Min(coin / 100, 35));
+			DataController.Instance.Coin += coin;
 
 			DataController.Instance.PbTimeDuration = 0;
-			DataController.Instance.isFirstOpenPB = true;
+			DataController.Instance.initedPiggy = false;
 			DataController.Instance.PiggyBankCoin = 0;
 			DataController.Instance.PiggyBankLevel++;
 			DataController.Instance.SaveData();
-			
+
 			PiggyBankController piggyBankController = FindObjectOfType<PiggyBankController>();
 			piggyBankController.SetupData();
 			// APIController.Instance.LogEventEarnRuby(ruby, "buy_IAP");
@@ -161,7 +164,7 @@ namespace MainMenu.PiggyBank
 			{
 				PlayerPrefs.SetInt("isShowFullPiggy", 0);
 			}
-			
+
 			piggyBankController.DisableFullText();
 		}
 
@@ -194,6 +197,7 @@ namespace MainMenu.PiggyBank
 		private void UpdateCoinProgressBar(int fillAmount, int total)
 		{
 			float fillPercent = (float)fillAmount / total;
+			fillPercent = Mathf.Min(fillPercent, 1);
 
 			for (int i = 0; i < 2; i++)
 			{
@@ -205,7 +209,7 @@ namespace MainMenu.PiggyBank
 			}
 		}
 
-		public void Init(IAPData  iapData)
+		public void Init(IAPData iapData)
 		{
 			// GetComponent<>()
 			buyBtn.GetComponentInChildren<TextMeshProUGUI>().text = iapData.Price.ToString();

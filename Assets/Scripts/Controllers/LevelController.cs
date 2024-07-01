@@ -42,19 +42,21 @@ namespace Controllers
 		public int Star;
 
 		protected LevelUIController Ui => LevelUIController.Instance;
-		public bool MovingItem { get; set; }
+		public bool AnyItemMoving => MovingItemsCount > 0;
+		public int MovingItemsCount;
 
 		private int _secondRemain;
 		public GameObject SortEffect;
 		public Prop StarProp;
 		public Prop CoinProp;
+		[SerializeField] private Range _coinWinBonus;
 
 		[Header("Audio")] public AudioClip GameplayMusic;
 		public AudioClip PickupItemSfx;
 		public AudioClip PutDownItemSfx;
-		public AudioClip RemoveASetSfx;
-		public AudioClip ComboSfx;
 		public AudioClip UseBoosterSfx;
+		public AudioClip RemoveASetSfx;
+		[SerializeField] private AudioClip[] _combosSfx;
 
 		protected override void Awake()
 		{
@@ -64,8 +66,7 @@ namespace Controllers
 
 			string numberString = gameObject.scene.name.Substring(5);
 			LevelIndex = int.Parse(numberString);
-			LevelIndex--;
-			LevelData = (LevelData)DataController.Instance.LevelsData[LevelIndex].Clone();
+			LevelData = (LevelData)DataController.Instance.LevelsData[LevelIndex - 1].Clone();
 		}
 
 		protected virtual IEnumerator Start()
@@ -118,7 +119,6 @@ namespace Controllers
 
 			LockedShelves[0].Lock.ReduceLocksNumber();
 			if (LockedShelves[0].Lock.Number <= 0)
-				// LockedShelves[0].Lock.Remove();
 				LockedShelves.RemoveAt(0);
 		}
 
@@ -128,8 +128,8 @@ namespace Controllers
 		private IEnumerator CountDown(int totalSeconds)
 		{
 			var waitForASecond = new WaitForSeconds(1);
-
 			_secondRemain = totalSeconds;
+
 			while (enabled)
 			{
 				yield return waitForASecond;
@@ -152,8 +152,10 @@ namespace Controllers
 			StartCoroutine(CommonIEnumerator.WaitForFrames(1, () =>
 			{
 				foreach (var shelf in Shelves)
-					if (shelf.FrontLayer.ItemsCount < 3)
+				{
+					if (!shelf.IsLocked && shelf.FrontLayer.ItemsCount < 3)
 						return;
+				}
 
 				Lose();
 			}));
@@ -183,7 +185,6 @@ namespace Controllers
 			StopCoroutine(_countDown);
 
 			int currentLevel = LevelIndex;
-			currentLevel++;
 			if (currentLevel > DataController.Instance.LevelsData.Length - 1)
 				currentLevel = 0;
 			PlayerPrefs.SetInt("level", currentLevel);
@@ -220,6 +221,8 @@ namespace Controllers
 		protected void GainReward()
 		{
 			DataController.Instance.IncreaseOneEnergy();
+
+			Coin += _coinWinBonus.GetRandomValue();
 			if (LevelData.IsHardLevel())
 				Coin += IsReducedDifficulty() ? 25 : 50;
 
@@ -241,7 +244,7 @@ namespace Controllers
 
 		public void Replay()
 		{
-			SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+			SceneController.Instance.LoadScene(SceneManager.GetActiveScene().name);
 		}
 
 		public void ShuffleItems(List<Item> items)
@@ -279,11 +282,9 @@ namespace Controllers
 			_currentCombo++;
 			_currentCombo = Mathf.Min(_currentCombo, DataController.Instance.CombosData.Length);
 
-			if (_currentCombo % 5 == 0)
-				AudioController.Instance.PlaySfx(ComboSfx);
+			PlayComboEffect();
 
 			if (_highestCombo < _currentCombo) _highestCombo = _currentCombo;
-
 			int comboStar = DataController.Instance.CombosData[_currentCombo - 1].Star;
 
 			if (DoubleStar)
@@ -294,6 +295,18 @@ namespace Controllers
 			if (_comboTimer != null)
 				StopCoroutine(_comboTimer);
 			_comboTimer = StartCoroutine(ComboTimer());
+		}
+
+
+		private void PlayComboEffect()
+		{
+			if (_currentCombo % 5 != 0)
+				return;
+
+			int index = Mathf.Clamp(_currentCombo / 5 - 1, 0, _combosSfx.Length - 1);
+			AudioController.Instance.PlaySfx(_combosSfx[index]);
+
+			LevelUIController.Instance.PlayComboEffect(_currentCombo);
 		}
 
 		private IEnumerator ComboTimer()
@@ -347,7 +360,7 @@ namespace Controllers
 			PlayerPrefs.SetInt("PointUser", prevPoint + star);
 			PlayerPrefs.SetInt("PrevPointUser", prevPoint);
 
-			TopChartsPlayerDataManager.Instance.UpdateRank();
+			TopChartsDataManager.Instance.UpdateRank();
 		}
 	}
 }

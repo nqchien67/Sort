@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using Controllers;
+using Data;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 using UnityEngine;
 
 namespace MainMenu.DailyReward
@@ -13,12 +16,12 @@ namespace MainMenu.DailyReward
 
 		private void Start()
 		{
-			_isPassLevel4 = MainMenuController.Instance.HighestPassedLevel >= 4;
 			_dailyRewardButton.SetActive(_isPassLevel4);
 		}
 
 		public bool ShouldShowPanel()
 		{
+			_isPassLevel4 = MainMenuController.Instance.HighestPassedLevel >= 4;
 			return _isPassLevel4 && CanClaimReward();
 		}
 
@@ -39,16 +42,9 @@ namespace MainMenu.DailyReward
 			return !isClaimed;
 		}
 	}
-
+	
 	[Serializable]
-	public class Reward
-	{
-		public string[] RewardTypes;
-		public int[] Quantities;
-	}
-
-	[Serializable]
-	public class DailyRewardObjects
+	public class DailyRewardCollections
 	{
 		[SerializeField] public List<Reward> DailyReward;
 	}

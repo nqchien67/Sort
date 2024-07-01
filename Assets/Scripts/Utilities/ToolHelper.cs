@@ -32,6 +32,19 @@ namespace Utilities
 		{
 			return array.Where(element => element != null).ToArray();
 		}
+
+		public static int GetLastNumber(string input)
+		{
+			for (int i = input.Length - 1; i >= 0; i--)
+			{
+				if (char.IsDigit(input[i]))
+				{
+					return (int)char.GetNumericValue(input[i]);
+				}
+			}
+
+			return -1;
+		}
 	}
 
 	[Serializable]
@@ -45,7 +58,7 @@ namespace Utilities
 			Min = min;
 			Max = max;
 		}
-		
+
 		public int GetRandomValue()
 		{
 			return Random.Range(Min, Max + 1);

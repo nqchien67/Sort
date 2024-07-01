@@ -1,5 +1,6 @@
 ﻿using System;
 using Data;
+using InGame.UI;
 using MainMenu.Profile;
 using TMPro;
 using UI;

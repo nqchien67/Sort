@@ -44,7 +44,7 @@ namespace PolyAndCode.UI
 		private readonly Vector2 zeroVector = Vector2.zero;
 
 		private float _cellDistance = 20;
-		private List<PlayerData> PlayersData => TopChartsPlayerDataManager.Instance.DisplayPlayersData;
+		private List<PlayerData> PlayersData => TopChartsDataManager.Instance.DisplayPlayersData;
 
 		#region INIT
 
@@ -320,8 +320,8 @@ namespace PolyAndCode.UI
 			float posY = 0;
 
 			_cellPool.Sort((x, y) =>
-				x.GetComponent<PlayerCard>().rankTemp
-					.CompareTo(y.GetComponent<PlayerCard>().rankTemp));
+				x.GetComponent<PlayerCard>()._rank
+					.CompareTo(y.GetComponent<PlayerCard>()._rank));
 
 			for (int i = 0; i < _cellPool.Count; i++)
 			{

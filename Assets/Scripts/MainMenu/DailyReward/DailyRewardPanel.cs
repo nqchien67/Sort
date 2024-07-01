@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using Controllers;
 using Data;
+using InGame.UI;
 using MainMenu.DailyReward;
+using Newtonsoft.Json;
 using UI;
 using UnityEngine;
 using UnityEngine.UI;
@@ -26,7 +28,7 @@ namespace MainMenu.DailyReward
 
 		[SerializeField] private DailyRewardButton dailyRewardBtnPrefab;
 
-		private DailyRewardObjects dailyRewards;
+		private DailyRewardCollections dailyRewards;
 		private int weeklyRewardProgress, lastReceivedDate;
 
 		private DailyRewardButton _rewardCanClaim;
@@ -51,7 +53,7 @@ namespace MainMenu.DailyReward
 				DailyRewardButton dailyRewardBtn = Instantiate(dailyRewardBtnPrefab, spawnsPos[i].position,
 					Quaternion.identity, spawnsPos[i]);
 
-				RewardType[] items = DataController.StringsToConsumable(dailyRewards.DailyReward[i].RewardTypes);
+				RewardType[] items = dailyRewards.DailyReward[i].RewardTypes;
 				dailyRewardBtn.Init(items, dailyRewards.DailyReward[i].Quantities, i + 1, receivedProgress, canDouble,
 					Close /*,dailyRewardExtra.itemId*/);
 
@@ -74,29 +76,29 @@ namespace MainMenu.DailyReward
 			_rewardCanClaim.OnClick();
 		}
 
-		private DailyRewardObjects LoadDailyRewardData()
+		private DailyRewardCollections LoadDailyRewardData()
 		{
 			var data = FirebaseServiceController.Instance.GetDailyRewardData();
-			return JsonUtility.FromJson<DailyRewardObjects>(data);
+			return JsonConvert.DeserializeObject<DailyRewardCollections>(data);
 		}
 
-		public DailyRewardObjects GetDailyRewardObjectsByWeek(int weekIndex)
+		public DailyRewardCollections GetDailyRewardObjectsByWeek(int weekIndex)
 		{
-			DailyRewardObjects drObjects = new DailyRewardObjects();
+			DailyRewardCollections drCollections = new DailyRewardCollections();
 			int count = 7;
 			weekIndex %= 4;
 			for (int i = weekIndex * 7; i < dailyRewards.DailyReward.Count; i++)
 			{
 				if (count > 0)
 				{
-					drObjects.DailyReward.Add(dailyRewards.DailyReward[i]);
+					drCollections.DailyReward.Add(dailyRewards.DailyReward[i]);
 					count--;
 				}
 				else
 					break;
 			}
 
-			return drObjects;
+			return drCollections;
 		}
 
 		private void InitAccumulation()

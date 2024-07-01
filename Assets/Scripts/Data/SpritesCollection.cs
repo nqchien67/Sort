@@ -146,8 +146,11 @@ namespace Data
 		public void AddPriorityItem(ItemSkin item)
 		{
 			var temp = PriorityItems;
-			temp.Add(item);
-			PriorityItems = temp;
+			if (!temp.Contains(item))
+			{
+				temp.Add(item);
+				PriorityItems = temp;
+			}
 		}
 
 		public void RemovePriorityItem(ItemSkin item)

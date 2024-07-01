@@ -19,5 +19,11 @@ namespace MainMenu.BottomBar
 			const int buttonIndex = 0; 
 			_buttons[buttonIndex].OnClick();
 		}
+
+		public void GoHome()
+		{
+			const int buttonIndex = 2; 
+			_buttons[buttonIndex].OnClick();
+		}
 	}
 }

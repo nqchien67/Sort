@@ -9,11 +9,10 @@ namespace MainMenu
 	{
 		[SerializeField] private Image itemImage;
 		[SerializeField] private TextMeshProUGUI itemQuantityTxt;
-		[SerializeField] private Sprite[] itemSprites;
 
-		public void Init(RewardType rewardTypeId, int quantity)
+		public void Init(RewardType rewardType, int quantity)
 		{
-			itemImage.sprite = itemSprites[(int)rewardTypeId];
+			itemImage.sprite = RewardHelper.Instance.GetRewardSprite(rewardType);
 			itemQuantityTxt.text = quantity.ToString();
 		}
 	}

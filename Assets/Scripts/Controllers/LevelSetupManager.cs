@@ -31,7 +31,7 @@ namespace Controllers
 				ReduceDifficult();
 
 			_skinManager = SkinManager.Instance;
-			_skinManager.InitUnplacedItems(LevelData.ItemTypes, LevelData.id);
+			_skinManager.InitUnplacedItems(LevelData.ItemTypes, LevelData.Id);
 			LevelController.Instance.RemainItemTypes = _skinManager._unplacedItems;
 
 			SetUpLocks();
@@ -77,30 +77,6 @@ namespace Controllers
 		}
 
 		public List<Item> fixedItems;
-
-		private void PlaceLastTwoType()
-		{
-			fixedItems = new List<Item>();
-			for (int i = 0; i < 2; i++)
-			{
-				Sprite itemSprite = _skinManager.GetNextUnplacedItem();
-
-				for (int j = 0; j < 3; j++)
-				{
-					ShelfIndexPair shelfIndexPair =
-						GetValidShelfIndexPair2(itemSprite, cloneShelfIndexPairs, currentLayer);
-
-					var layer = shelfIndexPair.Shelf.Layers[currentLayer];
-
-					var item = Instantiate(LevelController.Instance.ItemPrefab, layer.transform);
-					item.Init(itemSprite);
-					layer.PlaceItemAtIndex(item, shelfIndexPair.Index);
-
-					fixedItems.Add(item);
-				}
-			}
-		}
-
 		private List<ShelfIndexPair> cloneShelfIndexPairs;
 		private int _maxItemPerLayer;
 		private int currentLayer;
@@ -156,6 +132,29 @@ namespace Controllers
 			}
 		}
 
+		private void PlaceLastTwoType()
+		{
+			fixedItems = new List<Item>();
+			for (int i = 0; i < 2; i++)
+			{
+				Sprite itemSprite = _skinManager.GetNextUnplacedItem();
+
+				for (int j = 0; j < 3; j++)
+				{
+					ShelfIndexPair shelfIndexPair =
+						GetValidShelfIndexPair2(itemSprite, cloneShelfIndexPairs, currentLayer);
+
+					var layer = shelfIndexPair.Shelf.Layers[currentLayer];
+
+					var item = Instantiate(LevelController.Instance.ItemPrefab, layer.transform);
+					item.Init(itemSprite);
+					layer.PlaceItemAtIndex(item, shelfIndexPair.Index);
+
+					fixedItems.Add(item);
+				}
+			}
+		}
+		
 		private void CalculateMaxItemPerLayer()
 		{
 			_maxItemPerLayer = 3 * Shelves.Length;
@@ -191,7 +190,7 @@ namespace Controllers
 			PlaceItemsShuffle(shelfIndexPairs, refreshItems);
 			PlaceLastTwoTypeShuffle(savingItems);
 			if (LockedShelves != null && LockedShelves.Count > 0)
-				FillLockedShelves();
+				FillLockedShelves(true);
 
 			DestroyUnusedLayer();
 
@@ -281,18 +280,21 @@ namespace Controllers
 			{
 				var pair = shelfIndexPairs[i];
 				Shelf shelf = pair.Shelf;
+
+				// Khac ham ben tren moi cho nay
 				if (shelf.IsLocked)
 					continue;
+				/////////////////
 
 				ItemLayer layer = shelf.GetLayerAtIndex(currentLayer);
 				if (layer.IsAlreadyHaveTwoOfThisType(itemSprite))
 					continue;
 
 				result = pair;
-				shelfIndexPairs.RemoveAt(i);
 				break;
 			}
 
+			shelfIndexPairs.Remove(result);
 			return result;
 		}
 
@@ -367,7 +369,7 @@ namespace Controllers
 			return result;
 		}
 
-		private void FillLockedShelves()
+		private void FillLockedShelves(bool moveItem = false)
 		{
 			_itemsSafeToTake = FindSafeItemsFromFrontLayers();
 
@@ -390,7 +392,10 @@ namespace Controllers
 					prevLayer.RemoveItem(item);
 					prevLayer.CheckShouldDestroy(false);
 
-					lockedShelfFrontLayer.MoveItemToIndex(item, i);
+					if (moveItem)
+						lockedShelfFrontLayer.MoveItemToIndex(item, i);
+					else
+						lockedShelfFrontLayer.PlaceItemAtIndex(item, i);
 				}
 			}
 		}

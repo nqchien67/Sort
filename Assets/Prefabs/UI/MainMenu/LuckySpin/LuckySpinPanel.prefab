@@ -215,7 +215,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: x60
+  m_text: x40
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 784f01a5a82e75c49b54f598231e0541, type: 2}
   m_sharedMaterial: {fileID: 2100000, guid: 112846a9f514e9b4aad3a5c07b6b3342, type: 2}
@@ -242,7 +242,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 38.25
+  m_fontSize: 38.6
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -517,8 +517,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   probability: 10
   rotationZ: -135
-  coinAmount: 0
-  unlimitEnergyAmount: 0
   _consumables: 06000000
   _consumableQuantities: 01000000
 --- !u!1 &1414497945652971035
@@ -573,8 +571,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   probability: 4
   rotationZ: -270
-  coinAmount: 0
-  unlimitEnergyAmount: 0
   _consumables: 010000000200000003000000
   _consumableQuantities: 010000000100000001000000
 --- !u!1 &1771129863865963897
@@ -717,7 +713,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: x100
+  m_text: x80
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 784f01a5a82e75c49b54f598231e0541, type: 2}
   m_sharedMaterial: {fileID: 2100000, guid: 112846a9f514e9b4aad3a5c07b6b3342, type: 2}
@@ -744,7 +740,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 31
+  m_fontSize: 38.5
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -1464,6 +1460,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   btnClickAudio: {fileID: 8300000, guid: d15080e446e4ce24486cc5611ab31cff, type: 3}
   isNotScale: 1
+  _isMute: 0
 --- !u!1 &3192281220150403350
 GameObject:
   m_ObjectHideFlags: 0
@@ -1535,6 +1532,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c86e29983e9d33b458f063ed9a443d6b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _showSfx: {fileID: 0}
   numberSpin: 12
   timeToFreeSpin: 0
   wheel: {fileID: 4863492108711739729}
@@ -1774,8 +1772,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   probability: 10
   rotationZ: -45
-  coinAmount: 0
-  unlimitEnergyAmount: 0
   _consumables: 07000000
   _consumableQuantities: 01000000
 --- !u!1 &3440907443390452208
@@ -1924,6 +1920,7 @@ GameObject:
   - component: {fileID: 5002233484962590416}
   - component: {fileID: 1091960926897712101}
   - component: {fileID: 7866690018730397567}
+  - component: {fileID: 5050161292973382238}
   m_Layer: 5
   m_Name: Select
   m_TagString: Untagged
@@ -2044,6 +2041,21 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &5050161292973382238
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3798339502190850223}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 094c4108b5fec694b9327f59da7ee5b0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  btnClickAudio: {fileID: 0}
+  isNotScale: 0
+  _isMute: 0
 --- !u!1 &3820947856099965817
 GameObject:
   m_ObjectHideFlags: 0
@@ -2096,8 +2108,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   probability: 8
   rotationZ: -315
-  coinAmount: 0
-  unlimitEnergyAmount: 0
   _consumables: 04000000
   _consumableQuantities: 01000000
 --- !u!1 &3848396923456758878
@@ -2388,7 +2398,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 5.4, y: 40}
+  m_AnchoredPosition: {x: 5, y: 50}
   m_SizeDelta: {x: 108.6273, y: 108.6275}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &668971005241119607
@@ -2419,7 +2429,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: ae5c4df7be0d46343a4ec2ab48d2bfa4, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 450b73e76bdc0174189b0fae52fa77c8, type: 3}
   m_Type: 0
   m_PreserveAspect: 1
   m_FillCenter: 1
@@ -2481,10 +2491,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   probability: 25
   rotationZ: 0
-  coinAmount: 60
-  unlimitEnergyAmount: 0
-  _consumables: 
-  _consumableQuantities: 
+  _consumables: 00000000
+  _consumableQuantities: 28000000
 --- !u!1 &5049122669996003926
 GameObject:
   m_ObjectHideFlags: 0
@@ -2671,10 +2679,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   probability: 15
   rotationZ: -180
-  coinAmount: 120
-  unlimitEnergyAmount: 0
-  _consumables: 
-  _consumableQuantities: 
+  _consumables: 00000000
+  _consumableQuantities: 78000000
 --- !u!1 &5221481373369682703
 GameObject:
   m_ObjectHideFlags: 0
@@ -3070,10 +3076,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   probability: 20
   rotationZ: -90
-  coinAmount: 100
-  unlimitEnergyAmount: 0
-  _consumables: 
-  _consumableQuantities: 
+  _consumables: 00000000
+  _consumableQuantities: 50000000
 --- !u!1 &6975064419122818234
 GameObject:
   m_ObjectHideFlags: 0
@@ -3469,8 +3473,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   probability: 8
   rotationZ: -225
-  coinAmount: 0
-  unlimitEnergyAmount: 0
   _consumables: 05000000
   _consumableQuantities: 01000000
 --- !u!1 &7779755570918752436
@@ -9111,6 +9113,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   btnClickAudio: {fileID: 0}
   isNotScale: 0
+  _isMute: 0
 --- !u!1 &8521593896337756287
 GameObject:
   m_ObjectHideFlags: 0
@@ -9212,17 +9215,17 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8521593896498302123}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: 0.04858682, w: 0.998819}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 8521593896621460853}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 5.57}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -65.900024, y: 2}
-  m_SizeDelta: {x: 74.25, y: 68.85}
+  m_AnchoredPosition: {x: -80.2, y: 2}
+  m_SizeDelta: {x: 72, y: 80}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8521593896498302118
 CanvasRenderer:
@@ -9252,7 +9255,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 0a984355e22632040ac324ed84893073, type: 3}
+  m_Sprite: {fileID: 21300000, guid: c53062693c612d947a1125bbe8d0480d, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -9411,6 +9414,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   btnClickAudio: {fileID: 0}
   isNotScale: 0
+  _isMute: 0
 --- !u!1 &8521593896662704395
 GameObject:
   m_ObjectHideFlags: 0
@@ -9445,8 +9449,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 39.3, y: 2}
-  m_SizeDelta: {x: 135, y: 60}
+  m_AnchoredPosition: {x: 38.5, y: 3.4}
+  m_SizeDelta: {x: 149.2, y: 70}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8521593896662704390
 CanvasRenderer:
@@ -9479,7 +9483,7 @@ MonoBehaviour:
   m_text: Free
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 784f01a5a82e75c49b54f598231e0541, type: 2}
-  m_sharedMaterial: {fileID: -4404169904772803313, guid: 784f01a5a82e75c49b54f598231e0541, type: 2}
+  m_sharedMaterial: {fileID: 2100000, guid: d1e40dd810a8d984d8cbb286351054d6, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -9503,7 +9507,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 50
+  m_fontSize: 56.59
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -9513,7 +9517,7 @@ MonoBehaviour:
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
   m_textAlignment: 65535
-  m_characterSpacing: -7.6
+  m_characterSpacing: -5.87
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0

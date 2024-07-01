@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using InGame.UI;
 using MainMenu.BottomBar;
 using MainMenu.Shop;
 using MainMenu.TopBar;
@@ -29,6 +30,11 @@ namespace MainMenu
 		public void OpenShop()
 		{
 			StartCoroutine(CloseAllPopupThenOpenShop());
+		}
+		
+		public void GoHome()
+		{
+			BottomBar.GoHome();
 		}
 
 		private IEnumerator CloseAllPopupThenOpenShop()

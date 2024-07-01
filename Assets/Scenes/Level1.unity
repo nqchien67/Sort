@@ -1593,7 +1593,7 @@ MonoBehaviour:
   DisabledMaterial: {fileID: 2100000, guid: 854afd646f757394fa6e09e2f44c38be, type: 2}
   NormalMaterial: {fileID: 2100000, guid: 43e02f601d0b3a44ea8de2dea1da1104, type: 2}
   LevelData:
-    id: 0
+    Id: 0
     TotalShelves: 0
     ItemTypes: 0
     LayerPerShelf: 0
@@ -1609,12 +1609,16 @@ MonoBehaviour:
   SortEffect: {fileID: 6447278513215144292, guid: 4d73530b8aafcd0478b95a2a46d2e873, type: 3}
   StarProp: {fileID: 5043075920097340578, guid: fbb1678156591434f9bc30dd9baaf900, type: 3}
   CoinProp: {fileID: 5043075920097340578, guid: 9f47bc15386ba18488067ee6278a0f7d, type: 3}
+  _coinWinBonus:
+    Min: 0
+    Max: 0
   GameplayMusic: {fileID: 8300000, guid: 6aaecbec67a7de14fb9eda5344318fe4, type: 3}
   PickupItemSfx: {fileID: 8300000, guid: 3becd2d4f934531499466f3e68b22aee, type: 3}
   PutDownItemSfx: {fileID: 8300000, guid: 58ca63193aea60b48bb5f5c1976fe377, type: 3}
-  RemoveASetSfx: {fileID: 8300000, guid: 7ebeda1dddd99544da4c86da236eab3f, type: 3}
   ComboSfx: {fileID: 8300000, guid: b54c4423efc792d42a594916da89967b, type: 3}
   UseBoosterSfx: {fileID: 8300000, guid: ab307831df51d824ba69321063982334, type: 3}
+  RemoveASetSfx: {fileID: 8300000, guid: 7ebeda1dddd99544da4c86da236eab3f, type: 3}
+  _combosSfx: []
   PausedTime: 0
   _hand: {fileID: 104808344}
   _tutShelf: {fileID: 886287628}
@@ -1976,6 +1980,10 @@ PrefabInstance:
     - target: {fileID: 5550604509687823100, guid: d44ac003218b7cf458c4e158f36cc985, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 5.300293
+      objectReference: {fileID: 0}
+    - target: {fileID: 5927625861314090312, guid: d44ac003218b7cf458c4e158f36cc985, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: NextLevel
       objectReference: {fileID: 0}
     - target: {fileID: 6081764025648101584, guid: d44ac003218b7cf458c4e158f36cc985, type: 3}
       propertyPath: m_AnchoredPosition.y

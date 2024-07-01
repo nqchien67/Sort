@@ -97,7 +97,7 @@ namespace InGame.Gameplay
 			chain.parent = null;
 
 			DOTween.Sequence()
-				.Append(chain.DOShakePosition(0.2f, new Vector3(0.2f, 0.2f, 0), 50).SetEase(Ease.Linear))
+				.Append(chain.DOShakePosition(0.3f, new Vector3(0.25f, 0.25f, 0), 50).SetEase(Ease.Linear))
 				.Append(chain.DOMoveY(CameraController.BottomLeft.y - 3, 0.7f).SetEase(Ease.InSine));
 
 			yield return null;

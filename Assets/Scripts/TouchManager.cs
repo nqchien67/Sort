@@ -17,7 +17,6 @@ public class TouchManager : MonoBehaviour
 	[SerializeField] private float _dragSmoothTime;
 
 	public Vector2 TouchPosition => _camera.ScreenToWorldPoint(_touchPositionAction.ReadValue<Vector2>());
-	public Vector2 log;
 
 	private Vector2 _currentVelocity = Vector2.zero;
 
@@ -40,34 +39,27 @@ public class TouchManager : MonoBehaviour
 
 	private void TouchPressed(InputAction.CallbackContext context)
 	{
-		// _isPressed = context.ReadValue<float>();
 		Collider2D hit = Physics2D.OverlapPoint(TouchPosition, _draggableMask);
-		if (hit && hit.TryGetComponent(out IDraggable draggable) && draggable.CanDrag() &&
-		    EventSystem.current.currentSelectedGameObject == null)
+		if (hit && hit.TryGetComponent(out IDraggable draggable) && draggable.CanDrag())
 		{
 			draggable.OnStartDrag();
 			_currentVelocity = Vector2.zero;
-			// _clickedTransform = hit.transform;
-			StartCoroutine(DragUpdate(hit.transform));
+			StartCoroutine(DragUpdate(hit.transform, draggable));
 		}
 	}
 
-	private IEnumerator DragUpdate(Transform clickedTransform)
+	private IEnumerator DragUpdate(Transform clickedTransform, IDraggable draggable)
 	{
 		var waitForEndOfFrame = new WaitForEndOfFrame();
 		while (_touchPressAction.ReadValue<float>() != 0)
 		{
 			yield return waitForEndOfFrame;
-			clickedTransform.position = Vector2.SmoothDamp(clickedTransform.position, TouchPosition,
-				ref _currentVelocity, _dragSmoothTime);
+			Vector2 newPosition = Vector2.SmoothDamp(clickedTransform.position, TouchPosition, ref _currentVelocity,
+				_dragSmoothTime);
+
+			clickedTransform.position = draggable.ClampDragZone(newPosition);
 		}
 
-		if (clickedTransform.TryGetComponent(out IDraggable draggable))
-			draggable.OnEndDrag();
-	}
-
-	private void Update()
-	{
-		log = TouchPosition;
+		draggable.OnEndDrag();
 	}
 }

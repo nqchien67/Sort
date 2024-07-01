@@ -53,14 +53,14 @@ namespace MainMenu.CollectionTask
 	{
 		public CTProgress[] Progresses;
 
-		public int CurrentTaskId;
+		public int CurrentTaskIndex;
 
 		public CTProgressData(CTTaskData[] tasks)
 		{
 			Progresses = new CTProgress[tasks.Length];
 			for (int i = 0; i < tasks.Length; i++) Progresses[i] = new CTProgress(tasks[i].Id);
 
-			CurrentTaskId = -1;
+			CurrentTaskIndex = -1;
 		}
 	}
 

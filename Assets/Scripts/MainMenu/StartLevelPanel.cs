@@ -1,9 +1,7 @@
 ﻿using Boosters.Start;
 using Controllers;
 using Data;
-using DG.Tweening;
 using TMPro;
-using UI;
 using UnityEngine;
 
 namespace MainMenu
@@ -25,30 +23,37 @@ namespace MainMenu
 
 		public void OnClickPlayButton()
 		{
-			MainMenuController.Instance.Play();
+			if (DataController.Instance.TryUseEnergy())
+				MainMenuController.Instance.Play();
+			else
+				EnergyController.Instance.OpenBuyEnergyPanel();
 		}
 
 		public void OnClickPreGiftButton()
 		{
-			Debug.Log("Show reward video");
-
-			StartBoosterButton randomBoosterButton = _startBoosterButtons[Random.Range(0, _startBoosterButtons.Length)];
-			BoosterType boosterType = randomBoosterButton.boosterType;
-			DataController.Instance.AddBooster(boosterType, 1);
-			DataController.Instance.SaveData();
-
-			if (RewardHelper.TryConvertBoosterToReward(boosterType, out var rewardType))
+			if (DataController.Instance.TryUseEnergy())
 			{
-				MainMenuController.Instance.PlayClaimRewardEffect(rewardType, _freeGifButton.transform.position,
-					randomBoosterButton.transform.position, () => randomBoosterButton.RefreshQuantityText());
-			}
+				Debug.Log("Show reward video");
 
-			// foreach (StartBoosterButton boosterButton in _startBoosterButtons)
-			// {
-			// 	DataController.Instance.AddBooster(boosterButton.boosterType, 1);
-			//
-			// 	boosterButton.RefreshQuantityText();
-			// }
+				StartBoosterButton randomBoosterButton =
+					_startBoosterButtons[Random.Range(0, _startBoosterButtons.Length)];
+				BoosterType boosterType = randomBoosterButton.boosterType;
+
+				if (RewardHelper.TryConvertBoosterToReward(boosterType, out var rewardType))
+				{
+					// 	MainMenuController.Instance.PlayClaimRewardEffect(rewardType, _freeGifButton.transform.position,
+					// 		randomBoosterButton.transform.position, () => randomBoosterButton.RefreshQuantityText());
+					FindObjectOfType<RewardPanelController>()
+						.Init(new[] { rewardType }, new[] { 1 }, false, false, null, 1, () =>
+						{
+							randomBoosterButton.RefreshQuantityText();
+							randomBoosterButton.Select();
+							MainMenuController.Instance.Play();
+						});
+				}
+			}
+			else
+				EnergyController.Instance.OpenBuyEnergyPanel();
 		}
 
 		public override void EndCloseAnimationTrigger()

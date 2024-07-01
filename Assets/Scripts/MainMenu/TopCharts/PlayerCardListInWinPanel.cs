@@ -14,7 +14,7 @@ namespace MainMenu.TopCharts
 		private RectTransform _content;
 		[SerializeField] private PlayerCard _prototypeCell;
 
-		private List<PlayerData> PlayersData => TopChartsPlayerDataManager.Instance.PlayersData;
+		private List<PlayerData> PlayersData => TopChartsDataManager.Instance.PlayersData;
 		private List<RectTransform> _spawnedCells = new List<RectTransform>();
 		private RectTransform _userCell;
 
@@ -46,7 +46,7 @@ namespace MainMenu.TopCharts
 			{
 				RectTransform item = SpawnCell();
 
-				PlayerData playerData = TopChartsPlayerDataManager.Instance.DisplayPlayersData[i];
+				PlayerData playerData = TopChartsDataManager.Instance.DisplayPlayersData[i];
 				var playerCard = item.GetComponent<PlayerCard>();
 				playerCard.InitItem(playerData.Name, playerData.Rank, playerData.AvatarName, playerData.Star);
 
@@ -135,8 +135,8 @@ namespace MainMenu.TopCharts
 		private void SetCellsSiblingIndex()
 		{
 			_spawnedCells.Sort((x, y) =>
-				x.GetComponent<PlayerCard>().rankTemp
-					.CompareTo(y.GetComponent<PlayerCard>().rankTemp));
+				x.GetComponent<PlayerCard>()._rank
+					.CompareTo(y.GetComponent<PlayerCard>()._rank));
 			
 			for (int i = 0; i < _spawnedCells.Count; i++)
 			{

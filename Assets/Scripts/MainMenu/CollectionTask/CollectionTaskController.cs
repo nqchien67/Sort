@@ -20,22 +20,22 @@ namespace MainMenu.CollectionTask
 		public CTProgressData ProgressData;
 		public CTProgress[] Progresses => ProgressData.Progresses;
 
-		public int CurrentTaskId
+		public int CurrentTaskIndex
 		{
-			get => ProgressData.CurrentTaskId;
-			private set => ProgressData.CurrentTaskId = value;
+			get => ProgressData.CurrentTaskIndex;
+			private set => ProgressData.CurrentTaskIndex = value;
 		}
 
-		public CTTaskData Current => Tasks[CurrentTaskId];
+		public CTTaskData Current => Tasks[CurrentTaskIndex];
 
 		public int CurrentTaskProgress
 		{
-			get => Progresses[CurrentTaskId].Progress;
-			private set => Progresses[CurrentTaskId].Progress = value;
+			get => Progresses[CurrentTaskIndex].Progress;
+			private set => Progresses[CurrentTaskIndex].Progress = value;
 		}
 
 		public int TimeResetTask;
-		public bool IsStarted => CurrentTaskId >= 0;
+		public bool IsStarted => CurrentTaskIndex >= 0;
 
 		public UnityAction OnResetProgress;
 
@@ -48,8 +48,8 @@ namespace MainMenu.CollectionTask
 
 		public void StartFirstTask()
 		{
-			CurrentTaskId = 0;
-			Progresses[CurrentTaskId].State = State.Active;
+			CurrentTaskIndex = 0;
+			Progresses[CurrentTaskIndex].State = State.Active;
 			SaveData();
 			PlayerPrefs.SetFloat(ResetTaskTimeStamp_Hash,
 				(float)DataController.ConvertToUnixTime(DateTime.Now) + TimeResetTask);
@@ -113,14 +113,14 @@ namespace MainMenu.CollectionTask
 				return;
 			}
 
-			Progresses[CurrentTaskId].State = State.Complete;
+			Progresses[CurrentTaskIndex].State = State.Complete;
 			ChangeToNextTask();
 		}
 
 		private void ChangeToNextTask()
 		{
-			CurrentTaskId++;
-			Progresses[CurrentTaskId].State = State.Active;
+			CurrentTaskIndex++;
+			Progresses[CurrentTaskIndex].State = State.Active;
 			SaveData();
 		}
 

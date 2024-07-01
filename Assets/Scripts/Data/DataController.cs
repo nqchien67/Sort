@@ -35,6 +35,7 @@ namespace Data
 
 				DontDestroyOnLoad(gameObject);
 			}
+
 			new StringEnumConverter();
 			LoadData();
 
@@ -88,7 +89,7 @@ namespace Data
 				}
 			};
 
-			SaveData(false);
+			SaveData();
 		}
 
 		public int Coin
@@ -117,8 +118,9 @@ namespace Data
 			return (time - epoch).TotalSeconds;
 		}
 
-		public void SaveData(bool postData = true)
+		public void SaveData()
 		{
+			// Debug.Log("save data");
 			DOVirtual.DelayedCall(0.1f, () =>
 				{
 					gameData.SaveTime = DateTime.Now.Ticks;
@@ -128,10 +130,6 @@ namespace Data
 					{
 						binaryFormatter.Serialize(fileStream, origin);
 					}
-
-
-					// if (postData)
-					// 	DatabaseController.Instance.PostData();
 				}
 			);
 		}
@@ -147,7 +145,7 @@ namespace Data
 			return 0;
 		}
 
-		public bool isFirstOpenPB = true;
+		public bool initedPiggy;
 
 		public int PbTimeDuration
 		{
@@ -168,7 +166,7 @@ namespace Data
 		}
 
 		public int[] PiggyBankStorageMilestone
-			=> new[] { 3000, 6000, 9000, 15000, 25000, 45000 };
+			=> new[] { 1600, 3000, 5000, 8000, 10000, 12000 };
 
 		public int PiggyBankLevel
 		{
@@ -253,14 +251,14 @@ namespace Data
 			set
 			{
 				if (value > PlayerPrefs.GetInt("MAX_ENERGY", 5) ||
-				    gameData.Energy == PlayerPrefs.GetInt("MAX_ENERGY", 5) &&
-				    value == PlayerPrefs.GetInt("MAX_ENERGY", 5) - 1)
+				    (gameData.Energy == PlayerPrefs.GetInt("MAX_ENERGY", 5) &&
+				     value == PlayerPrefs.GetInt("MAX_ENERGY", 5) - 1))
 				{
 					gameData.EnergyTimeStamp = ConvertToUnixTime(DateTime.UtcNow);
 				}
 
 				gameData.Energy = Mathf.Clamp(value, 0, PlayerPrefs.GetInt("MAX_ENERGY", 5));
-				SaveData(false);
+				SaveData();
 			}
 		}
 
@@ -292,6 +290,13 @@ namespace Data
 			double deltaTime = ConvertToUnixTime(DateTime.UtcNow) - gameData.UnlimitedEnergyTimeStamp;
 			int remainTime = gameData.UnlimitedEnergyTime - Mathf.Max(0, (int)deltaTime);
 			return remainTime > 0;
+		}
+		
+		public void AddUnlimitedEnergy(int minutes)
+		{
+			if (gameData.UnlimitedEnergyTime == 0)
+				gameData.UnlimitedEnergyTimeStamp = ConvertToUnixTime(DateTime.UtcNow);
+			gameData.UnlimitedEnergyTime += minutes * 60;
 		}
 
 		public bool TryUseEnergy()

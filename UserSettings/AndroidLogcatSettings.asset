@@ -3,7 +3,7 @@
     "m_SelectedPackage": {
         "deviceId": "1B021FDF6006Q6",
         "name": "com.DefaultCompany.ChefstrioPuzzle",
-        "processId": 7874,
+        "processId": 18636,
         "exited": false
     },
     "m_SelectedPriority": 0,
@@ -72,6 +72,18 @@
             "deviceId": "1B021FDF6006Q6",
             "name": "com.DefaultCompany.ChefstrioPuzzle",
             "processId": 7874,
+            "exited": false
+        },
+        {
+            "deviceId": "1B021FDF6006Q6",
+            "name": "com.DefaultCompany.ChefstrioPuzzle",
+            "processId": 17091,
+            "exited": false
+        },
+        {
+            "deviceId": "1B021FDF6006Q6",
+            "name": "com.DefaultCompany.ChefstrioPuzzle",
+            "processId": 18636,
             "exited": false
         }
     ],

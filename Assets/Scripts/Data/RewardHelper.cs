@@ -1,4 +1,6 @@
 ﻿using System;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 using UnityEngine;
 
 namespace Data
@@ -73,4 +75,14 @@ namespace Data
 		FreezeTime,
 		Refresh,
 	}
+	
+	[Serializable]
+	public class Reward
+	{
+		[JsonProperty("RewardTypes", ItemConverterType = typeof(StringEnumConverter))]
+		public RewardType[] RewardTypes;
+
+		public int[] Quantities;
+	}
+
 }

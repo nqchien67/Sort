@@ -577,6 +577,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   btnClickAudio: {fileID: 0}
   isNotScale: 0
+  _isMute: 0
 --- !u!1 &3464734480598885442
 GameObject:
   m_ObjectHideFlags: 0
@@ -590,6 +591,7 @@ GameObject:
   - component: {fileID: 3464734480598885470}
   - component: {fileID: 3464734480598885469}
   - component: {fileID: 3464734480598885468}
+  - component: {fileID: 562045929951948915}
   m_Layer: 5
   m_Name: Avatar
   m_TagString: Untagged
@@ -613,10 +615,10 @@ RectTransform:
   m_Father: {fileID: 3464734481816684165}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 379.95, y: -145}
-  m_SizeDelta: {x: 180, y: 180}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3464734480598885471
 CanvasRenderer:
@@ -728,6 +730,21 @@ MonoBehaviour:
   _image: {fileID: 3464734480598885470}
   _buyWithCoin: {fileID: 3464734480577618511}
   _buyWithAds: {fileID: 3464734480956694185}
+--- !u!114 &562045929951948915
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3464734480598885442}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 094c4108b5fec694b9327f59da7ee5b0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  btnClickAudio: {fileID: 0}
+  isNotScale: 0
+  _isMute: 0
 --- !u!1 &3464734480893853214
 GameObject:
   m_ObjectHideFlags: 0
@@ -899,7 +916,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -116, y: -495}
+  m_AnchoredPosition: {x: -155, y: -552}
   m_SizeDelta: {x: 84, y: 88}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3464734480946319284
@@ -1022,6 +1039,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   btnClickAudio: {fileID: 8300000, guid: d15080e446e4ce24486cc5611ab31cff, type: 3}
   isNotScale: 0
+  _isMute: 0
 --- !u!1 &3464734480956694185
 GameObject:
   m_ObjectHideFlags: 0
@@ -1114,6 +1132,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   btnClickAudio: {fileID: 0}
   isNotScale: 0
+  _isMute: 0
 --- !u!1 &3464734481178763863
 GameObject:
   m_ObjectHideFlags: 0
@@ -1262,6 +1281,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   btnClickAudio: {fileID: 0}
   isNotScale: 0
+  _isMute: 0
 --- !u!1 &3464734481180876171
 GameObject:
   m_ObjectHideFlags: 0
@@ -1917,6 +1937,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6668a535a6424d8d98d947d8665e415c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _showSfx: {fileID: 0}
   _sprites: []
   Avatars:
   - id: 0
@@ -2424,7 +2445,7 @@ RectTransform:
   m_GameObject: {fileID: 3464734481758345355}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.1, y: 1.1, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 3464734480034465592}
   - {fileID: 3464734479835814574}
@@ -2516,7 +2537,7 @@ RectTransform:
   m_GameObject: {fileID: 3464734481764620837}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.1, y: 1.1, z: 1}
   m_Children:
   - {fileID: 3464734481758345348}
   - {fileID: 3464734480946319295}

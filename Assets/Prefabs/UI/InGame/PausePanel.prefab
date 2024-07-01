@@ -79,6 +79,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   btnClickAudio: {fileID: 0}
   isNotScale: 0
+  _isMute: 0
 --- !u!1 &493996492601295759
 GameObject:
   m_ObjectHideFlags: 0
@@ -417,8 +418,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 452b8b6358053c543961a74a5b0e4981, type: 3}
-  m_Type: 0
+  m_Sprite: {fileID: 21300000, guid: 65225ccf4fb302f4abb4c7d304f6b010, type: 3}
+  m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -497,6 +498,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   btnClickAudio: {fileID: 8300000, guid: ffb3a59befd186847b6f6b8d74f48168, type: 3}
   isNotScale: 0
+  _isMute: 0
 --- !u!1 &856998510961364387
 GameObject:
   m_ObjectHideFlags: 0
@@ -1677,8 +1679,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 094c4108b5fec694b9327f59da7ee5b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  btnClickAudio: {fileID: 8300000, guid: ffb3a59befd186847b6f6b8d74f48168, type: 3}
+  btnClickAudio: {fileID: 8300000, guid: 2e2da620dfcb6d44788bff2ce06b173b, type: 3}
   isNotScale: 0
+  _isMute: 0
 --- !u!1 &5727232937924354544
 GameObject:
   m_ObjectHideFlags: 0
@@ -1836,8 +1839,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 094c4108b5fec694b9327f59da7ee5b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  btnClickAudio: {fileID: 8300000, guid: ffb3a59befd186847b6f6b8d74f48168, type: 3}
+  btnClickAudio: {fileID: 8300000, guid: 2e2da620dfcb6d44788bff2ce06b173b, type: 3}
   isNotScale: 0
+  _isMute: 0
 --- !u!1 &5727232938010312462
 GameObject:
   m_ObjectHideFlags: 0
@@ -1995,8 +1999,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 094c4108b5fec694b9327f59da7ee5b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  btnClickAudio: {fileID: 8300000, guid: ffb3a59befd186847b6f6b8d74f48168, type: 3}
+  btnClickAudio: {fileID: 8300000, guid: 2e2da620dfcb6d44788bff2ce06b173b, type: 3}
   isNotScale: 0
+  _isMute: 0
 --- !u!1 &5990776064186401667
 GameObject:
   m_ObjectHideFlags: 0
@@ -2559,6 +2564,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b95e0089a9a41bc93165408888d8f45, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _showSfx: {fileID: 0}
   musicIconOn: {fileID: 21300000, guid: fc5058e5daf8a1141ad79ce7e97ba76e, type: 3}
   musicIconOff: {fileID: 21300000, guid: 235fbf71e35860648b0a0938e990bf74, type: 3}
   sfxIconOn: {fileID: 21300000, guid: d3b07fd0fe984014d8b239658ef0ba94, type: 3}
@@ -2570,6 +2576,7 @@ MonoBehaviour:
   vibrationIcon: {fileID: 5727232937924354554}
   _popUpClip: {fileID: 0}
   _continueButton: {fileID: 1680163714451418531}
+  _quitButton: {fileID: 7409629611170698773}
   _confirmQuit: {fileID: 9200641597697631018}
   _coinCount: {fileID: 5483329141982313092}
   _energyCount: {fileID: 3655198074073173396}
@@ -2642,8 +2649,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 452b8b6358053c543961a74a5b0e4981, type: 3}
-  m_Type: 0
+  m_Sprite: {fileID: 21300000, guid: 65225ccf4fb302f4abb4c7d304f6b010, type: 3}
+  m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -2722,6 +2729,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   btnClickAudio: {fileID: 8300000, guid: ffb3a59befd186847b6f6b8d74f48168, type: 3}
   isNotScale: 0
+  _isMute: 0
 --- !u!1 &7615622814600162279
 GameObject:
   m_ObjectHideFlags: 0
@@ -3091,6 +3099,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   btnClickAudio: {fileID: 8300000, guid: d15080e446e4ce24486cc5611ab31cff, type: 3}
   isNotScale: 0
+  _isMute: 0
 --- !u!1 &9200641597697631018
 GameObject:
   m_ObjectHideFlags: 0
@@ -3100,7 +3109,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8022148957675251832}
-  - component: {fileID: 1008294227705218278}
   m_Layer: 5
   m_Name: ConfirmExit
   m_TagString: Untagged
@@ -3129,17 +3137,3 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1008294227705218278
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9200641597697631018}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 094c4108b5fec694b9327f59da7ee5b0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  btnClickAudio: {fileID: 0}
-  isNotScale: 0

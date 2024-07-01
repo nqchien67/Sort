@@ -21,7 +21,7 @@ namespace Boosters.InGame
 		[SerializeField] private GameObject _hitEffect;
 		private bool _animCompleted;
 
-		private int _x;
+		private int _countLayer;
 		private int time;
 		private List<Item> _effectedItems;
 		private SkeletonAnimation _effectSkeletonAnimation;
@@ -30,8 +30,6 @@ namespace Boosters.InGame
 
 		public override void Use()
 		{
-			_x = 0;
-
 			int maxLayerCount = 0;
 
 			foreach (var shelf in LevelController.Shelves)
@@ -50,25 +48,20 @@ namespace Boosters.InGame
 			{
 				if (uniqueItems.Count == 0)
 				{
-					while (true)
-					{
-						List<Item> items = GetAllNotCuLacItems();
-						if (items.Count == 0)
-						{
-							_x++;
-							if (_x >= maxLayerCount)
-								break;
-							continue;
-						}
-
-						if (items.Count > 0)
-							uniqueItems = RemoveDuplicate(items);
-						break;
-					}
+					List<Item> items = GetAllItemNotInLock(maxLayerCount);
+					if (items.Count > 0)
+						uniqueItems = RemoveDuplicate(items);
 				}
 
 				if (uniqueItems.Count == 0)
-					return;
+				{
+					var items = GetAllItemsInLocks(maxLayerCount);
+					if (items.Count > 0)
+						uniqueItems = RemoveDuplicate(items);
+				}
+
+				if (uniqueItems.Count == 0)
+					break;
 
 				int randomIndex = Random.Range(0, uniqueItems.Count);
 				Item randomItem = uniqueItems[randomIndex];
@@ -77,10 +70,61 @@ namespace Boosters.InGame
 				_effectedItems.AddRange(FindSameItems(randomItem));
 			}
 
+			if (_effectedItems.Count == 0)
+				return;
+			
 			base.Use();
 			ReduceQuantity();
 			StartCoroutine(TransformItems(_effectedItems));
 			time++;
+		}
+
+		private List<Item> GetAllItemNotInLock(int maxLayerCount)
+		{
+			_countLayer = 0;
+			List<Item> items;
+			do
+			{
+				items = new List<Item>();
+
+				foreach (var shelf in LevelController.Shelves)
+				{
+					if (shelf.IsLocked)
+						continue;
+					items.AddRange(GetItemsInShelf(shelf, _countLayer));
+				}
+
+				if (items.Count != 0)
+					continue;
+
+				_countLayer++;
+				if (_countLayer >= maxLayerCount)
+					break;
+			} while (items.Count == 0);
+
+			return items;
+		}
+
+		private List<Item> GetAllItemsInLocks(int maxLayerCount)
+		{
+			_countLayer = 0;
+			List<Item> items;
+			do
+			{
+				items = new List<Item>();
+
+				foreach (var shelf in LevelController.LockedShelves)
+					items.AddRange(GetItemsInShelf(shelf, _countLayer));
+
+				if (items.Count != 0)
+					continue;
+
+				_countLayer++;
+				if (_countLayer >= maxLayerCount)
+					break;
+			} while (items.Count == 0);
+
+			return items;
 		}
 
 		private HashSet<string> GetAllTypeInLocks()
@@ -117,7 +161,7 @@ namespace Boosters.InGame
 
 		protected override bool CanUse()
 		{
-			return LevelController.CanDrag && !LevelController.MovingItem;
+			return LevelController.CanDrag && !LevelController.AnyItemMoving;
 		}
 
 		private List<Item> RemoveDuplicate(List<Item> items)
@@ -133,25 +177,15 @@ namespace Boosters.InGame
 			return new List<Item>(uniqueItems.Values);
 		}
 
-		private List<Item> GetAllNotCuLacItems()
+		private IEnumerable<Item> GetItemsInShelf(Shelf shelf, int x)
 		{
-			List<Item> items = new List<Item>();
+			var layers = shelf.Layers;
+			int layerIndex = layers.Count - 1 - x;
+			layerIndex = Mathf.Max(0, layerIndex);
 
-			foreach (var shelf in LevelController.Shelves)
-			{
-				if (shelf.IsLocked)
-					continue;
-
-				var layers = shelf.Layers;
-				int layerIndex = layers.Count - 1 - _x;
-				layerIndex = Mathf.Max(0, layerIndex);
-
-				items.AddRange(layers[layerIndex].GetAllItems()
-					.Where(item =>
-						item.Type != "_CuLac" && !_effectedItems.Contains(item)));
-			}
-
-			return items;
+			var foundItems = layers[layerIndex].GetAllItems()
+				.Where(item => item.Type != "_CuLac" && !_effectedItems.Contains(item));
+			return foundItems;
 		}
 
 		private IEnumerator TransformItems(List<Item> items)
@@ -200,8 +234,8 @@ namespace Boosters.InGame
 
 		protected override bool IsBoosterUnlocked()
 		{
-			int highestPassedLevel = PlayerPrefs.GetInt("level", 0);
-			return highestPassedLevel >= 5;
+			int currentLevel = LevelController.Instance.LevelIndex;
+			return currentLevel > 6;
 		}
 	}
 }

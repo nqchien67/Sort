@@ -253,12 +253,6 @@ namespace Data
 		// 	return value;
 		// }
 
-
-		// public void SignOutAuth()
-		// {
-		// 	firebaseAuth.SignOut();
-		// }
-
 		public string GetDailyRewardData()
 		{
 			// string value = Firebase.RemoteConfig.FirebaseRemoteConfig.DefaultInstance.GetValue("daily_reward_data")
@@ -285,6 +279,12 @@ namespace Data
 			// }
 			//
 			// return value;
+		}
+
+		public string GetTopChartsRewards()
+		{
+			TextAsset data = Resources.Load<TextAsset>("top_charts_rewards");
+			return data.text;
 		}
 
 		public string GetEndlessTreasureData()

@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using Data;
-using Menu;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
@@ -24,11 +23,9 @@ namespace MainMenu.DailyReward
 
 		private UnityAction onCloseCallback;
 		private bool canDoubleReward;
-		private readonly List<RewardType> _consumables = new List<RewardType>();
-		private readonly List<int> _consumableQuantities = new List<int>();
+		private readonly List<RewardType> _rewards = new List<RewardType>();
+		private readonly List<int> _rewardQuantities = new List<int>();
 		private int _itemSkinId;
-		private int _coinQuantity = 0;
-		readonly int time = 0;
 		public bool canClaim;
 
 		public int _date;
@@ -84,11 +81,10 @@ namespace MainMenu.DailyReward
 			// 		reward = RewardType.Coin;
 			// }
 
-			_itemIcon.sprite = itemSprites[GetConsumableIndex(reward, quantity)];
-			//TODO: doi sang dung RewardHelper
+			SetRewardQuantities(reward, quantity);
+			_itemIcon.sprite = RewardHelper.Instance.GetRewardSprite(reward);
 		}
-
-
+		
 		private void ResizeIcon(RewardType item)
 		{
 			if (item == RewardType.Coin)
@@ -99,8 +95,6 @@ namespace MainMenu.DailyReward
 			size.x = size.y;
 			rectTransform.sizeDelta = size;
 		}
-
-		// private void GetRandom 
 
 		private void SetDay7Frame()
 		{
@@ -113,18 +107,10 @@ namespace MainMenu.DailyReward
 			rectTransform.sizeDelta = rectTransform.parent.GetComponent<RectTransform>().sizeDelta;
 		}
 
-		private int GetConsumableIndex(RewardType rewardType, int quantity)
+		private void SetRewardQuantities(RewardType rewardType, int quantity)
 		{
-			_consumables.Add(rewardType);
-
-			if (rewardType == RewardType.Coin)
-			{
-				_coinQuantity = quantity;
-				return 0;
-			}
-
-			_consumableQuantities.Add(quantity);
-			return (int)rewardType;
+			_rewards.Add(rewardType);
+				_rewardQuantities.Add(quantity);
 		}
 
 		public void OnClick()
@@ -144,12 +130,9 @@ namespace MainMenu.DailyReward
 				PlayerPrefs.SetInt("dayAccumulated", PlayerPrefs.GetInt("dayAccumulated", 0) + 1);
 
 				onCloseCallback?.Invoke();
-				if (_consumableQuantities.Count != 0)
-					FindObjectOfType<RewardPanelController>().Init(_coinQuantity, time, _consumables.ToArray(),
-						_consumableQuantities.ToArray(), true, true, canDoubleReward, "x2Daily", 1, null);
-				else
-					FindObjectOfType<RewardPanelController>().Init(_coinQuantity, time, Array.Empty<RewardType>(),
-						Array.Empty<int>(), canDoubleReward, true, true, "x2Daily", 1, null);
+				if (_rewardQuantities.Count != 0)
+					FindObjectOfType<RewardPanelController>().Init(_rewards.ToArray(),
+						_rewardQuantities.ToArray(), true, canDoubleReward);
 			}
 		}
 	}

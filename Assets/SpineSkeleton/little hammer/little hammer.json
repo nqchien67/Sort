@@ -1,17 +1,17 @@
 {
 "skeleton": {
-	"hash": "qLLNhDnYXjNdq/HcUXJvKj4BrG8",
+	"hash": "Zop0QI127b0hbUNWPVY8Y213uXw",
 	"spine": "3.8.99",
 	"x": -100.77,
 	"y": -96,
-	"width": 328.37,
+	"width": 286.79,
 	"height": 206.4,
 	"images": "",
 	"audio": ""
 },
 "bones": [
 	{ "name": "root" },
-	{ "name": "Little hammer", "parent": "root", "length": 70.82, "rotation": 65.36, "x": 110.33, "y": -51.99 },
+	{ "name": "Little hammer", "parent": "root", "length": 70.82, "rotation": 65.36, "x": 68.75, "y": -51.99 },
 	{ "name": "Blink", "parent": "root", "x": -6.82, "y": 54.06, "scaleX": 0.5, "scaleY": 0.5 },
 	{ "name": "bone2", "parent": "root" },
 	{ "name": "Blink2", "parent": "root", "x": 40.32, "y": 27.1, "scaleX": 0.5, "scaleY": 0.5 },
@@ -24,7 +24,6 @@
 ],
 "slots": [
 	{ "name": "F1", "bone": "bone2", "attachment": "F1", "blend": "additive" },
-	{ "name": "Little hammer", "bone": "Little hammer", "attachment": "Little hammer" },
 	{ "name": "Blink", "bone": "Blink", "attachment": "Blink", "blend": "additive" },
 	{ "name": "Blink2", "bone": "Blink2", "attachment": "Blink", "blend": "additive" },
 	{ "name": "Blink3", "bone": "Blink3", "attachment": "Blink", "blend": "additive" },
@@ -32,7 +31,8 @@
 	{ "name": "Blink5", "bone": "Blink5", "attachment": "Blink", "blend": "additive" },
 	{ "name": "Blink6", "bone": "Blink6", "attachment": "Blink", "blend": "additive" },
 	{ "name": "Blink7", "bone": "Blink7", "attachment": "Blink", "blend": "additive" },
-	{ "name": "Blink8", "bone": "Blink8", "attachment": "Blink", "blend": "additive" }
+	{ "name": "Blink8", "bone": "Blink8", "attachment": "Blink", "blend": "additive" },
+	{ "name": "Little hammer", "bone": "Little hammer", "attachment": "Little hammer" }
 ],
 "skins": [
 	{
@@ -146,40 +146,41 @@
 			},
 			"F1": {
 				"attachment": [
-					{ "time": 0.2, "name": "F2" },
-					{ "time": 0.2333, "name": "F3" },
-					{ "time": 0.2667, "name": "F4" },
-					{ "time": 0.3, "name": "F5" },
-					{ "time": 0.3333, "name": "F6" },
-					{ "time": 0.3667, "name": "F7" },
-					{ "time": 0.4, "name": null }
+					{ "time": 0.4333, "name": "F2" },
+					{ "time": 0.4667, "name": "F3" },
+					{ "time": 0.5, "name": "F4" },
+					{ "time": 0.5333, "name": "F5" },
+					{ "time": 0.5667, "name": "F6" },
+					{ "time": 0.6, "name": "F7" },
+					{ "time": 0.6333, "name": null }
 				]
 			},
 			"Little hammer": {
 				"color": [
-					{ "time": 0.1667, "color": "ffffffff" },
-					{ "time": 0.2667, "color": "ffffff00" }
+					{ "time": 0.6, "color": "ffffffff", "curve": 0.25, "c4": 0.57 },
+					{ "time": 0.7667, "color": "ffffff00" }
 				]
 			}
 		},
 		"bones": {
 			"bone2": {
 				"scale": [
-					{ "x": 0, "y": 0 },
-					{ "time": 0.1667 },
-					{ "time": 0.4, "x": 1.2, "y": 1.2 }
+					{ "x": 0, "y": 0, "curve": "stepped" },
+					{ "time": 0.3333, "x": 0, "y": 0 },
+					{ "time": 0.4 },
+					{ "time": 0.6333, "x": 1.2, "y": 1.2 }
 				]
 			},
 			"Little hammer": {
 				"rotate": [
-					{ "curve": 0.25, "c4": 0.28 },
-					{ "time": 0.1667, "angle": 46.72 },
-					{ "time": 0.3333 }
+					{ "curve": 0.423, "c2": 0.03, "c4": -1.72 },
+					{ "time": 0.4333, "angle": 46.72, "curve": 0.25, "c4": 0.57 },
+					{ "time": 0.8333 }
 				],
 				"translate": [
-					{ "x": 40.39, "curve": 0.25, "c4": 0.28 },
-					{ "time": 0.1667, "x": -2.29 },
-					{ "time": 0.3333, "x": 40.39 }
+					{ "x": 40.39, "curve": 0.423, "c2": 0.03, "c4": -1.72 },
+					{ "time": 0.4333, "x": -2.29, "curve": 0.25, "c4": 0.57 },
+					{ "time": 0.8333, "x": 40.39 }
 				]
 			},
 			"Blink": {

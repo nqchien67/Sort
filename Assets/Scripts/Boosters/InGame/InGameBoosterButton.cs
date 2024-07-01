@@ -10,6 +10,7 @@ using Spine.Unity;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using Utilities;
 
 namespace Boosters.InGame
 {
@@ -25,10 +26,12 @@ namespace Boosters.InGame
 		[SerializeField] private Image _buyIcon;
 		[SerializeField] private GameObject _lock;
 		protected Transform _spawnedEffect;
-		[SerializeField] private BuyBoosterPanel _boosterPanelPrefab;
 
 		protected LevelController LevelController => LevelController.Instance;
 		protected int _quantity;
+
+		[SerializeField] private AudioClip _sfx;
+		[SerializeField] private float _delaySfx;
 
 		protected virtual void Awake()
 		{
@@ -40,16 +43,22 @@ namespace Boosters.InGame
 
 		private void Start()
 		{
-			// if (!IsBoosterUnlocked())
-			// {
-			// 	_lock.SetActive(true);
-			// 	_quantityText.gameObject.SetActive(false);
-			// 	_buyIcon.gameObject.SetActive(false);
-			// 	Button.interactable = false;
-			// 	return;
-			// }
-
 			RefreshQuantity();
+		}
+
+		private void Update()
+		{
+			if (Input.GetKeyDown(KeyCode.Q) && this is LittleHammer)
+				OnClick();
+
+			if (Input.GetKeyDown(KeyCode.W) && this is MagicWand)
+				OnClick();
+
+			if (Input.GetKeyDown(KeyCode.E) && this is Freeze)
+				OnClick();
+
+			if (Input.GetKeyDown(KeyCode.R) && this is Refresh)
+				OnClick();
 		}
 
 		public void OnClick()
@@ -68,7 +77,7 @@ namespace Boosters.InGame
 
 		public virtual void Use()
 		{
-			AudioController.Instance.PlaySfx(LevelController.Instance.UseBoosterSfx);
+			StartCoroutine(CommonIEnumerator.WaiForSeconds(_delaySfx, () => AudioController.Instance.PlaySfx(_sfx)));
 		}
 
 		public List<Item> GetAllFrontItems()
@@ -104,6 +113,8 @@ namespace Boosters.InGame
 		{
 			_quantity--;
 			DataController.Instance.AddBooster(Data.Type, -1);
+			DataController.Instance.SaveData();
+
 			_quantityText.text = _quantity.ToString();
 			_buyIcon.gameObject.SetActive(_quantity <= 0);
 		}
@@ -117,5 +128,22 @@ namespace Boosters.InGame
 		}
 
 		protected abstract bool IsBoosterUnlocked();
+
+		private void Lock()
+		{
+			_lock.SetActive(true);
+			_quantityText.gameObject.SetActive(false);
+			_buyIcon.gameObject.SetActive(false);
+			Button.interactable = false;
+		}
+
+		public void Unlock()
+		{
+			_lock.SetActive(false);
+			_quantityText.gameObject.SetActive(true);
+			_buyIcon.gameObject.SetActive(false);
+			Button.interactable = true;
+			RefreshQuantity();
+		}
 	}
 }

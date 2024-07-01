@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Data;
+using InGame.UI;
 using UI;
 using UnityEngine;
 using UnityEngine.UI;
@@ -11,6 +12,7 @@ namespace MainMenu
 	{
 		[SerializeField] private Image _itemIcon;
 		[SerializeField] private Button _claimButton;
+		[SerializeField] private Sprite[] _itemIcons;
 
 		private int _itemId;
 		private UnlockableItemSkin _unlockableItemSkin;
@@ -20,16 +22,20 @@ namespace MainMenu
 			List<UnlockableItemSkin> notUnlockedItems = SpritesCollection.Instance.GetNotUnlockedItems();
 
 			_unlockableItemSkin = notUnlockedItems[Random.Range(0, notUnlockedItems.Count)];
-			_itemIcon.sprite = SpritesCollection.Instance.GetUnlockableItemSprite(_unlockableItemSkin.Id);
+			_itemIcon.sprite = _itemIcons[_unlockableItemSkin.Id];
 
 			_unlockableItemSkin.Unlocked = true;
 			SpritesCollection.Instance.AddPriorityItem(_unlockableItemSkin);
 			DataController.Instance.SaveData();
 		}
 
+		public override void Show()
+		{
+			base.Show();
+		}
+
 		public void OnClickClaim()
 		{
-			// SkinDataController.Instance.AddUnlockedItemSkin(_itemId);
 			Close();
 		}
 

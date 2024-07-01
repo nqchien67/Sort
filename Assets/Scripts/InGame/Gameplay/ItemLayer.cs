@@ -105,7 +105,7 @@ namespace InGame.Gameplay
 				var item2 = Items[i + 1];
 				if (item1 == null || item2 == null || item1.Type != item2.Type)
 				{
-					LevelController.Instance.MovingItem = false;
+					LevelController.Instance.MovingItemsCount--;
 					yield break;
 				}
 			}
@@ -128,7 +128,7 @@ namespace InGame.Gameplay
 			yield return null;
 			CheckShouldDestroy();
 			LevelController.Instance.EatASet();
-			LevelController.Instance.MovingItem = false;
+			LevelController.Instance.MovingItemsCount--;
 		}
 
 

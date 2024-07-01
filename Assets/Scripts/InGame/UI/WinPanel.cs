@@ -33,12 +33,13 @@ namespace InGame.UI
 
 		[SerializeField] private AdsMultiplierCatcher _adsMultiplierCatcher;
 		[SerializeField] private DOTweenAnimation _pointerTween;
-		
+
 		private Animator _animator;
 		private float _maxFillBarLength;
 		private int _levelGainedStar;
 
 		[Header("Audio")] [SerializeField] private AudioClip _openSfx;
+		[SerializeField] private AudioClip _piggySuckCoinSfx;
 
 		private void Awake()
 		{
@@ -85,12 +86,12 @@ namespace InGame.UI
 
 				// int bonusCoinPiggy =
 				// 	DataController.Instance.CurrentPbStorage / (DataController.Instance.PiggyBankLevel * 2 + 3);
-				int bonusCoinPiggy = LevelController.Instance.Coin; 
-				
+				int bonusCoinPiggy = LevelController.Instance.Coin;
+
 				bonusCoinPiggy += Random.Range(-1, bonusCoinPiggy / 10 + 1);
 				bonusCoinPiggy = Mathf.Max(bonusCoinPiggy, 0);
-				int averageGold = DataController.Instance.CurrentPbStorage /
-				                  ((DataController.Instance.PiggyBankLevel * 2 + 3) * 12);
+				int averageGold = bonusCoinPiggy / 12;
+
 				int tmp = 0;
 				yield return new WaitForSeconds(1.3f);
 				_piggyBankAnim.AnimationState.SetAnimation(1, "suckindiamond_x", false);
@@ -100,7 +101,7 @@ namespace InGame.UI
 				{
 					tmp += averageGold;
 					_piggyGoldBonusTxt.text = "+" + tmp;
-					// AudioController.Instance.PlaySfx(IncreaseGoldAudio);
+					AudioController.Instance.PlaySfx(_piggySuckCoinSfx);
 					yield return delay;
 				}
 
@@ -127,8 +128,6 @@ namespace InGame.UI
 
 		public void OnClickClaim()
 		{
-			//TODO: Nhét piggy bank hiện khi bấm nút này
-
 			if (_claimItemButton.enabled)
 				ClaimFreeItemAndClose();
 			else
@@ -138,7 +137,7 @@ namespace InGame.UI
 		public void OnLickClaimAds()
 		{
 			Debug.Log("Show video ads reward");
-			
+
 			_pointerTween.DOPause();
 			int extraStar = _levelGainedStar * _adsMultiplierCatcher.MultiTime - _levelGainedStar;
 

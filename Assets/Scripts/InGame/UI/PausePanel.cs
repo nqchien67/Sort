@@ -1,10 +1,12 @@
-﻿using Audio;
+﻿using System;
+using Audio;
 using Controllers;
+using Data;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace UI.InGame
+namespace InGame.UI
 {
 	public class PausePanel : Popup
 	{
@@ -22,6 +24,7 @@ namespace UI.InGame
 		[SerializeField] private AudioClip _popUpClip;
 
 		[SerializeField] private Button _continueButton;
+		[SerializeField] private Button _quitButton;
 		[SerializeField] private GameObject _confirmQuit;
 		[SerializeField] private TextMeshProUGUI _coinCount;
 		[SerializeField] private TextMeshProUGUI _energyCount;
@@ -29,6 +32,12 @@ namespace UI.InGame
 
 		private AudioController AudioController => AudioController.Instance;
 		private bool _quiting;
+
+		private void Start()
+		{
+			if (LevelController.Instance.LevelIndex == 1)
+				_quitButton.gameObject.SetActive(false);
+		}
 
 		public override void Show()
 		{
@@ -92,6 +101,7 @@ namespace UI.InGame
 			gameObject.SetActive(false);
 			_confirmQuit.SetActive(false);
 			_continueButton.gameObject.SetActive(true);
+			_quiting = false;
 		}
 
 		public void OnClickQuit()
@@ -116,7 +126,7 @@ namespace UI.InGame
 			_continueButton.gameObject.SetActive(false);
 			_confirmQuit.SetActive(true);
 			_coinCount.text = LevelController.Instance.Coin.ToString();
-			_energyCount.text = "1";
+			_energyCount.text = DataController.Instance.HaveUnlimitedEnergy() ? "0" : "1";
 			_starCount.text = LevelController.Instance.Star.ToString();
 			_quiting = true;
 		}

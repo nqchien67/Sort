@@ -102,6 +102,11 @@ namespace MainMenu.Shop
 			}
 		}
 
+		private void OnDisable()
+		{
+			_scrollRect.verticalNormalizedPosition = 1;
+		}
+
 		public void ScrollToBottom()
 		{
 			Vector2 focusPoint = _scrollRect.content.GetCorners()[0];

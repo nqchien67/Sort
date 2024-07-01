@@ -38,6 +38,8 @@ namespace Boosters
 			}
 			else
 			{
+				yield return null;
+				_booster.Unlock();
 				Destroy(gameObject);
 			}
 		}
@@ -53,7 +55,7 @@ namespace Boosters
 			DataController.Instance.AddBooster(_unlockBoosterPanel.Data.Type, boosterQuantity);
 			DataController.Instance.SaveData();
 
-			_booster.RefreshQuantity();
+			_booster.Unlock();
 
 			StartCoroutine(ClaimBoosterRoutine(boosterQuantity));
 

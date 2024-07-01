@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Audio;
 using Data;
 using DG.Tweening;
+using InGame.UI;
 using TMPro;
 using UI;
 using UnityEngine;
@@ -117,7 +118,6 @@ namespace MainMenu.LuckySpin
 					probability -= luckySpinItems[i].probability;
 				}
 
-			finalItem.OnCollect();
 			float timeRotate = 0.4f * (numberSpin + finalItem.rotationZ / 360f);
 			wheel.DOLocalRotate(new Vector3(0, 0, -360f * numberSpin - finalItem.rotationZ), timeRotate)
 				.SetEase(Ease.OutQuint)

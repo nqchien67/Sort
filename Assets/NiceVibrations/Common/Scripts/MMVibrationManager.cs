@@ -84,7 +84,6 @@ namespace MoreMountains.NiceVibrations
 		/// </summary>
 		public static void Vibrate()
         {
-	        Debug.Log("Vibrate");
             if (Android ())
 			{
 				AndroidVibrate (MediumAmplitude);

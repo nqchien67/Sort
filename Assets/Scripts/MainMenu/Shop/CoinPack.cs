@@ -1,8 +1,6 @@
-﻿using System;
-using IAP;
+﻿using IAP;
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace MainMenu.Shop
 {
@@ -19,13 +17,13 @@ namespace MainMenu.Shop
 
 		private void Init()
 		{
-			_pack = IAPPackHelper.GetPack(GetPackId());
+			_pack = IAPPackHelper.GetCoinPack(GetPackId());
 			_coinAmountText.text = "x" + _pack.GetCoinAmount();
 		}
 
 		private string GetPackId()
 		{
-			return "";
+			return "coin1";
 		}
 	}
 }

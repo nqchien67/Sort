@@ -10,6 +10,10 @@ namespace Audio
 
 		public bool IsSfxMute => isSfxMute;
 
+		public AudioClip ButtonClickSfx;
+		public AudioClip PopupShowSfx;
+		public AudioClip CloseButtonClickSfx;
+
 		public bool Music
 		{
 			set
@@ -74,7 +78,7 @@ namespace Audio
 		{
 			sfxSource.Stop();
 		}
-		
+
 		public void StopLoopSfx()
 		{
 			sfxSource.loop = false;

@@ -1,4 +1,5 @@
-﻿using UI;
+﻿using InGame.UI;
+using UI;
 using UnityEngine;
 
 namespace MainMenu.DailyQuest

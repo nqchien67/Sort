@@ -48,6 +48,7 @@ namespace InGame.UI
 			if (coinHave < _buyPrice)
 			{
 				LevelUIController.Instance.ShowNotEnoughCoin();
+				LevelUIController.Instance.ShowCoinPackPanel(_buyPrice - coinHave);
 				return;
 			}
 
